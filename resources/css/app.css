@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Cinzel';
+    src: url('/public/fonts/Cinzel/Cinzel-Regular.woff2'),
+         url('/public/fonts/Cinzel/Cinzel-Regular.woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/public/fonts/Montserrat/Montserrat-Regular.woff2'),
+         url('/public/fonts/Montserrat/Montserrat-Regular.woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/public/fonts/Montserrat/Montserrat-Medium.woff2'),
+         url('/public/fonts/Montserrat/Montserrat-Medium.woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/public/fonts/Montserrat/Montserrat-Semibold.woff2'),
+         url('/public/fonts/Montserrat/Montserrat-Semibold.woff');
+    font-weight: 600;
+    font-style: normal;
+}
