@@ -9,7 +9,7 @@
         @vite('resources/css/custom.css')
     </head>
     <body class="bg-cwhite-500 grid xl:grid-rows-[auto_1fr_auto] xl:min-h-dvh">
-        <header class="w-full bg-white text-accents-900 px-4 md:px-20 xl:px-28 flex justify-between font-cinzel">
+        <header class="w-full bg-white text-accents-900 px-4 md:px-20 xl:px-8 flex justify-between font-cinzel">
             {{--HAMBURGER--}}
             <div class="flex flex-col justify-center cursor-pointer w-[33%] xl:relative xl:hidden order-1" id="hamburger">
                 <div class="w-8 h-[3px] mb-1 rounded bg-cblack-500"></div>
@@ -103,16 +103,16 @@
                         <a href="" class="hover:text-accents-600 transition-colors duration-150">Personaliza</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Aros</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'earrings']) }}" class="hover:text-accents-600 transition-colors duration-150">Aros</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'rings']) }}" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'bracelets']) }}" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'necklaces']) }}" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
                     </li>
                 </ul>
             </nav>
@@ -272,15 +272,15 @@
             <div class="border-b border-cwhite-500 col-span-6"></div>
 
             {{--CONTENT--}}
-            <div class="flex flex-col items-center text-cwhite-500 xl:flex-row xl:items-start xl:justify-between xl:py-8 xl:px-28">
+            <div class="flex flex-col items-center text-cwhite-500 xl:flex-row xl:items-start xl:justify-between xl:py-8 xl:px-8">
                 <div class="order-2 flex flex-col w-[70%] items-start pb-6 md:pb-8 xl:w-fit xl:pb-0">
                     <h4 class="pb-1 font-bold">Categorías</h4>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Aros</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
+                    <a href="{{ route('jewelry.index', ['type' => 'earrings']) }}" class="hover:text-accents-600 transition-colors duration-150">Aros</a>
+                    <a href="{{ route('jewelry.index', ['type' => 'rings']) }}" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
+                    <a href="{{ route('jewelry.index', ['type' => 'bracelets']) }}" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
+                    <a href="{{ route('jewelry.index', ['type' => 'necklaces']) }}" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Joya Personalizada</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Todas las colecciones</a>
+                    <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="hover:text-accents-600 transition-colors duration-150">Todas las colecciones</a>
                 </div>
 
                 <div class="flex flex-col text-start order-3 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">

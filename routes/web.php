@@ -53,8 +53,8 @@ Route::post('', [LogoutController::class, 'logout'])->name('user.logout');
 //
 
 //Productos
-Route::get('/joyas/{type?}', [UserProdController::class, 'index'])->name('joyas.index');
-Route::get('/joyas/{id}', [UserProdController::class, 'show'])->name('joyas.show');
+Route::get('/jewelry/{type?}', [UserProdController::class, 'index'])->name('jewelry.index');
+Route::get('/jewelry/{id}', [UserProdController::class, 'show'])->name('jewelry.show');
 //
 
 //Carrito

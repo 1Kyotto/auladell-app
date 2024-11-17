@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Products\Product;
 use App\Models\Materials\Material;
+use App\Models\Customizations\CustomizationHierarchy;
+use App\Models\Customizations\CustomizationSelection;
 
 class Customization extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'additional_cost'];
+    protected $fillable = ['name', 'description'];
 
     public function products()
     {
@@ -27,5 +29,10 @@ class Customization extends Model
     public function customizationSelections()
     {
         return $this->hasMany(CustomizationSelection::class);
+    }
+
+    public function customizationHierarchies()
+    {
+        return $this->hasMany(CustomizationHierarchy::class);
     }
 }

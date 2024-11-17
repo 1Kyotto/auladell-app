@@ -21,7 +21,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 540000, // 9 gramos de oro (~58,000 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -32,7 +32,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 63000, // 90 gramos de plata (~700 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -43,7 +43,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 330000, // 11 gramos de platino (~30,000 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -54,7 +54,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 6000, // 60 gramos de acero (~100 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -65,7 +65,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 89870, // 10 gramos de rodio (~8,987 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -76,7 +76,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 576000, // 9.5 gramos de oro blanco (~60,000 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -87,7 +87,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 8000, // 40 gramos de cobre (~200 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -98,7 +98,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 120000, // 70 gramos de plata + oro (~1000 CLP/gramo en total)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -109,7 +109,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 36000, // 9 gramos de titanio (~4,000 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -120,7 +120,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 12000, // 40 gramos de bronce (~300 CLP/gramo)
             'category' => 'Aros',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);        
@@ -133,7 +133,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 348000, // 6 gramos de oro (~58,000 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -144,7 +144,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 28000, // 40 gramos de plata (~700 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -155,7 +155,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 270000, // 9 gramos de platino (~30,000 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -166,7 +166,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 8000, // 80 gramos de acero (~100 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -177,7 +177,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 59870, // 6.5 gramos de rodio (~8,987 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -188,7 +188,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 450000, // 7.5 gramos de oro blanco (~60,000 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -199,7 +199,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 4000, // 20 gramos de cobre (~200 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -210,7 +210,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 85000, // 65 gramos de plata + oro (~1,300 CLP/gramo en total)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -221,7 +221,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 24000, // 6 gramos de titanio (~4,000 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -232,7 +232,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 6000, // 20 gramos de bronce (~300 CLP/gramo)
             'category' => 'Anillos',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);        
@@ -245,7 +245,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 870000, // 15 gramos de oro (~58,000 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -256,7 +256,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 105000, // 150 gramos de plata (~700 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -267,7 +267,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 600000, // 20 gramos de platino (~30,000 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -278,7 +278,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 15000, // 150 gramos de acero (~100 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -289,7 +289,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 179740, // 20 gramos de rodio (~8,987 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -300,7 +300,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 960000, // 16 gramos de oro blanco (~60,000 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -311,7 +311,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 12000, // 60 gramos de cobre (~200 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -322,7 +322,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 225000, // 150 gramos de plata + oro (~1500 CLP/gramo en total)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -333,7 +333,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 60000, // 15 gramos de titanio (~4,000 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -344,7 +344,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 15000, // 50 gramos de bronce (~300 CLP/gramo)
             'category' => 'Brazaletes',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);           
@@ -357,7 +357,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 1740000, // 30 gramos de oro (~58,000 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -368,7 +368,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 175000, // 250 gramos de plata (~700 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -379,7 +379,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 1050000, // 35 gramos de platino (~30,000 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -390,7 +390,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 20000, // 200 gramos de acero (~100 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -401,7 +401,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 269610, // 30 gramos de rodio (~8,987 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -412,7 +412,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 1920000, // 32 gramos de oro blanco (~60,000 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -423,7 +423,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 24000, // 120 gramos de cobre (~200 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -434,7 +434,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 330000, // 220 gramos de plata + oro (~1500 CLP/gramo en total)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -445,7 +445,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 96000, // 24 gramos de titanio (~4,000 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -456,7 +456,7 @@ class ProductsSeeder extends Seeder
             'base_price' => 30000, // 100 gramos de bronce (~300 CLP/gramo)
             'category' => 'Collares',
             'is_active' => true,
-            'image' => 'products/No-Image-Placeholder.png',
+            'image' => 'products/product-image.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);        

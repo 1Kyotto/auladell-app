@@ -156,6 +156,106 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        Material::create([
+            'name' => 'Esmeralda',
+            'description' => 'Piedra preciosa verde utilizada en joyería fina.',
+            'unit' => 'quilates',
+            'price_per_unit' => 650000, // Precio aproximado en CLP por quilate de esmeralda
+            'quantity_in_stock' => rand(10, 50),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Zafiro',
+            'description' => 'Piedra preciosa azul valorada en joyería y relojería.',
+            'unit' => 'quilates',
+            'price_per_unit' => 450000, // Precio aproximado en CLP por quilate de zafiro
+            'quantity_in_stock' => rand(10, 50),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Rubí',
+            'description' => 'Piedra preciosa roja, altamente valorada en joyería.',
+            'unit' => 'quilates',
+            'price_per_unit' => 500000, // Precio aproximado en CLP por quilate de rubí
+            'quantity_in_stock' => rand(10, 50),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Amatista',
+            'description' => 'Piedra semipreciosa púrpura, popular en joyería y decoración.',
+            'unit' => 'quilates',
+            'price_per_unit' => 15000, // Precio aproximado en CLP por quilate de amatista
+            'quantity_in_stock' => rand(100, 200),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Diamante',
+            'description' => 'Piedra preciosa extremadamente valiosa y resistente.',
+            'unit' => 'quilates',
+            'price_per_unit' => 2000000, // Precio aproximado en CLP por quilate de diamante
+            'quantity_in_stock' => rand(5, 20),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Material::create([
+            'name' => 'Ágata',
+            'description' => 'Piedra semipreciosa de múltiples colores, popular en joyería y decoración.',
+            'unit' => 'quilates',
+            'price_per_unit' => 5000, // Precio aproximado en CLP por quilate de ágata
+            'quantity_in_stock' => rand(100, 300),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Cuarzo Rosa',
+            'description' => 'Piedra semipreciosa rosa, simboliza el amor y la armonía.',
+            'unit' => 'quilates',
+            'price_per_unit' => 7000, // Precio aproximado en CLP por quilate de cuarzo rosa
+            'quantity_in_stock' => rand(100, 300),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Ojo de Tigre',
+            'description' => 'Piedra semipreciosa marrón y dorada, utilizada en amuletos de protección.',
+            'unit' => 'quilates',
+            'price_per_unit' => 6000, // Precio aproximado en CLP por quilate de ojo de tigre
+            'quantity_in_stock' => rand(100, 300),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Jade',
+            'description' => 'Piedra verde semipreciosa valorada por su durabilidad y belleza.',
+            'unit' => 'quilates',
+            'price_per_unit' => 12000, // Precio aproximado en CLP por quilate de jade
+            'quantity_in_stock' => rand(50, 150),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        
+        Material::create([
+            'name' => 'Ambar',
+            'description' => 'Resina fosilizada semipreciosa, conocida por su color cálido y su ligereza.',
+            'unit' => 'quilates',
+            'price_per_unit' => 8000, // Precio aproximado en CLP por quilate de ámbar
+            'quantity_in_stock' => rand(50, 150),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
         
     }
 }

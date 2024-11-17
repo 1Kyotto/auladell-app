@@ -74,7 +74,10 @@ export default {
       },
       backgroundImage: {
         'custom-background': "url('http://127.0.0.1:8000/images/background-image.jpg')", // Imagen de prueba
-      }
+      },
+      boxShadow: {
+        'right-only': '8px 0px 10px -5px rgba(0, 0, 0, 0.1)',
+      },
     },
   },
   plugins: [],

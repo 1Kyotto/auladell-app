@@ -11,6 +11,10 @@
     <div class="w-full mt-14 flex items-center justify-center xl:justify-start">
         <a href="" class="text-xl md:text-2xl">
             Personalizar
+            <svg class="w-[120px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+            </svg>
         </a>
     </div>
 </div>
@@ -47,7 +51,13 @@
             </div>
         </a>
     </div>
-    <a href="" class="sm:text-lg md:text-xl">Ver todo</a>
+    <a href="" class="sm:text-lg md:text-xl">
+        Ver todo
+        <svg class="w-[75px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+            <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+            <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+    </a>
 </div>
 {{--NUESTROS PRODUCTOS--}}
 
@@ -92,7 +102,13 @@
             <div class="pt-3">
                 <h4>Nom Prod</h4>
                 <h4>$$$</h4>
-                <a href="">Comprar</a>
+                <a href="">
+                    Comprar
+                    <svg class="w-[60px] h-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
         {{--REPETIR--}}
@@ -104,7 +120,13 @@
             <div class="pt-3">
                 <h4>Nom Prod</h4>
                 <h4>$$$</h4>
-                <a href="">Comprar</a>
+                <a href="">
+                    Comprar
+                    <svg class="w-[60px] h-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
 
@@ -115,7 +137,13 @@
             <div class="pt-3">
                 <h4>Nom Prod</h4>
                 <h4>$$$</h4>
-                <a href="">Comprar</a>
+                <a href="">
+                    Comprar
+                    <svg class="w-[60px] h-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
 
@@ -126,11 +154,23 @@
             <div class="pt-3">
                 <h4>Nom Prod</h4>
                 <h4>$$$</h4>
-                <a href="">Comprar</a>
+                <a href="">
+                    Comprar
+                    <svg class="w-[60px] h-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
-    <a href="" class="sm:text-lg md:text-xl">Ver todo</a>
+    <a href="" class="sm:text-lg md:text-xl">
+        Ver todo
+        <svg class="w-[75px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+            <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+            <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+    </a>
 </div>
 {{--MÁS VENDIDOS--}}
 
@@ -144,6 +184,10 @@
     <div class="w-full mt-14 flex items-center justify-center xl:justify-start">
         <a href="" class="text-xl md:text-2xl">
             Personalizar
+            <svg class="w-[120px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+                <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
+                <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
+            </svg>
         </a>
     </div>
 </div>
