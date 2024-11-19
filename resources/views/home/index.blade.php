@@ -21,39 +21,21 @@
 {{--MAIN--}}
 
 {{--NUESTROS PRODUCTOS--}}
-<div class="h-[60dvh] w-full flex flex-col justify-between py-6 items-center px-4 font-montserrat md:px-20 xl:px-28">
+<div class="h-[75dvh] w-full flex flex-col pt-5 items-center px-4 font-montserrat md:px-20 xl:px-28">
     <h2 class="font-cinzel sm:text-xl md:text-2xl xl:text-3xl">Nuestros productos</h2>
     <div class="w-full h-[70%] grid grid-cols-2 gap-2 xl:grid-cols-4 items-center">
-        {{--REPETIR--}}
-        <a href="" class="w-full h-full col-span-1 grid grid-cols-1 grid-rows-1 xl:h-[70%]">
-            <img src="" alt="" class="w-full h-full object-cover col-start-1 row-start-1">
-            <div class="col-start-1 row-start-1 flex items-center justify-center w-full h-full">
-                <p  class="">Aros</p>
-            </div>
-        </a>
-        {{--REPETIR--}}
-        <a href="" class="w-full h-full col-span-1 grid grid-cols-1 grid-rows-1 xl:h-[70%]">
-            <img src="" alt="" class="w-full h-full object-cover col-start-1 row-start-1">
-            <div class="col-start-1 row-start-1 flex items-center justify-center w-full h-full">
-                <p  class="">Anillos</p>
-            </div>
-        </a>
-        <a href="" class="w-full h-full col-span-1 grid grid-cols-1 grid-rows-1 xl:h-[70%]">
-            <img src="" alt="" class="w-full h-full object-cover col-start-1 row-start-1">
-            <div class="col-start-1 row-start-1 flex items-center justify-center w-full h-full">
-                <p  class="">Brazaletes</p>
-            </div>
-        </a>
-        <a href="" class="w-full h-full col-span-1 grid grid-cols-1 grid-rows-1 xl:h-[70%]">
-            <img src="" alt="" class="w-full h-full object-cover col-start-1 row-start-1">
-            <div class="col-start-1 row-start-1 flex items-center justify-center w-full h-full">
-                <p  class="">Collares</p>
-            </div>
-        </a>
+        @foreach ($products as $product)
+            <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-full col-span-1 grid grid-cols-1 grid-rows-1 xl:h-[70%] relative group overflow-hidden">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover col-start-1 row-start-1 transition-transform duration-500 ease-in-out group-hover:blur-[3px] z-10">
+                <div class="col-start-1 row-start-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                    <p class="text-cwhite-500 px-6 font-bold">{{ $product->name }}</p>
+                </div>
+            </a>
+        @endforeach
     </div>
-    <a href="" class="sm:text-lg md:text-xl">
+    <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="sm:text-lg md:text-xl pt-3">
         Ver todo
-        <svg class="w-[75px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
+        <svg class="w-[90px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
             <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
             <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
         </svg>

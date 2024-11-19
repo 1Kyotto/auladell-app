@@ -5,6 +5,7 @@ namespace App\Models\Products;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customizations\Customization;
+use App\Models\Customizations\CustomizationHierarchy;
 use App\Models\Carts\Cart;
 use App\Models\Carts\CartProduct;
 use App\Models\Materials\Material;
@@ -18,12 +19,12 @@ class Product extends Model
 
     public function customizations()
     {
-        return $this->belongsToMany(Customization::class);
+        return $this->belongsToMany(CustomizationHierarchy::class, 'customization_product', 'product_id', 'customization_hierarchy_id');
     }
 
     public function materials()
     {
-        return $this->belongsToMany(Material::class)->withPivot('quantity_needed');
+        return $this->belongsToMany(Material::class, 'material_product')->withPivot('quantity_needed');
         //->withTimestamps();
     }
 
@@ -36,6 +37,6 @@ class Product extends Model
     public function carts()
     {
         return $this->belongsToMany(Cart::class)->using(CartProduct::class)->withPivot('quantity', 'price');
-                    //->withTimestamps();
+        //->withTimestamps();
     }
 }

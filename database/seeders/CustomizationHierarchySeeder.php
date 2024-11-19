@@ -14,6 +14,7 @@ class CustomizationHierarchySeeder extends Seeder
 {
     public function run(): void
     {
+        /*
         $categories = Product::distinct()->pluck('category');
         $ores = Material::whereBetween('id', [1, 10])->get();
 
@@ -55,7 +56,7 @@ class CustomizationHierarchySeeder extends Seeder
             }
         }
         //Tipos de Gemstone
-        
+
         // Tipos de cortes
         $cutTypes = [
             ['name' => 'Redondo', 'description' => 'Corte redondo para piedras preciosas'],
@@ -82,7 +83,6 @@ class CustomizationHierarchySeeder extends Seeder
                 ]);
             }
         }
-
 
         //Tipos de montura
         $mountTypes = [
@@ -158,7 +158,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodStyle->id,
                     'additional_cost' => 0,
                 ]);
-            
+
                 // Asocia solo la categoría específica a la personalización en la tabla intermedia
                 $customization->categories()->create([
                     'category' => $category,
@@ -175,7 +175,7 @@ class CustomizationHierarchySeeder extends Seeder
             'parent_id' => null,
             'additional_cost' => 0,
         ])];
-        
+
         $aroClosureType =  [
             ['name' => 'Cierre de presión', 'description' => 'Cierre seguro que se sujeta al lóbulo de la oreja mediante presión, proporcionando comodidad y estabilidad.'],
             ['name' => 'Cierre de gancho', 'description' => 'Cierre sencillo que permite colocar y retirar los aros fácilmente, ideal para diseños colgantes.'],
@@ -183,7 +183,7 @@ class CustomizationHierarchySeeder extends Seeder
             ['name' => 'Cierre de rosca', 'description' => 'Cierre que se enrosca para una fijación extra segura, perfecto para aros que se usan durante largos periodos.'],
             ['name' => 'Cierre de mariposa', 'description' => 'Cierre clásico con forma de mariposa que ofrece un ajuste cómodo y seguro para aros pequeños y medianos.'],
         ];
-        
+
         $brazaleteClosureType =  [
             ['name' => 'Cierre de mosquetón', 'description' => 'Cierre de gancho con resorte que se sujeta de manera segura y es fácil de usar, ideal para brazaletes.'],
             ['name' => 'Cierre ajustable', 'description' => 'Cierre que permite ajustar el tamaño del brazalete según la medida de la muñeca, brindando flexibilidad.'],
@@ -199,7 +199,7 @@ class CustomizationHierarchySeeder extends Seeder
             ['name' => 'Cierre con broche', 'description' => 'Cierre de broche que ofrece un mecanismo sencillo y seguro, ideal para el uso diario.'],
             ['name' => 'Cierre de gancho', 'description' => 'Cierre en forma de gancho que asegura el brazalete de manera fácil y rápida.'],
         ];
-        
+
         foreach ($prodClosures as $prodClosure) {
             foreach ($aroClosureType as $closureType) {
                 $customization = CustomizationHierarchy::create([
@@ -209,7 +209,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodClosure->id,
                     'additional_cost' => 0,
                 ]);
-        
+
                 $customization->categories()->create([
                     'category' => 'Aros',
                 ]);
@@ -224,7 +224,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodClosure->id,
                     'additional_cost' => 0,
                 ]);
-        
+
                 $customization->categories()->create([
                     'category' => 'Brazaletes',
                 ]);
@@ -239,7 +239,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodClosure->id,
                     'additional_cost' => 0,
                 ]);
-        
+
                 $customization->categories()->create([
                     'category' => 'Collares',
                 ]);
@@ -275,7 +275,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodEngraving->id,
                     'additional_cost' => 0,
                 ]);
-                
+
                 // Asocia las categorías a la personalización en la tabla intermedia
                 foreach ($categories as $category) {
                     $customization->categories()->create([
@@ -329,7 +329,7 @@ class CustomizationHierarchySeeder extends Seeder
                         ]);
                     }
                 }
-                
+
                 // Asocia las categorías a la personalización en la tabla intermedia
                 foreach ($categories as $category) {
                     $customization->categories()->create([
@@ -366,7 +366,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodWidth->id,
                     'additional_cost' => 0,
                 ]);
-                
+
                 $customization->categories()->create([
                     'category' => $category,
                 ]);
@@ -397,7 +397,7 @@ class CustomizationHierarchySeeder extends Seeder
                     'parent_id' => $prodDesign->id,
                     'additional_cost' => 0,
                 ]);
-                
+
                 $customization->categories()->create([
                     'category' => $category,
                 ]);
@@ -407,8 +407,8 @@ class CustomizationHierarchySeeder extends Seeder
 
         //Tipo de Longitud
         $prodLengths = [CustomizationHierarchy::create([
-            'name' => 'Longitud de ',
-            'description' => 'Variedad de Diseños de cadena.',
+            'name' => 'Longitud de Cadena',
+            'description' => 'Variedad de Longitud de cadena.',
             'customization_id' => 9,
             'parent_id' => null,
             'additional_cost' => 0,
@@ -427,16 +427,16 @@ class CustomizationHierarchySeeder extends Seeder
                 $customization = CustomizationHierarchy::create([
                     'name' => $lengthType['name'],
                     'description' => $lengthType['description'],
-                    'customization_id' => 7,
+                    'customization_id' => 9,
                     'parent_id' => $prodLength->id,
                     'additional_cost' => 0,
                 ]);
-                
+
                 $customization->categories()->create([
                     'category' => $category,
                 ]);
             }
         }
-        //Tipo de Longitud
+        //Tipo de Longitud*/
     }
 }

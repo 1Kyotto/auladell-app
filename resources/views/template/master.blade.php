@@ -100,7 +100,7 @@
             <nav class="absolute inset-x-0 top-[80px] w-full bg-white h-0 overflow-hidden duration-300 transition-all xl:relative xl:h-auto xl:flex xl:top-0 xl:overflow-visible xl:order-2 xl:w-1/2 2xl:w-[33%]" id="navbar">
                 <ul class="block w-full mt-[80px] mr-auto mb-0 ml-auto text-center opacity-0 duration-500 xl:flex xl:w-full xl:justify-between xl:items-center xl:opacity-100 xl:mt-0 xl:mr-0 xl:ml-0">
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Personaliza</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="hover:text-accents-600 transition-colors duration-150">Todas las Joyas</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
                         <a href="{{ route('jewelry.index', ['type' => 'earrings']) }}" class="hover:text-accents-600 transition-colors duration-150">Aros</a>

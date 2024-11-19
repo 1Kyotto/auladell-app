@@ -14,12 +14,8 @@ return new class extends Migration
         Schema::create('customization_hierarchy', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->foreignId('parent_id')->nullable()->constrained('customization_hierarchy')->onDelete('set null');
             $table->unsignedBigInteger('customization_id');
             $table->decimal('additional_cost', 10, 2)->default(0);
-
-            $table->foreign('customization_id')->references('id')->on('customizations');
         });
     }
 

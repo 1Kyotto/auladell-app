@@ -12,14 +12,5 @@ class MaterialProduct extends Pivot
 
     protected $table = 'material_product';
     protected $fillable = ['material_id', 'product_id', 'quantity_needed'];
-
-    public function material()
-    {
-        return $this->belongsTo(Material::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    public $timestamps = false;
 }

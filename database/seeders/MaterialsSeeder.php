@@ -23,7 +23,7 @@ class MaterialsSeeder extends Seeder
 
             $metalKey = "CLP{$metal}";
             $priceInTroyOunce = $data['rates'][$metalKey] ?? null;
-            
+
             if ($priceInTroyOunce) {
                 $priceInGrams = $priceInTroyOunce / 31.1035;
                 return $priceInGrams;
@@ -56,7 +56,7 @@ class MaterialsSeeder extends Seeder
                 'quantity_in_stock' => rand(100, 500),
             ]);
         } */
-        
+
         Material::create([
             'name' => 'Oro',
             'description' => 'Metal precioso utilizado para joyería fina como anillos y collares.',
@@ -66,7 +66,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Plata Esterlina',
             'description' => 'Metal brillante y accesible utilizado para diversas joyas.',
@@ -76,7 +76,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Platino',
             'description' => 'Metal precioso conocido por su durabilidad y uso en joyería de lujo.',
@@ -86,7 +86,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Rodio',
             'description' => 'Metal raro utilizado para chapar joyas de lujo.',
@@ -96,7 +96,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Acero Inoxidable',
             'description' => 'Metal resistente y duradero usado en joyería moderna.',
@@ -106,7 +106,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Titanio',
             'description' => 'Metal ligero y resistente, utilizado en joyería moderna.',
@@ -116,7 +116,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Cobre',
             'description' => 'Material asequible utilizado en joyería artesanal.',
@@ -126,7 +126,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Paladio',
             'description' => 'Metal raro y ligero, ideal para joyas de alta gama.',
@@ -136,7 +136,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Bronce',
             'description' => 'Material accesible y duradero utilizado en joyería artesanal.',
@@ -146,7 +146,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Cuero',
             'description' => 'Material flexible utilizado en joyería informal y moderna.',
@@ -166,7 +166,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Zafiro',
             'description' => 'Piedra preciosa azul valorada en joyería y relojería.',
@@ -176,7 +176,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Rubí',
             'description' => 'Piedra preciosa roja, altamente valorada en joyería.',
@@ -186,7 +186,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Amatista',
             'description' => 'Piedra semipreciosa púrpura, popular en joyería y decoración.',
@@ -196,7 +196,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Diamante',
             'description' => 'Piedra preciosa extremadamente valiosa y resistente.',
@@ -216,7 +216,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Cuarzo Rosa',
             'description' => 'Piedra semipreciosa rosa, simboliza el amor y la armonía.',
@@ -226,7 +226,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Ojo de Tigre',
             'description' => 'Piedra semipreciosa marrón y dorada, utilizada en amuletos de protección.',
@@ -236,7 +236,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Jade',
             'description' => 'Piedra verde semipreciosa valorada por su durabilidad y belleza.',
@@ -246,7 +246,7 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
+
         Material::create([
             'name' => 'Ambar',
             'description' => 'Resina fosilizada semipreciosa, conocida por su color cálido y su ligereza.',
@@ -256,6 +256,5 @@ class MaterialsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        
     }
 }

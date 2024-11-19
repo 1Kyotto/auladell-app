@@ -6,36 +6,31 @@ use Illuminate\Database\Seeder;
 use App\Models\Products\Product;
 use App\Models\Customizations\Customization;
 use Illuminate\Support\Facades\DB;
+use App\Models\Customizations\CustomizationHierarchy;
 
 class CustomizationProductsSeeder extends Seeder
 {
     public function run(): void
     {
-        // Definir las personalizaciones por categoría
-        $categories = ['Aros', 'Anillos', 'Brazaletes', 'Collares'];
+        //Obtener todas las personalizaciones y sus categorías
+        $customizations = CustomizationHierarchy::with('categories')->get();
 
-        // Recorrer cada categoría
-        foreach ($categories as $category) {
-            // Obtener los productos de la categoría actual
-            $products = Product::where('category', $category)->pluck('id')->toArray();
+        //Iterar sobre cada producto en la base de datos
+        $products = Product::all();
 
-            // Eliminar duplicados de los productos (si aún es necesario)
-            $products = array_unique($products);
-
-            // Obtener las personalizaciones para esta categoría
-            $customizations = Customization::where('category', $category)->pluck('id')->toArray();
-
-            // Asignar las personalizaciones a cada producto de la categoría
-            foreach ($products as $productId) {
-                foreach ($customizations as $customizationId) {
-                    DB::table('customization_product')->insertOrIgnore([
-                        'product_id' => $productId,
-                        'customization_id' => $customizationId,
-                    ]);
+        foreach ($products as $product) {
+            foreach ($customizations as $customization) {
+                //Verificar si la personalización tiene una categoría que coincide con la del producto
+                foreach ($customization->categories as $category) {
+                    if ($category->category === $product->category) {
+                        //Insertar en la tabla pivot
+                        DB::table('customization_product')->insert([
+                            'product_id' => $product->id,
+                            'customization_hierarchy_id' => $customization->id,
+                        ]);
+                    }
                 }
             }
         }
-
-        $this->command->info('Personalizaciones asignadas correctamente a los productos.');
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="w-full h-full flex">
     {{--SIDEBAR--}}
-    <div class="h-[100dvh] w-[25%] flex flex-col font-cinzel text-black shadow-right-only sticky top-0 z-50">
+    <div class="h-[800px] w-[25%] flex flex-col font-cinzel text-black shadow-right-only sticky top-0 z-50">
         <div class="ml-8">
             <h4 class="mt-5 text-2xl">
                 Filtrar Y Ordenar
@@ -23,19 +23,13 @@
                 </button>
                 <ul class="dropdown-menu hidden pt-1 shadow-md w-[calc(100%-32px)]">
                     <li>
-                        <a href="" class="rounded-t bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Trending Now</a>
+                        <a class="cursor-pointer bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap filter-option" data-filter="new-products">Nuevos Productos</a>
                     </li>
                     <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Bestsellers</a>
+                        <a class="cursor-pointer bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap filter-option" data-filter="price-asc">Precio: Menor a Mayor</a>
                     </li>
                     <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Newest</a>
-                    </li>
-                    <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Price Low to High</a>
-                    </li>
-                    <li>
-                        <a href="" class="rounded-b bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Price High to Low</a>
+                        <a class="cursor-pointer rounded-b bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap filter-option" data-filter="price-desc">Precio: Mayor a Menor</a>
                     </li>
                 </ul>
             </div>
@@ -83,7 +77,7 @@
                     @foreach ($selectedMaterial as $material)
                     <li>
                         <label for="">
-                            <input type="checkbox">
+                            <input type="checkbox" class="material-checkbox" data-material="{{ $material->name }}">
                             <span>{{$material->name}}</span>
                         </label>
                     </li>
@@ -91,11 +85,11 @@
                 </ul>
             </div>
             {{--FILTRO MATERIALES--}}
-    
-            {{--FILTRO COLECCION--}}
+
+            {{--FILTRO GEMSTONES--}}
             <div class="my-6 relative text-xl">
                 <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
-                    Colección
+                    Incrustaciones
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
                         <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -106,75 +100,17 @@
                     </svg>
                 </button>
                 <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
+                    @foreach ($selectedGemstone as $gemstone)
                     <li>
                         <label for="">
-                            <input type="checkbox">
-                            <span>Aros</span>
+                            <input type="checkbox" class="gemstone-checkbox" data-gemstone="{{ $gemstone->name }}">
+                            <span>{{$gemstone->name}}</span>
                         </label>
                     </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Anillos</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Brazaletes</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Collares</span>
-                        </label>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
-            {{--FILTRO COLECCION--}}
-    
-            {{--FILTRO ACABADO--}}
-            <div class="my-6 relative text-xl">
-                <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
-                    Acabado
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
-                        <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-    
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="minus-icon h-5 w-5 hidden" fill="none">
-                        <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-                <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Aros</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Anillos</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Brazaletes</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Collares</span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            {{--FILTRO ACABADO--}}
+            {{--FILTRO GEMSTONES--}}
         </div>
     </div>
     {{--SIDEBAR--}}
@@ -183,7 +119,7 @@
     <div class="h-full w-[75%] p-5 flex flex-wrap products-container">
         @foreach ($products as $product)
         <div class="w-[30%] mr-7 mb-6">
-            <a href="" class="w-full h-[300px]">
+            <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-[300px] object-cover">
             </a>
             <h4 class="pt-3">{{$product->name}}</h4>
@@ -207,6 +143,8 @@
 <script>
     // Selecciona todos los botones con clase 'toggle-button'
     const toggleButtons = document.querySelectorAll('.toggle-button');
+    const filterOptions = document.querySelectorAll('.filter-option'); // Selecciona las opciones de filtro
+    const buttonText = document.getElementById('buttonText'); // Elemento donde se mostrará el texto seleccionado
 
     toggleButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -230,6 +168,21 @@
             plusIcon.classList.toggle('hidden');
             minusIcon.classList.toggle('hidden');
             dropdownMenu.classList.toggle('hidden');
+        });
+    });
+
+    // Escucha los clics en las opciones de filtro para actualizar el texto del botón y cerrar el dropdown
+    filterOptions.forEach(option => {
+        option.addEventListener('click', function (e) {
+            e.preventDefault();
+            buttonText.textContent = this.textContent; // Cambia el texto del botón al de la opción seleccionada
+
+            // Cierra el dropdown después de seleccionar la opción
+            const dropdownMenu = this.closest('.dropdown-menu');
+            dropdownMenu.classList.add('hidden');
+            const parentDiv = dropdownMenu.closest('.my-6');
+            parentDiv.querySelector('.plus-icon').classList.remove('hidden');
+            parentDiv.querySelector('.minus-icon').classList.add('hidden');
         });
     });
 </script>
@@ -257,66 +210,99 @@
 {{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const checkboxes = document.querySelectorAll('.category-checkbox');
-        const productsContainer = document.querySelector('.products-container');  // Asegúrate de tener una clase para el contenedor de productos
-        const allProducts = @json($products);  // Pasa todos los productos al frontend
+        const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+        const materialCheckboxes = document.querySelectorAll('.material-checkbox');
+        const gemstoneCheckboxes = document.querySelectorAll('.gemstone-checkbox');
+        const filterOptions = document.querySelectorAll('.filter-option');
+        const productsContainer = document.querySelector('.products-container');
+        const allProducts = @json($products);
+        let activeFilter = null;
 
-        checkboxes.forEach(checkbox => {
-            // Añadimos un listener a cada checkbox
-            checkbox.addEventListener('change', function() {
-                // Si el checkbox es seleccionado
-                if (this.checked) {
-                    // Desmarcamos todos los demás checkboxes
-                    checkboxes.forEach(otherCheckbox => {
-                        if (otherCheckbox !== this) {
-                            otherCheckbox.checked = false;
-                        }
-                    });
+        function allowOnlyOneSelection(checkboxes) {
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    if (this.checked) {
+                        checkboxes.forEach(otherCheckbox => {
+                            if (otherCheckbox !== this) {
+                                otherCheckbox.checked = false;
+                            }
+                        });
+                    }
+                    filterProducts(); // Llamar a la función de filtrado cuando se cambie la selección
+                });
+            });
+        }
 
-                    // Ahora, si este checkbox está marcado, podemos realizar el filtrado
-                    filterProducts();
-                } else {
-                    // Si se desmarca, no hacemos nada, solo se mantienen los productos previamente filtrados
-                    filterProducts();
-                }
+        allowOnlyOneSelection(categoryCheckboxes);
+        allowOnlyOneSelection(materialCheckboxes);
+        allowOnlyOneSelection(gemstoneCheckboxes);
+
+        // Evento para los filtros de la lista
+        filterOptions.forEach(option => {
+            option.addEventListener('click', function (e) {
+                e.preventDefault();
+                activeFilter = this.getAttribute('data-filter');
+                filterProducts();
             });
         });
 
-        // Función para mostrar productos según la categoría seleccionada
         function filterProducts() {
-            // Obtener todas las categorías seleccionadas
-            const selectedCategories = Array.from(checkboxes)
+            const selectedCategories = Array.from(categoryCheckboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.getAttribute('data-category'));
 
-            // Si no hay categorías seleccionadas, mostrar todos los productos
-            if (selectedCategories.length === 0) {
-                renderProducts(allProducts);  // Muestra todos los productos
-                return;  // No filtramos nada más
-            }
+            const selectedMaterials = Array.from(materialCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.getAttribute('data-material'));
 
-            // Filtrar los productos según las categorías seleccionadas
-            const filteredProducts = allProducts.filter(product => {
-                return selectedCategories.includes(product.category);
+            const selectedGemstones = Array.from(gemstoneCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.getAttribute('data-gemstone'));
+
+            let filteredProducts = allProducts;
+
+            // Filtrar por categorías, materiales e incrustaciones
+            filteredProducts = filteredProducts.filter(product => {
+                const productMaterials = product.materials.map(material => material.name);
+
+                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+                const materialMatch = selectedMaterials.length === 0 || selectedMaterials.some(material => productMaterials.includes(material));
+                const gemstoneMatch = selectedGemstones.length === 0 || selectedGemstones.some(gemstone => productMaterials.includes(gemstone));
+
+                return categoryMatch && materialMatch && gemstoneMatch;
             });
 
-            // Mostrar los productos filtrados
+            // Aplicar filtro adicional basado en la opción seleccionada
+            if (activeFilter === 'new-products') {
+                const currentDate = new Date();
+                filteredProducts = filteredProducts.filter(product => {
+                    const updatedAt = new Date(product.updated_at);
+                    return (currentDate - updatedAt) / (1000 * 60 * 60 * 24) <= 7; // Productos actualizados en los últimos 7 días
+                });
+                if (filteredProducts.length === 0) {
+                    filteredProducts = allProducts; // Mostrar todos los productos si no hay nuevos
+                }
+            } else if (activeFilter === 'price-asc') {
+                filteredProducts.sort((a, b) => a.base_price - b.base_price); // Ordenar por precio de menor a mayor
+            } else if (activeFilter === 'price-desc') {
+                filteredProducts.sort((a, b) => b.base_price - a.base_price); // Ordenar por precio de mayor a menor
+            }
+
             renderProducts(filteredProducts);
         }
 
-        // Función para renderizar los productos
         function renderProducts(products) {
-            productsContainer.innerHTML = '';  // Limpiar productos existentes
+            productsContainer.innerHTML = ''; // Limpiar productos existentes
 
             products.forEach(product => {
                 const productHtml = `
                     <div class="w-[30%] mr-7 mb-6">
-                        <a href="" class="w-full h-[300px]">
+                        <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
                             <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
                         </a>
                         <h4 class="pt-3">${product.name}</h4>
                         <span>CL$ ${new Intl.NumberFormat().format(product.base_price)}</span>
-                        <div class="">
+                        <div>
                             <button>Añadir al carro
                                 <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
                                     <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
@@ -330,12 +316,7 @@
             });
         }
 
-        // Escuchar cambios en los checkboxes de categoría
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', filterProducts);
-        });
-
-        // Inicializar el filtro en caso de que haya categorías pre-seleccionadas
+        // Inicializar el filtro en caso de que haya filtros pre-seleccionados
         filterProducts();
     });
 </script>
