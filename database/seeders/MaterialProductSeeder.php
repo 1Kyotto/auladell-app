@@ -89,7 +89,8 @@ class MaterialProductSeeder extends Seeder
                 ->join('materials', 'material_product.material_id', '=', 'materials.id')
                 ->sum(DB::raw('materials.price_per_unit * material_product.quantity_needed'));
 
-            $product->update(['base_price' => ($total + $costo_mano_obra) * 1.19]);
+            $product->update(['base_price' => ($total + $costo_mano_obra)]);
+            $product->update(['price' => $product->base_price * 1.19]);
         }
     }
 }
