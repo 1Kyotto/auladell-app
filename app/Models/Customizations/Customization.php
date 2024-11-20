@@ -17,7 +17,7 @@ class Customization extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'customization_product', 'customization_id', 'product_id');
     }
 
     public function materials()

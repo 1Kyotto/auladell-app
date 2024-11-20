@@ -8,7 +8,9 @@ use App\Models\Customizations\Customization;
 use App\Models\Customizations\CustomizationHierarchy;
 use App\Models\Carts\Cart;
 use App\Models\Carts\CartProduct;
+use App\Models\Materials\CustomizationMaterial;
 use App\Models\Materials\Material;
+use App\Models\Materials\MaterialProduct;
 use App\Models\Orders\Order;
 
 class Product extends Model
@@ -19,7 +21,7 @@ class Product extends Model
 
     public function customizations()
     {
-        return $this->belongsToMany(CustomizationHierarchy::class, 'customization_product', 'product_id', 'customization_hierarchy_id');
+        return $this->belongsToMany(Customization::class, 'customization_product', 'product_id', 'customization_id');
     }
 
     public function materials()
@@ -38,5 +40,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Cart::class)->using(CartProduct::class)->withPivot('quantity', 'price');
         //->withTimestamps();
+    }
+
+    public function customizationMaterials()
+    {
+        return $this->hasMany(CustomizationMaterial::class);
     }
 }

@@ -72,10 +72,7 @@ class UserProdController
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        $variations = Product::where('variation', $product->variation)
-            ->where('id', '!=', $product->id)->get();
-
-        return view('user-products.show', compact('product', 'variations'));
+        $product = Product::with('materials', 'customizations', 'customizationMaterials')->findOrFail($id);
+        return view('user-products.show', compact('product'));
     }
 }

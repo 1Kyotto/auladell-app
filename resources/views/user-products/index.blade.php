@@ -297,7 +297,7 @@
             products.forEach(product => {
                 const productHtml = `
                     <div class="w-[30%] mr-7 mb-6">
-                        <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
+                        <a href="/jewelry/product/${product.id}" class="w-full h-[300px]">
                             <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
                         </a>
                         <h4 class="pt-3">${product.name}</h4>

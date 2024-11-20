@@ -9,5 +9,12 @@ use Carbon\Carbon;
 
 class CustomizationsSeeder extends Seeder
 {
-    public function run(): void {}
+    public function run(): void
+    {
+        Customization::create([
+            'name' => 'Cambio de Material Base',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+    }
 }

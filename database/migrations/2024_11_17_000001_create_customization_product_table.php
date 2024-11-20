@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('customization_product', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('customization_hierarchy_id');
+            $table->unsignedBigInteger('customization_id');
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('customization_hierarchy_id')->references('id')->on('customization_hierarchy')->onDelete('cascade');
+            $table->foreign('customization_id')->references('id')->on('customizations')->onDelete('cascade');
         });
     }
 

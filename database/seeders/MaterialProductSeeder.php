@@ -18,28 +18,16 @@ class MaterialProductSeeder extends Seeder
         //Producto 1
         MaterialProduct::create([
             'product_id' => 1,
-            'material_id' => 1,
-            'quantity_needed' => 5,
-        ]);
-
-        MaterialProduct::create([
-            'product_id' => 1,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
+            'material_id' => 2,
+            'quantity_needed' => 15,
         ]);
         //Producto 1
 
         //Producto 2
         MaterialProduct::create([
             'product_id' => 2,
-            'material_id' => 1,
-            'quantity_needed' => 5,
-        ]);
-
-        MaterialProduct::create([
-            'product_id' => 2,
-            'material_id' => 11,
-            'quantity_needed' => 0.3,
+            'material_id' => 2,
+            'quantity_needed' => 7,
         ]);
         //Producto 2
 
@@ -47,13 +35,7 @@ class MaterialProductSeeder extends Seeder
         MaterialProduct::create([
             'product_id' => 3,
             'material_id' => 2,
-            'quantity_needed' => 4,
-        ]);
-
-        MaterialProduct::create([
-            'product_id' => 3,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
+            'quantity_needed' => 8,
         ]);
         //Producto 3
 
@@ -61,13 +43,7 @@ class MaterialProductSeeder extends Seeder
         MaterialProduct::create([
             'product_id' => 4,
             'material_id' => 2,
-            'quantity_needed' => 4,
-        ]);
-
-        MaterialProduct::create([
-            'product_id' => 4,
-            'material_id' => 11,
-            'quantity_needed' => 0.3,
+            'quantity_needed' => 12,
         ]);
         //Producto 4
 
@@ -75,116 +51,37 @@ class MaterialProductSeeder extends Seeder
         MaterialProduct::create([
             'product_id' => 5,
             'material_id' => 2,
-            'quantity_needed' => 6,
+            'quantity_needed' => 15,
         ]);
         //Producto 5
 
         //Producto 6
         MaterialProduct::create([
             'product_id' => 6,
-            'material_id' => 1,
-            'quantity_needed' => 5,
+            'material_id' => 2,
+            'quantity_needed' => 30,
         ]);
         //Producto 6
 
         //Producto 7
         MaterialProduct::create([
             'product_id' => 7,
-            'material_id' => 1,
-            'quantity_needed' => 8,
+            'material_id' => 2,
+            'quantity_needed' => 15,
         ]);
         //Producto 7
 
         //Producto 8
         MaterialProduct::create([
             'product_id' => 8,
-            'material_id' => 1,
-            'quantity_needed' => 8,
-        ]);
-
-        MaterialProduct::create([
-            'product_id' => 8,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
+            'material_id' => 2,
+            'quantity_needed' => 30,
         ]);
         //Producto 8
 
-        //Producto 9
-        MaterialProduct::create([
-            'product_id' => 9,
-            'material_id' => 2,
-            'quantity_needed' => 8,
-        ]);
-        //Producto 9
-
-        //Producto 10
-        MaterialProduct::create([
-            'product_id' => 10,
-            'material_id' => 2,
-            'quantity_needed' => 8,
-        ]);
-        MaterialProduct::create([
-            'product_id' => 10,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
-        ]);
-        //Producto 10
-
-        //Producto 11
-        MaterialProduct::create([
-            'product_id' => 11,
-            'material_id' => 2,
-            'quantity_needed' => 20,
-        ]);
-        MaterialProduct::create([
-            'product_id' => 11,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
-        ]);
-        //Producto 11
-
-        //Producto 12
-        MaterialProduct::create([
-            'product_id' => 12,
-            'material_id' => 2,
-            'quantity_needed' => 20,
-        ]);
-        MaterialProduct::create([
-            'product_id' => 12,
-            'material_id' => 11,
-            'quantity_needed' => 0.3,
-        ]);
-        //Producto 12
-
-        //Producto 13
-        MaterialProduct::create([
-            'product_id' => 13,
-            'material_id' => 1,
-            'quantity_needed' => 5,
-        ]);
-        MaterialProduct::create([
-            'product_id' => 13,
-            'material_id' => 15,
-            'quantity_needed' => 0.3,
-        ]);
-        //Producto 13
-
-        //Producto 14
-        MaterialProduct::create([
-            'product_id' => 14,
-            'material_id' => 1,
-            'quantity_needed' => 5,
-        ]);
-        MaterialProduct::create([
-            'product_id' => 14,
-            'material_id' => 11,
-            'quantity_needed' => 0.3,
-        ]);
-        //Producto 14
-
         $products = Product::all();
         $mano_obra = 2800;
-        $horas = [5, 6, 10, 12, 6, 6, 15, 25, 10, 20, 30, 35, 38, 40];
+        $horas = [3, 5, 3, 5, 4, 6, 6, 8];
         foreach ($products as $product) {
             $costo_mano_obra = $mano_obra * $horas[$product->id - 1];
 

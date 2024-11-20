@@ -15,7 +15,7 @@ return new class extends Migration
             $table->enum('category', ['Aros', 'Anillos', 'Brazaletes', 'Collares',]);
             $table->boolean('is_active')->default(true);
             $table->string('image')->nullable();
-            $table->string('variation');
+            $table->boolean('inlay')->default(false);
             $table->timestamps();
         });
     }

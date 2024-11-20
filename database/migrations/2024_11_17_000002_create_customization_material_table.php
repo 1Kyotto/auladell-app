@@ -10,12 +10,14 @@ return new class extends Migration
     {
         Schema::create('customization_material', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customization_hierarchy_id');
+            $table->unsignedBigInteger('customization_id');
             $table->unsignedBigInteger('material_id');
-            $table->decimal('quantity_needed', 8, 2);
+            $table->unsignedBigInteger('product_id');
+            $table->decimal('price_adjustment', 10, 2);
 
-            $table->foreign('customization_hierarchy_id')->references('id')->on('customization_hierarchy');
+            $table->foreign('customization_id')->references('id')->on('customizations');
             $table->foreign('material_id')->references('id')->on('materials');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
