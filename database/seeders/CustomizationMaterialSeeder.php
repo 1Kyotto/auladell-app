@@ -18,9 +18,6 @@ class CustomizationMaterialSeeder extends Seeder
     public function run(): void
     {
         $margin = 0.15; // Margen de ganancia del 20%
-        $mano_obra = 2800;
-        $iva = 1.19;
-        $horas = 0;
 
         $validMaterialIds = [1, 2, 3, 5, 6, 7, 9];
         $materials = Material::whereIn('id', $validMaterialIds)->get();
