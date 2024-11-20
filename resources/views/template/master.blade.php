@@ -131,7 +131,7 @@
                 {{--SEARCH--}}
 
                 {{--CARRITO--}}
-                <a href="{{ route('cart.index') }}" class="flex items-center">
+                <a href="{{route('cart.index')}}" class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
                         <path d="M3.87289 17.0194L2.66933 9.83981C2.48735 8.75428 2.39637 8.21152 2.68773 7.85576C2.9791 7.5 3.51461 7.5 4.58564 7.5H19.4144C20.4854 7.5 21.0209 7.5 21.3123 7.85576C21.6036 8.21152 21.5126 8.75428 21.3307 9.83981L20.1271 17.0194C19.7282 19.3991 19.5287 20.5889 18.7143 21.2945C17.9 22 16.726 22 14.3782 22H9.62182C7.27396 22 6.10003 22 5.28565 21.2945C4.47127 20.5889 4.27181 19.3991 3.87289 17.0194Z" stroke="currentColor" stroke-width="1.5" />
                         <path d="M17.5 7.5C17.5 4.46243 15.0376 2 12 2C8.96243 2 6.5 4.46243 6.5 7.5" stroke="currentColor" stroke-width="1.5" />
@@ -293,17 +293,19 @@
                 <div class="flex flex-col text-start order-4 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
                     <h4 class="pb-1 font-bold">Servicio al cliente</h4>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Preguntas frecuentes</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
+                    <a href="{{route('services.order-status')}}" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Cambios, devoluciones y garantía</a>
                 </div>
 
                 <div class="order-1 py-6 w-[70%] md:py-8 xl:w-fit xl:py-0 xl:order-5">
                     <h4 class="pb-1 font-bold">Contacto</h4>
                     <div class="flex gap-6 pb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
-                            <path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            <path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                        </svg>
+                        <a href="{{route('services.contact-us')}}" class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
+                                <path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                <path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                            </svg>
+                        </a>
                         <p>contacto@auladelljoyas.cl</p>
                     </div>
                     <div class="flex gap-6">

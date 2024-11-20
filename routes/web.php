@@ -11,9 +11,13 @@ use App\Http\Controllers\Users\RegisterController;
 use App\Http\Controllers\Users\ForgotPasswordController;
 use App\Http\Controllers\Users\ResetPasswordController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Cart\PasarelasController;
+use App\Http\Controllers\Cart\ConfirmadoController;
+use App\Http\Controllers\Services\ServicesController;
+use App\Http\Controllers\Services\PaymentsController;
+use App\Http\Controllers\Services\OrderController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
 
 //Admin
 Route::middleware(['auth', \App\Http\Middleware\AuthAdmin::class])->group(function () {
@@ -57,6 +61,14 @@ Route::get('/jewelry/{type?}', [UserProdController::class, 'index'])->name('jewe
 Route::get('/jewelry/product/{id}', [UserProdController::class, 'show'])->name('jewelry.show');
 //
 
+//Servicios
+Route::get('/contact-us',[ServicesController::class, 'contactUs'])->name('services.contact-us');
+Route::get('/order-status',[OrderController::class, 'orderStatus'])->name('services.order-status');
+Route::get('/payment_summary',[PaymentsController::class,'index'])->name('services.payment_summary');
+//
+
 //Carrito
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart/confirmado',[ConfirmadoController::class, 'index'])->name('cart.confirmado');
+Route::get('/cart/confirmar-compra',[PasarelasController::class, 'index'])->name('cart.pasarela');
 //
