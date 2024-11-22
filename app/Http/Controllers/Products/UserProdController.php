@@ -75,4 +75,8 @@ class UserProdController
         $product = Product::with('materials', 'customizations', 'customizationMaterials')->findOrFail($id);
         return view('user-products.show', compact('product'));
     }
+
+    public function customization(){
+        return view('user-products.personalization');
+    }
 }

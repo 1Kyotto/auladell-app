@@ -65,6 +65,7 @@ Route::get('/jewelry/product/{id}', [UserProdController::class, 'show'])->name('
 Route::get('/contact-us',[ServicesController::class, 'contactUs'])->name('services.contact-us');
 Route::get('/order-status',[OrderController::class, 'orderStatus'])->name('services.order-status');
 Route::get('/payment_summary',[PaymentsController::class,'index'])->name('services.payment_summary');
+Route::get('/personalization',[UserProdController::class,'customization'])->name('user-products.personalization');
 //
 
 //Carrito
