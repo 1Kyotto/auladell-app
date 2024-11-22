@@ -1,9 +1,9 @@
 @extends('template.master')
 
 @section('content')
-<div class="col-span-6 text-center py-5 border-y border-black bg-cyan-200 text-3xl"> Contactanos! </div>
-<div class="col-span-6 grid grid-cols-2 bg-teal-600">
-    <div class="col-span-1 grid grid-rows-2 bg-red-400">
+<div class="col-span-6 text-center py-5 border-y border-black bg-sec-700 text-3xl text-white"> Contactanos! </div>
+<div class="col-span-6 grid grid-cols-2 bg-gradient-to-bl from-slate-400 via-white to-slate-400">
+    <div class="col-span-1 grid grid-rows-2 bg-transparent">
         <div class="row-span-1 px-10">
             <p class="text-2xl pb-7 pt-8">Ingrese sus datos y comentario para contactar!</p>
             <div class="grid grid-cols-2 gap-6 mb-6 pt-4">
