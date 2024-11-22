@@ -1,8 +1,8 @@
 @extends('template.master')
 
 @section('content')
-<div class="main col-span-6 grid grid-cols-9 bg-white h-screen">
-	<div class="col-span-7 col-start-2 grid grid-cols-7 bg-[#87A196] h-full">
+<div class="main col-span-6 grid grid-cols-9 bg-gradient-to-bl from-sec-900 via-sec-800 to-sec-900 h-screen">
+	<div class="col-span-7 col-start-2 grid grid-cols-7 bg-transparent h-full">
 		<div class="col-span-4 overflow-y-auto bg-white mx-3 max-h-screen">
 			{{--TextoEjemplo--}}
 			<div class="py-1 grid grid-cols-8">
@@ -116,14 +116,14 @@
 			</div>
 		</div>
 
-		<div class="col-span-3 grid grid-rows-5 bg-[#87A196] pr-3">
+		<div class="col-span-3 grid grid-rows-5 bg-gradient-to-bl from-yellow-500 via-white to-yellow-400 px-3">
 			<div class="row-span-1 flex items-center justify-center">
 				<h2 class="text-4xl text-center">Continuar con la compra.</h2>
 			</div>
 			{{--Card de datos--}}
 			<div class="row-span-3 row-start-2">
 				<div class="w-full bg-white border border-black 
-				rounded-lg shadow  dark:border-gray-700">
+					rounded-lg shadow  dark:border-gray-700 ">
 					<div class="flex justify-center items-center p-2 text-2xl">
 						Precio total del carrito
 						<svg xmlns="http://www.w3.org/2000/svg" class="text-black ml-2 mt-1" viewBox="0 0 24 24" width="24" height="24" color="#ffffff" fill="none">

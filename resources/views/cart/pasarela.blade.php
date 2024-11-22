@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="col-span-6 grid grid-cols-5 grid-rows-1 h-screen bg-transparent">
-    <div class="col-span-3 grid grid-cols-6 grid-rows-3 bg-red-500">
+    <div class="col-span-3 grid grid-cols-6 grid-rows-3 bg-gradient-to-bl from-slate-400 via-white to-slate-400">
         <div class="col-span-4 col-start-2 row-span-3">
 
             <div class="p-5">
 				<div class="flex-col items-center h-auto bg-white border border-gray-200 shadow 
-                md:flex-row rounded-xl dark:border-gray-700 dark:bg-gray-800 w-full text-white">
+                md:flex-row rounded-xl dark:border-gray-700 dark:bg-gray-600 w-full text-white">
 				 	<div class="pt-5 grid grid-cols-3">
                         <div class="grid-span-1 flex justify-center items-center">Logo</div>
 						<div class="grid-span-1 flex justify-center items-center">
@@ -61,12 +61,12 @@
         </div>
     </div>
 
-    <div class="col-span-2 grid grid-cols-1 grid-rows-3 bg-green-500">
+    <div class="col-span-2 grid grid-cols-1 grid-rows-3 bg-gradient-to-bl from-white via-slate-400 to-white">
         <div class="col-span-1 col-start-1 row-span-3">
 
             <div class="p-5">
 				<div class="flex-col items-center h-auto bg-white border border-gray-200 shadow 
-                md:flex-row rounded-xl dark:border-gray-700 dark:bg-gray-800 w-full text-white">
+                md:flex-row rounded-xl dark:border-gray-700 dark:bg-gray-600 w-full text-white">
 				 	<div class="pt-5">
 						<div class="grid-span-2 flex justify-center items-center">
                             <img src="{{asset('images/gato1.jpg')}}" class="border-2">

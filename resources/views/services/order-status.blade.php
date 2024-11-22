@@ -1,8 +1,8 @@
 @extends('template.master')
 
 @section('content')
-<div class="col-span-6 grid grid-cols-8 grid-rows-1 h-screen bg-red-600">
-    <div class="col-start-3 col-end-7 bg-orange-400">
+<div class="col-span-6 grid grid-cols-8 grid-rows-1 h-screen bg-gradient-to-bl from-sec-900 via-sec-700 to-sec-900">
+    <div class="col-start-3 col-end-7 bg-slate-100 shadow-right-only">
         <div class="text-3xl pt-10 text-center">Formulario estado de la orden</div>
         <hr class="mx-auto max-w-sm border-black">
         <br>
