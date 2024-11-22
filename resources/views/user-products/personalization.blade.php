@@ -8,7 +8,7 @@
             <span class="text-2xl">Rellenar datos para revisar el pedido y ver su posible producción.</span>
         </div>
         <div class="text-center col-span-1 row-span-2">
-            <hr class=" border-black pt-4">
+            <hr class="border-black pt-4">
             <div class="grid grid-cols-2 gap-6 mb-6">
                 <div class="py-2">
                     <label for="first_name" class="block mb-2 text-md font-medium text-black">Nombre</label>

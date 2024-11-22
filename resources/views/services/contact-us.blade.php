@@ -9,33 +9,33 @@
             <div class="grid grid-cols-2 gap-6 mb-6 pt-4">
                 <div class="py-2">
                     <label for="first_name" class="block mb-2 text-md font-medium text-black">Nombre</label>
-                    <input type="text" id="first_name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg 
+                    <input type="text" id="first_name" class="bg-white border border-gray-300 text-black text-sm rounded-lg 
                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Juan" required />
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Juan" required />
                 </div>
                 <div class="py-2">
                     <label for="last_name" class="block mb-2 text-md font-medium text-black">Apellido(s)</label>
-                    <input type="text" id="last_name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg 
+                    <input type="text" id="last_name" class="bg-white border border-gray-300 text-black text-sm rounded-lg 
                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Perez" required />
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Perez" required />
                 </div>
                 <div class="py-2">
                     <label for="company" class="block mb-2 text-md font-medium text-black">Ciudad</label>
-                    <input type="text" id="company" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg 
+                    <input type="text" id="company" class="bg-white border border-gray-300 text-black text-sm rounded-lg 
                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Viña del Mar" required />
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Viña del Mar" required />
                 </div>  
                 <div class="py-2">
                     <label for="phone" class="block mb-2 text-md font-medium text-black">Numero de telefono</label>
-                    <input type="tel" id="phone" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg 
+                    <input type="tel" id="phone" class="bg-white border border-gray-300 text-black text-sm rounded-lg 
                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400
-                     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="+56 9 1234 5678" required />
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="+56 9 1234 5678" required />
                 </div>
                 <div class="col-span-2">
                     <label for="email" class="block mb-2 text-md font-medium text-black">Correo electrónico</label>
                     <input type="email" id="email" class="bg-white border border-gray-300 text-black text-sm rounded-lg 
                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 
-                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="usuario1@gmail.com" required />
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="usuario1@gmail.com" required />
                 </div> 
             </div>
         </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="row-span-1">
                     {{--Parte donde iran botones--}}
-                    <button type="button" class="px-5 py-3 text-md font-medium text-white inline-flex items-center bg-blue-700 
+                    <a href="{{route('services.contact-us')}}" type="button" class="px-5 py-3 text-md font-medium text-white inline-flex items-center bg-blue-700 
                     hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 
                     dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="w-5 h-4 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
@@ -58,9 +58,17 @@
                         <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                         </svg>
                         Enviar
-                    </button>
+                    </a>
+                    <a href="{{route('home.index')}}" type="button" class=" px-5 py-3 text-md font-medium text-white inline-flex items-center bg-green-700 
+                hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-green-300 rounded-lg text-center dark:bg-green-600 
+                dark:hover:bg-green-700 dark:focus:ring-green-800">
+                <svg class="w-5 h-4 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 15 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                </svg>
+                    Volver al Menú
+                </a>
                 </div>
-                <span class="text-2xl justify-center">
+                <span class="text-xl justify-center">
                     La información y comentarios enviados por el usuario pasaran a verificación por parte de la 
                     administracion de la página para aceptar o denegar su solicitud, muchas gracias de antemano!
                 </span>
@@ -69,67 +77,19 @@
     </div>
     <div class="col-span-1 grid grid-rows-4">
         <div class=" row-span-1 grid justify-center items-center">
-            <div class="text-xl pt-5">Informacion para contactar a la pagina...</div>
-            <div class="text-sm">Numero: +56901234567</div>
-            <div class="text-md">Zona: Los Pinos - Quilpué</div>
+            <div class="text-center text-xl pt-5">Informacion para contactar la pagina...</div>
+            <div class="text-center text-sm">Numero: +569XXXXXXXX</div>
+            <div class="text-center text-xl">Los Pinos - QUILPUÉ</div>
         </div>
-        <div class=" row-span-3 pb-20 pt-2 px-5">
-            <div class=" bg-white border border-black dark:bg-gray-800 rounded h-full">
-                <img class="rounded h-full w-full" src="{{asset('images/thomas-y-percy.jpg')}}" alt="" />
+        <div class="row-span-3 pb-20 pt-2 pr-5">
+            <div class=" bg-white border border-black rounded h-full">
+                {{--<img class="rounded h-full w-full" src="{{asset('images/thomas-y-percy.jpg')}}" alt="" />--}}
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d18913.531056769534!2d-71.42455903500422!3d-33.07037765402203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2scl!4v1732314787336!5m2!1ses-419!2scl"
+                 class="rounded" width="910" height="560" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
 
-
-    {{--
-    <div class="grid grid-cols-1">
-        <div class="col-span-1"></div>
-        <div class="col-span-1"></div>
-        <div class="col-span-1">
-            <h2 class="text-3xl">
-                <br>Lorem ipsum sample text
-            </h2>
-        </div>
-    </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-3 text-center">
-        <p class="col-span-3">parrafo 1 de datos</p>
-        <p class="col-span-3">parrafo 2 de datos</p>
-        <p class="col-span-3">parrafo 3 de datos</p>
-        <p class="col-span-3">parrafo para links</p>
-    </div>
-    
-    
-    <div class="grid grid-cols-3">
-        <div class="col-span-1"></div>
-        <div class="col-span-1">
-            <form class="max-w-sm mx-auto">
-                <div class="mb-2">
-                    <input type="text" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tu nombre">
-                </div>
-                <div class="mb-2">
-                    <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tu email" required />
-                </div>
-                <div class="mb-2">
-                    <input type="text" id="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Telefono (opcional)" />
-                </div>
-                <div class="mb-2 flex items-start">
-                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 
-                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Dejanos un mensaje"></textarea>
-                </div>
-                <div class="mb-2">
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
-                    text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enviar</button>
-                </div>
-                
-            </form>
-        </div>
-        <div class="col-span-1"></div>
-    </div>
-    --}}
 
 </div>
 @endsection
