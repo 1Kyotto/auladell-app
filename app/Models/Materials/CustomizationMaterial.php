@@ -13,7 +13,7 @@ class CustomizationMaterial extends Pivot
     use HasFactory;
 
     protected $table = 'customization_material';
-    protected $fillable = ['product_id', 'customization_id', 'material_id', 'price_adjustment'];
+    protected $fillable = ['customization_id', 'material_id', 'product_id', 'quantity_needed', 'price_adjustment'];
     public $timestamps = false;
 
     public function customization()

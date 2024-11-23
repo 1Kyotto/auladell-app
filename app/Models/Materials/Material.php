@@ -19,11 +19,6 @@ class Material extends Model
         return $this->belongsToMany(Product::class, 'material_product')->withPivot('quantity_needed');
     }
 
-    public function customizations()
-    {
-        return $this->belongsToMany(CustomizationHierarchy::class, 'customization_product', 'product_id', 'customization_hierarchy_id');
-    }
-
     public function inventoryChanges()
     {
         return $this->hasMany(Inventory::class);

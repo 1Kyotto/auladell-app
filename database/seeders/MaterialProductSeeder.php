@@ -80,8 +80,9 @@ class MaterialProductSeeder extends Seeder
         //Producto 8
 
         $products = Product::all();
-        $mano_obra = 2800;
+        $mano_obra = 10000;
         $horas = [3, 5, 3, 5, 4, 6, 6, 8];
+
         foreach ($products as $product) {
             $costo_mano_obra = $mano_obra * $horas[$product->id - 1];
 
@@ -90,7 +91,6 @@ class MaterialProductSeeder extends Seeder
                 ->sum(DB::raw('materials.price_per_unit * material_product.quantity_needed'));
 
             $product->update(['base_price' => ($total + $costo_mano_obra)]);
-            $product->update(['price' => $product->base_price * 1.19]);
         }
     }
 }

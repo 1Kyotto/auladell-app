@@ -18,7 +18,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Northern Star Stud Earrings',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Aros',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -30,7 +29,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Teardrop Dangle Earrings',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Aros',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -44,7 +42,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Sloane Ring',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Anillos',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -56,7 +53,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Laney Ring',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Anillos',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -70,7 +66,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Ivy Name Paperclip Chain Bracelet',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Brazaletes',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -82,7 +77,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'The Showstopper Link',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Brazaletes',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -96,7 +90,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Engraved Northern Star Necklace',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Collares',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
@@ -108,7 +101,6 @@ class ProductsSeeder extends Seeder
         Product::create([
             'name' => 'Aria Mirror Chain Necklace',
             'base_price' => 0,
-            'price' => 0,
             'category' => 'Collares',
             'is_active' => true,
             'image' => 'products/product-image.jpg',

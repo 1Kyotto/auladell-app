@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
             ProductsSeeder::class,
             MaterialProductSeeder::class,
             CustomizationsSeeder::class,
-            CustomizationMaterialSeeder::class,
             CustomizationProductsSeeder::class,
+            CustomizationOptionSeeder::class,
+            CustomizationMaterialSeeder::class,
             //CustomizationHierarchySeeder::class,
         ]);
     }

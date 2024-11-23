@@ -11,11 +11,12 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->enum('payment_method',['Credit','Debit','Transfer']);
+            $table->enum('payment_method', ['Credit', 'Debit', 'Transfer']);
             $table->decimal('total_price');
-            $table->enum('payment_status',['Confirmed','Cancelled','In Transaction','Failed']);
+            $table->decimal('net_price');
+            $table->enum('payment_status', ['Confirmed', 'Cancelled', 'In Transaction', 'Failed']);
             $table->timestamps();
-            
+
             $table->foreign('order_id')->references('id')->on('orders');
         });
     }
