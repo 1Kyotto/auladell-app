@@ -16,7 +16,7 @@
             <div class="pt-10">
                 <div class="flex items-start justify-between pb-5 border-b border-[#CED4E0]">
                     {{--PRECIO ACTUAL--}}
-                    <span class="text-xl font-semibold font-cinzel">Precio: CL$ <span class="base-price">{{ number_format(($product->base_price), 0) }}</span></span>
+                    <span class="text-xl font-semibold font-cinzel">Precio: CL$ <span class="">{{ number_format($totalPrice, 0) }}</span></span>
                     {{--PRECIO ACTUAL--}}
                     <div class="cursor-pointer w-20 h-9 bg-[#c8e3de] border border-[#006c55] rounded-xl flex items-center justify-between font-cinzel text-lg font-semibold px-2">
                         <div class="h-full w-5 flex items-center justify-start" onclick="decreaseValue()">
@@ -56,7 +56,74 @@
                             <h3 class="text-sm font-semibold font-montserrat">
                                 Longitud del {{ $product->category === 'Brazaletes' ? 'Brazalete' : 'Collar' }}:
                             </h3>
-                            <span class="cursor-pointer underline text-sm text-[#808080] font-montserrat font-semibold">Guía de Tallas</span>
+                            <button id="openModal" class="underline text-sm text-[#808080] font-montserrat font-semibold">Guía de Tallas</button>
+                            @if ($product->category === 'Brazaletes')
+                            {{--MODAL BRAZALETE--}}
+                            <div id="myModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+                                <div class="w-[500px] h-[600px] bg-white rounded-lg shadow-lg p-6">
+                                    <div class="flex justify-between items-center border-b pb-3">
+                                        <h2 class="text-xl font-cinzel font-semibold">Guía de tallas de Brazaletes</h2>
+                                        <button id="closeModal" class="text-gray-500 hover:text-gray-800">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="mt-5 flex flex-col justify-center items-center">
+                                        <div class="w-[400px] flex flex-col items-center justify-between mb-5">
+                                            <p class="font-montserrat text-sm font-semibold">Para saber tu talla, coloca una cinta métrica ajustada alrededor de tu muñeca, añade <span class="font-bold">1 cm</span> más a la medida. Y ya está.</p>
+                                            <div class="flex w-full justify-between mt-6">
+                                                <div class="">
+                                                    <div class="font-cinzel font-bold">Medida de muñeca</div>
+                                                    <div class="font-montserrat font-semibold">
+                                                        <ul>
+                                                            <li>14 cm</li>
+                                                            <li>19 cm</li>
+                                                            <li>24 cm</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <div class="font-cinzel font-bold">Talla de brazalete</div>
+                                                    <div class="font-montserrat font-semibold">
+                                                        <ul>
+                                                            <li>15 cm</li>
+                                                            <li>20 cm</li>
+                                                            <li>25 cm</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="w-full font-cinzel mb-5 font-bold text-sm">¿Necesitas una cadena más larga de las que ofrecemos?</h4>
+                                        <p class="w-full font-montserrat text-md">
+                                            Si deseas una cadena más larga de la que ofrecemos para este brazalete, te recomendamos ponerte en contacto con nosotros. Estaremos encantados de ayudarte a personalizarlo según tus necesidades. Nuestro equipo estará disponible para ofrecerte opciones adicionales y garantizar que obtengas el producto perfecto.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--MODAL BRAZALETE--}}
+                            @endif
+
+                            @if ($product->category === 'Collares')
+                            {{--MODAL COLLAR--}}
+                            <div id="myModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+                                <div class="w-[500px] h-[600px] bg-white rounded-lg shadow-lg p-6 overflow-y-scroll">
+                                    <div class="flex justify-between items-center border-b pb-3">
+                                        <h2 class="text-xl font-cinzel font-semibold">Guía de tallas de Collares</h2>
+                                        <button id="closeModal" class="text-gray-500 hover:text-gray-800">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="mt-4 flex flex-col justify-center items-center">
+                                        <img class="w-[400px] h-[500px]" src="{{ asset('images/necklace-size-guide.jpg') }}" alt="">
+                                        <h4 class="w-full font-cinzel mb-5 font-bold text-sm">¿Necesitas una cadena más larga de las que ofrecemos?</h4>
+                                        <p class="w-full font-montserrat text-md">
+                                            Si deseas una cadena más larga de la que ofrecemos para este collar, te recomendamos ponerte en contacto con nosotros. Estaremos encantados de ayudarte a personalizarlo según tus necesidades. Nuestro equipo estará disponible para ofrecerte opciones adicionales y garantizar que obtengas el producto perfecto.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--MODAL COLLAR--}}
+                            @endif
                         </div>
                         {{--DROPDOWN--}}
                         <div class="mt-3 relative text-md">
@@ -86,7 +153,28 @@
                             <h3 class="text-sm font-semibold font-montserrat">
                                 Talla del anillo
                             </h3>
-                            <span class="cursor-pointer underline text-sm text-[#808080] font-montserrat font-semibold">Guía de Tallas</span>
+                            <button id="openModal" class="underline text-sm text-[#808080] font-montserrat font-semibold">Guía de Tallas</button>
+                            {{--MODAL ANILLO--}}
+                            <div id="myModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+                                <div class="w-[600px] h-[700px] bg-white rounded-lg shadow-lg p-6 overflow-y-scroll">
+                                    <div class="flex justify-between items-center border-b pb-3">
+                                        <h2 class="text-xl font-cinzel font-semibold">Guía de tallas de Anillos</h2>
+                                        <button id="closeModal" class="text-gray-500 hover:text-gray-800">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="mt-4 flex flex-col justify-center items-center">
+                                        <div class="flex w-full justify-center items-center mb-4">
+                                            <img class="w-full h-[420px]" src="{{ asset('images/talla-de-anillo.jpeg') }}" alt="">
+                                        </div>
+                                        <h4 class="w-full font-cinzel mb-5 font-bold text-sm">¿Necesitas un anillo con una talla distinta de las que ofrecemos?</h4>
+                                        <p class="w-full font-montserrat text-md">
+                                            Si deseas un anillo con un talla distintas a las que ofrecemos, te recomendamos ponerte en contacto con nosotros. Estaremos encantados de ayudarte a personalizarlo según tus necesidades. Nuestro equipo estará disponible para ofrecerte opciones adicionales y garantizar que obtengas el producto perfecto.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--MODAL ANILLO--}}
                         </div>
                         {{--DROPDOWN--}}
                         <div class="mt-3 relative text-md">
@@ -98,11 +186,13 @@
                                     <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </button>
-                            <ul class="dropdown-menu hidden border-x border-b border-[#74777e] w-full">
-                                @foreach ($sizeOptions as $sizeOption)
-                                    <li class="cursor-pointer px-4 py-2 hover:bg-[#d8dadf]">{{ $sizeOption->option_name }}</li>
-                                @endforeach
-                            </ul>
+                            <div class="dropdown-menu list-none hidden border-x border-b border-[#74777e] w-full">
+                                <div class="flex flex-wrap items-center justify-center">
+                                    @foreach ($sizeOptions as $sizeOption)
+                                        <li class="h-10 w-10 flex items-center justify-center cursor-pointer hover:bg-[#d8dadf]">{{ $sizeOption->option_name }}</li>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                         {{--DROPDOWN--}}
                     </div>
@@ -173,7 +263,15 @@
                 {{--AÑADIR AL CARRITO--}}
                 <div class="mt-6 flex flex-col gap-3">
                     <span class="text-xl font-semibold font-cinzel">Subtotal: CL$ <span class="base-price">{{ number_format(($product->base_price), 0) }}</span></span>
-                    <button class="w-full bg-[#008769] font-montserrat rounded-lg py-2 font-bold text-cwhite-500">AGREGAR AL CARRO</button>
+                    <form id="addToCartForm" method="POST" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" id="productIdInput" value="{{ $product->id }}">
+                        <input type="hidden" name="total_price" id="totalPriceInput">
+                        <input type="hidden" name="quantity" id="quantityInput">
+                        <button type="submit" id="addToCartButton" class="w-full bg-[#008769] font-montserrat rounded-lg py-2 font-bold text-cwhite-500">
+                            AGREGAR AL CARRO
+                        </button>
+                    </form>
                 </div>
                 {{--AÑADIR AL CARRITO--}}
 
@@ -244,6 +342,47 @@
         let currentInlayAdjustment = 0; // Ajuste de incrustación
         let currentPlatedAdjustment = 0; // Ajuste de bañado
 
+
+        // Seleccionar tarjeta predeterminada de material
+        function selectDefaultMaterialCard() {
+            const defaultMaterialCard = materialsContainer.querySelector(".material-card.default");
+            if (defaultMaterialCard) {
+                defaultMaterialCard.classList.add("selected");
+                selectedMaterialCard = defaultMaterialCard;
+
+                const finalPriceElement = defaultMaterialCard.querySelector("#final-price");
+                basePrice = parseInt(finalPriceElement.textContent.replace(/[^\d]/g, ""));
+
+                const materialNameElement = defaultMaterialCard.querySelector("#option-name");
+                const materialName = materialNameElement.textContent.trim();
+
+                updateMaterialName(materialName);
+
+                // Recalcular el precio para reflejar totalPrice con el material predeterminado
+                updatePrices();
+            }
+        }
+
+        // Seleccionar tarjeta predeterminada de incrustaciones
+        function selectDefaultInlayCard() {
+            const defaultInlayCard = inlayContainer.querySelector(".no-inlay");
+            if (defaultInlayCard) {
+                defaultInlayCard.classList.add("selected");
+                selectedInlayCard = defaultInlayCard;
+                currentInlayAdjustment = 0; // Sin ajuste
+            }
+        }
+
+        // Seleccionar tarjeta predeterminada de bañados
+        function selectDefaultPlatedCard() {
+            const defaultPlatedCard = platedContainer.querySelector(".no-plated");
+            if (defaultPlatedCard) {
+                defaultPlatedCard.classList.add("selected");
+                selectedPlatedCard = defaultPlatedCard;
+                currentPlatedAdjustment = 0; // Sin ajuste
+            }
+        }
+
         // Escuchar clics en los cards de cambio de material
         materialsContainer.addEventListener("click", function (event) {
             const card = event.target.closest(".material-card"); // Cambiado a ".material-card"
@@ -268,7 +407,6 @@
                 updatePrices(); // Recalcula el precio
             }
         });
-
 
         // Escuchar clics en los cards de bañados
         platedContainer.addEventListener("click", function (event) {
@@ -341,14 +479,20 @@
             const priceWithoutMargin = basePrice;
 
             const adjustedPrice = (priceWithoutMargin + currentInlayAdjustment + currentPlatedAdjustment) * 1.2; // Agregar ajustes y margen
-
             let totalPrice = (adjustedPrice * quantity) * 1.19; // Multiplicar por la cantidad
 
-            const formattedPrice = Math.round(totalPrice).toLocaleString("es-CL");
+            const formattedPrice = Math.round(totalPrice).toLocaleString("en-US");
+
             const priceElements = document.querySelectorAll(".base-price");
             priceElements.forEach(element => {
                 element.textContent = formattedPrice;
             });
+
+            // Actualizar el valor en el input oculto
+            const totalPriceInput = document.getElementById("totalPriceInput");
+            if (totalPriceInput) {
+                totalPriceInput.value = Math.round(totalPrice); // Enviar el valor sin formato
+            }
         }
 
         // Actualizar el nombre del material seleccionado
@@ -358,6 +502,8 @@
 
         // Seleccionar la tarjeta de material por defecto al cargar la página
         selectDefaultMaterialCard();
+        selectDefaultInlayCard();
+        selectDefaultPlatedCard();
     });
 </script>
 {{--FUNCIONALIDAD DE PRECIO--}}
@@ -454,6 +600,64 @@
     }
 </script>
 {{--SCRIPT PARA MOSTRAR INFO/DESCRIPCIÓN--}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('myModal');
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelAction = document.getElementById('cancelAction');
+
+        // Mostrar el modal
+        openModal.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        // Ocultar el modal al cerrar
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+        // Ocultar el modal al cancelar
+        cancelAction.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+            // Cerrar el modal si se hace clic fuera del contenido del modal
+        modal.addEventListener('click', (e) => {
+            // Verifica que el clic no fue en el contenido
+            if (e.target === modal) {
+                closeModalFunction();
+            }
+        });
+
+        // Función para cerrar el modal
+        function closeModalFunction() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    });
+</script>
+
+{{--ANÑADIR CANTIDAD DEL PROD AL CARRITO--}}
+<script>
+    document.getElementById('addToCartButton').addEventListener('click', function (e) {
+    e.preventDefault(); // Evita el envío inmediato del formulario
+
+        // Obtén la cantidad actual del elemento con id="quantity"
+        const quantity = document.getElementById('quantity').textContent.trim();
+
+        // Asigna el valor al input oculto
+        document.getElementById('quantityInput').value = quantity;
+
+        // Envía el formulario
+        document.getElementById('addToCartForm').submit();
+    });
+</script>
+{{--ANÑADIR CANTIDAD DEL PROD AL CARRITO--}}
 
 {{-- Estilo CSS adicional para los cards --}}
 <style>

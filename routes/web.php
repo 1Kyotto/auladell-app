@@ -59,4 +59,5 @@ Route::get('/jewelry/product/{id}', [UserProdController::class, 'show'])->name('
 
 //Carrito
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 //

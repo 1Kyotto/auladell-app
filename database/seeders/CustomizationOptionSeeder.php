@@ -108,42 +108,142 @@ class CustomizationOptionSeeder extends Seeder
         //Tallas de anillos
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '10mm',
+            'option_name' => '4',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '12mm',
+            'option_name' => '5',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '14mm',
+            'option_name' => '6',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '16mm',
+            'option_name' => '7',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '18mm',
+            'option_name' => '8',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '20mm',
+            'option_name' => '9',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '22mm',
+            'option_name' => '10',
         ]);
 
         CustomizationOption::create([
             'customization_id' => 4,
-            'option_name' => '24mm',
+            'option_name' => '11',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '12',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '13',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '14',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '15',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '16',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '17',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '18',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '19',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '20',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '21',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '22',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '23',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '24',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '25',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '26',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '27',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '28',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '29',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '30',
+        ]);
+
+        CustomizationOption::create([
+            'customization_id' => 4,
+            'option_name' => '31',
         ]);
         //Tallas de anillos
 

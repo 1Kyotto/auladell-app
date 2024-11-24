@@ -11,13 +11,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
-            $table->string('email', 30)->unique();
-            $table->string('phone',9);
+            $table->string('email', 255)->unique();
+            $table->string('phone', 9);
             $table->string('password');
-            $table->char('role',1)->default('C'); //'A' para Administrador, 'C' para Cliente.
+            $table->char('role', 1)->default('C'); //'A' para Administrador, 'C' para Cliente.
             $table->rememberToken();
             $table->timestamps();
-
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

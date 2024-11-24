@@ -93,11 +93,11 @@
     <div class="h-full w-[75%] p-5 flex flex-wrap products-container">
         @foreach ($products as $product)
         <div class="w-[30%] mr-7 mb-6">
-            <a href="" class="w-full h-[300px]">
+            <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-[300px] object-cover">
             </a>
             <h4 class="pt-3">{{$product->name}}</h4>
-            <span>CL$ {{ number_format($product->base_price, 0) }}</span>
+            <span data-calculated-price="{{ $product->calculated_price }}">CL$ {{ $product->formatted_price }}</span>
             <div class="">
                 <button>
                     Añadir al carro
@@ -109,6 +109,8 @@
             </div>
         </div>    
         @endforeach
+
+        <div id="end-marker" class="w-full h-1 hidden"></div>
     </div>
     {{--PRODUCTOS--}}
 
@@ -181,10 +183,9 @@
 </script>
 {{--FUNCIONALIDAD DEL DROPDOWN--}}
 
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
         const materialCheckboxes = document.querySelectorAll('.material-checkbox');
         const gemstoneCheckboxes = document.querySelectorAll('.gemstone-checkbox');
         const filterOptions = document.querySelectorAll('.filter-option');
@@ -207,7 +208,6 @@
             });
         }
 
-        allowOnlyOneSelection(categoryCheckboxes);
         allowOnlyOneSelection(materialCheckboxes);
         allowOnlyOneSelection(gemstoneCheckboxes);
 
@@ -221,10 +221,6 @@
         });
 
         function filterProducts() {
-            const selectedCategories = Array.from(categoryCheckboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.getAttribute('data-category'));
-
             const selectedMaterials = Array.from(materialCheckboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.getAttribute('data-material'));
@@ -239,11 +235,10 @@
             filteredProducts = filteredProducts.filter(product => {
                 const productMaterials = product.materials.map(material => material.name);
 
-                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
                 const materialMatch = selectedMaterials.length === 0 || selectedMaterials.some(material => productMaterials.includes(material));
-                const gemstoneMatch = selectedGemstones.length === 0 || selectedGemstones.some(gemstone => productMaterials.includes(gemstone));
+                const gemstoneMatch = selectedGemstones.length === 0 || selectedGemstones.some(gemstone => product.gemstones.includes(gemstone));
 
-                return categoryMatch && materialMatch && gemstoneMatch;
+                return materialMatch && gemstoneMatch;
             });
 
             // Aplicar filtro adicional basado en la opción seleccionada
@@ -271,11 +266,11 @@
             products.forEach(product => {
                 const productHtml = `
                     <div class="w-[30%] mr-7 mb-6">
-                        <a href="" class="w-full h-[300px]">
+                        <a href="/jewelry/product/${product.id}" class="w-full h-[300px]">
                             <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
                         </a>
                         <h4 class="pt-3">${product.name}</h4>
-                        <span>CL$ ${new Intl.NumberFormat().format(product.base_price)}</span>
+                        <span>CL$ ${new Intl.NumberFormat("en-US").format(product.calculated_price)}</span>
                         <div>
                             <button>Añadir al carro
                                 <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
@@ -294,5 +289,32 @@
         filterProducts();
     });
 </script>
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
+
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebar = document.querySelector(".sidebar");
+        const endMarker = document.getElementById("end-marker");
+        const productsContainer = document.querySelector(".products-container");
+        const initialSidebarTop = sidebar.offsetTop;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    // Cuando el marcador no es visible, "pegar" el sidebar
+                    sidebar.style.position = "absolute";
+                    sidebar.style.top = `${productsContainer.offsetHeight - sidebar.offsetHeight}px`;
+                } else {
+                    // Volver a sticky cuando el marcador es visible
+                    sidebar.style.position = "sticky";
+                    sidebar.style.top = "0";
+                }
+            });
+        }, { threshold: 0 });
+
+        observer.observe(endMarker);
+    });
+</script>
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
 @endsection

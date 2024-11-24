@@ -16,7 +16,7 @@ class UserProdController
 
         // Obtener materiales con el filtro deseado
         $materials = Material::whereBetween('id', [1, 20])->get();
-        $selectedMaterial = $materials->whereBetween('id', [1, 10]);
+        $selectedMaterial = $materials->whereBetween('id', [1, 9]);
         $selectedGemstone = $materials->whereBetween('id', [11, 20]);
 
         switch ($type) {
@@ -24,9 +24,21 @@ class UserProdController
             case 'bracelet':
             case 'brazaletes':
             case 'bracelets':
-                $products = Product::with('materials')->where('category', 'Brazaletes')->get()->map(function ($product) {
+                $products = Product::with(['materials', 'customizationMaterials.material'])->where('category', 'Brazaletes')->get()->map(function ($product) {
                     // Crear una propiedad 'image_url' con la URL completa de la imagen
                     $product->image_url = asset('storage/' . $product->image);
+
+                    // Cálculo del precio con margen e IVA
+                    $margin = 0.20;
+                    $iva = 0.19;
+                    $basePrice = $product->base_price;
+                    $finalPrice = round((($basePrice * (1 + $margin)) * (1 + $iva)));
+                    $product->formatted_price = number_format($finalPrice, 0);
+                    $product->calculated_price = $finalPrice;
+
+                    // Obtener los nombres de los materiales que pueden usarse como incrustaciones
+                    $product->gemstones = $product->customizationMaterials->pluck('material.name');
+
                     return $product;
                 });
                 return view('user-products.bracelets', compact('products', 'selectedMaterial', 'selectedGemstone'));
@@ -34,9 +46,21 @@ class UserProdController
             case 'necklace':
             case 'collares':
             case 'necklaces':
-                $products = Product::with('materials')->where('category', 'Collares')->get()->map(function ($product) {
+                $products = Product::with(['materials', 'customizationMaterials.material'])->where('category', 'Collares')->get()->map(function ($product) {
                     // Crear una propiedad 'image_url' con la URL completa de la imagen
                     $product->image_url = asset('storage/' . $product->image);
+
+                    // Cálculo del precio con margen e IVA
+                    $margin = 0.20;
+                    $iva = 0.19;
+                    $basePrice = $product->base_price;
+                    $finalPrice = round((($basePrice * (1 + $margin)) * (1 + $iva)));
+                    $product->formatted_price = number_format($finalPrice, 0);
+                    $product->calculated_price = $finalPrice;
+
+                    // Obtener los nombres de los materiales que pueden usarse como incrustaciones
+                    $product->gemstones = $product->customizationMaterials->pluck('material.name');
+
                     return $product;
                 });
                 return view('user-products.necklaces', compact('products', 'selectedMaterial', 'selectedGemstone'));
@@ -44,9 +68,21 @@ class UserProdController
             case 'earring':
             case 'aros':
             case 'earrings':
-                $products = Product::with('materials')->where('category', 'Aros')->get()->map(function ($product) {
+                $products = Product::with(['materials', 'customizationMaterials.material'])->where('category', 'Aros')->get()->map(function ($product) {
                     // Crear una propiedad 'image_url' con la URL completa de la imagen
                     $product->image_url = asset('storage/' . $product->image);
+
+                    // Cálculo del precio con margen e IVA
+                    $margin = 0.20;
+                    $iva = 0.19;
+                    $basePrice = $product->base_price;
+                    $finalPrice = round((($basePrice * (1 + $margin)) * (1 + $iva)));
+                    $product->formatted_price = number_format($finalPrice, 0);
+                    $product->calculated_price = $finalPrice;
+
+                    // Obtener los nombres de los materiales que pueden usarse como incrustaciones
+                    $product->gemstones = $product->customizationMaterials->pluck('material.name');
+
                     return $product;
                 });
                 return view('user-products.earrings', compact('products', 'selectedMaterial', 'selectedGemstone'));
@@ -54,18 +90,42 @@ class UserProdController
             case 'ring':
             case 'anillos':
             case 'rings':
-                $products = Product::with('materials')->where('category', 'Anillos')->get()->map(function ($product) {
+                $products = Product::with(['materials', 'customizationMaterials.material'])->where('category', 'Anillos')->get()->map(function ($product) {
                     // Crear una propiedad 'image_url' con la URL completa de la imagen
                     $product->image_url = asset('storage/' . $product->image);
+
+                    // Cálculo del precio con margen e IVA
+                    $margin = 0.20;
+                    $iva = 0.19;
+                    $basePrice = $product->base_price;
+                    $finalPrice = round((($basePrice * (1 + $margin)) * (1 + $iva)));
+                    $product->formatted_price = number_format($finalPrice, 0);
+                    $product->calculated_price = $finalPrice;
+
+                    // Obtener los nombres de los materiales que pueden usarse como incrustaciones
+                    $product->gemstones = $product->customizationMaterials->pluck('material.name');
+
                     return $product;
                 });
                 return view('user-products.rings', compact('products', 'selectedMaterial', 'selectedGemstone'));
             case 'todo':
             case 'todos':
             case 'all-products':
-                $products = Product::with('materials')->get()->map(function ($product) {
+                $products = Product::with(['materials', 'customizationMaterials.material'])->get()->map(function ($product) {
                     // Crear una propiedad 'image_url' con la URL completa de la imagen
                     $product->image_url = asset('storage/' . $product->image);
+
+                    // Cálculo del precio con margen e IVA
+                    $margin = 0.20;
+                    $iva = 0.19;
+                    $basePrice = $product->base_price;
+                    $finalPrice = round((($basePrice * (1 + $margin)) * (1 + $iva)));
+                    $product->formatted_price = number_format($finalPrice, 0);
+                    $product->calculated_price = $finalPrice;
+
+                    // Obtener los nombres de los materiales que pueden usarse como incrustaciones
+                    $product->gemstones = $product->customizationMaterials->pluck('material.name');
+
                     return $product;
                 });
                 return view('user-products.index', compact('products', 'selectedMaterial', 'selectedGemstone'));
@@ -76,6 +136,8 @@ class UserProdController
     {
         $margin = 0.20;
         $product = Product::findOrFail($id);
+
+        $totalPrice = ($product->base_price * (1 + $margin)) * 1.19;
 
         // Material original del producto
         $originalMaterialId = $product->materials->pluck('id')->first();
@@ -96,9 +158,8 @@ class UserProdController
                     $material->is_default = true;
                 } else {
                     // Calcular el precio ajustado
-                    $basePriceWithoutMargin = $product->base_price * (1 - $margin);
-                    $adjustedPrice = $basePriceWithoutMargin + $material->price_adjustment;
-                    $material->final_price = $adjustedPrice * (1 + $margin);
+                    $adjustedPrice = $product->base_price + $material->price_adjustment;
+                    $material->final_price = $adjustedPrice;
                     $material->is_default = false;
                 }
                 return $material;
@@ -153,6 +214,7 @@ class UserProdController
             'inlayOptions',
             'sizeOptions',
             'platedOptions',
+            'totalPrice',
             'defaultMaterial'
         ));
     }
