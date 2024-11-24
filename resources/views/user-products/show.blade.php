@@ -18,19 +18,8 @@
                     {{--PRECIO ACTUAL--}}
                     <span class="text-xl font-semibold font-cinzel">Precio: CL$ <span class="">{{ number_format($totalPrice, 0) }}</span></span>
                     {{--PRECIO ACTUAL--}}
-                    <div class="cursor-pointer w-20 h-9 bg-[#c8e3de] border border-[#006c55] rounded-xl flex items-center justify-between font-cinzel text-lg font-semibold px-2">
-                        <div class="h-full w-5 flex items-center justify-start" onclick="decreaseValue()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
-                                <path d="M20 12L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
+                    <div class="cursor-pointer w-20 h-9 bg-[#c8e3de] border border-[#006c55] rounded-xl items-center justify-between font-cinzel text-lg font-semibold px-2 hidden">
                         <span id="quantity">1</span>
-                        <div class="h-full w-5 flex items-center justify-end" onclick="increaseValue()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-black" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -279,16 +268,6 @@
                 <div class="w-full mt-6 flex flex-col gap-3">
                     <div class="flex items-center gap-5">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-black h-6 w-6" fill="none">
-                            <path d="M21 7V12M3 7C3 10.0645 3 16.7742 3 17.1613C3 18.5438 4.94564 19.3657 8.83693 21.0095C10.4002 21.6698 11.1818 22 12 22L12 11.3548" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M15 19C15 19 15.875 19 16.75 21C16.75 21 19.5294 16 22 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8.32592 9.69138L5.40472 8.27785C3.80157 7.5021 3 7.11423 3 6.5C3 5.88577 3.80157 5.4979 5.40472 4.72215L8.32592 3.30862C10.1288 2.43621 11.0303 2 12 2C12.9697 2 13.8712 2.4362 15.6741 3.30862L18.5953 4.72215C20.1984 5.4979 21 5.88577 21 6.5C21 7.11423 20.1984 7.5021 18.5953 8.27785L15.6741 9.69138C13.8712 10.5638 12.9697 11 12 11C11.0303 11 10.1288 10.5638 8.32592 9.69138Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M6 12L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M17 4L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <p class="font-montserrat text-black text-sm">Envío gratis</p>
-                    </div>
-                    <div class="flex items-center gap-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-black h-6 w-6" fill="none">
                             <path d="M3 13V8H21V13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M3 8L3.86538 6.07692C4.53654 4.58547 4.87211 3.83975 5.55231 3.41987C6.23251 3 7.105 3 8.85 3H15.15C16.895 3 17.7675 3 18.4477 3.41987C19.1279 3.83975 19.4635 4.58547 20.1346 6.07692L21 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M12 8V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -458,25 +437,10 @@
             }
         });
 
-        // Incrementar cantidad
-        window.increaseValue = function () {
-            let currentValue = parseInt(quantityElement.textContent);
-            quantityElement.textContent = currentValue + 1; // Incrementar cantidad
-            updatePrices(); // Recalcular precio
-        };
-
-        // Disminuir cantidad
-        window.decreaseValue = function () {
-            let currentValue = parseInt(quantityElement.textContent);
-            if (currentValue > 1) { // Evitar valores menores que 1
-                quantityElement.textContent = currentValue - 1; // Disminuir cantidad
-                updatePrices(); // Recalcular precio
-            }
-        };
-
         function updatePrices() {
             const quantity = parseInt(quantityElement.textContent);
             const priceWithoutMargin = basePrice;
+            console.log(priceWithoutMargin);
 
             const adjustedPrice = (priceWithoutMargin + currentInlayAdjustment + currentPlatedAdjustment) * 1.2; // Agregar ajustes y margen
             let totalPrice = (adjustedPrice * quantity) * 1.19; // Multiplicar por la cantidad

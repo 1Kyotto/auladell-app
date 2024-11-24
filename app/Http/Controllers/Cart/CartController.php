@@ -8,13 +8,38 @@ use App\Models\Carts\CartProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CartController
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('cart.index');
+        // Obtener el user_id si el usuario está autenticado
+        $userId = Auth::check() ? Auth::id() : null;
+
+        // Obtener el guest_id desde la cookie si no está autenticado
+        $guestId = !$userId ? $request->cookie('guest_id') : null;
+
+        // Verificar si hay un carrito activo
+        $cart = Cart::where('user_id', $userId)
+            ->orWhere('guest_id', $guestId)
+            ->first();
+
+        // Si no hay carrito, retorna con un mensaje
+        if (!$cart) {
+            return view('cart.index', ['products' => []])
+                ->with('message', 'Tu carrito está vacío.');
+        }
+
+        // Obtener los productos del carrito
+        $products = CartProduct::where('cart_id', $cart->id)
+            ->with('product') // Si tienes relación con el modelo Product
+            ->get();
+
+        $items = $products->sum('quantity');
+
+        return view('cart.index', compact('products', 'items'));
     }
 
     public function addToCart(Request $request)
@@ -69,27 +94,69 @@ class CartController
                 'guest_id' => $userId ? null : $guestId,
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error al crear o buscar el carrito:', ['error' => $e->getMessage()]);
+            // \Log::error('Error al crear o buscar el carrito:', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Hubo un problema al agregar el producto al carrito.');
         }
 
         // Agregar o actualizar el producto en el carrito
         try {
-            $cartProduct = CartProduct::updateOrCreate(
-                [
+            for ($i = 0; $i < $validated['quantity']; $i++) {
+                CartProduct::create([
                     'cart_id' => $cart->id,
                     'product_id' => $validated['product_id'],
-                ],
-                [
-                    'quantity' => DB::raw("quantity + {$validated['quantity']}"), // Incrementa la cantidad
-                    'price' => $validated['total_price'], // Asegura el precio correcto
-                ]
-            );
+                    'quantity' => 1,
+                    'price' => $validated['total_price'],
+                ]);
+            }
         } catch (\Exception $e) {
-            \Log::error('Error al agregar el producto al carrito:', ['error' => $e->getMessage()]);
+            // \Log::error('Error al agregar el producto al carrito:', ['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'No se pudo agregar el producto al carrito.');
         }
 
-        return redirect()->back()->with('success', 'Producto agregado al carrito.');
+        return redirect()->route('cart.index');
+    }
+
+    public function removeFromCart(Request $request)
+    {
+        // Validación de datos de entrada
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        // Obtener el user_id si está autenticado
+        $userId = Auth::check() ? Auth::id() : null;
+
+        // Obtener el guest_id desde la cookie si no está autenticado
+        $guestId = !$userId ? $request->cookie('guest_id') : null;
+
+        // Verificar si hay un carrito activo
+        $cart = Cart::where('user_id', $userId)
+            ->orWhere('guest_id', $guestId)
+            ->first();
+
+        // Si no hay carrito, redirigir con un mensaje
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'No se encontró un carrito activo.');
+        }
+
+        // Buscar el producto en el carrito
+        $cartProduct = CartProduct::where('cart_id', $cart->id)
+            ->where('product_id', $validated['product_id'])
+            ->first();
+
+        // Si el producto no existe en el carrito, redirigir con un mensaje
+        if (!$cartProduct) {
+            return redirect()->route('cart.index')->with('error', 'El producto no está en el carrito.');
+        }
+
+        // Eliminar el producto del carrito
+        try {
+            $cartProduct->delete();
+        } catch (\Exception $e) {
+            Log::error('Error al eliminar el producto del carrito:', ['error' => $e->getMessage()]);
+            return redirect()->route('cart.index')->with('error', 'No se pudo eliminar el producto del carrito.');
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Producto eliminado del carrito.');
     }
 }

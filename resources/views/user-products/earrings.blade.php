@@ -92,21 +92,12 @@
     {{--PRODUCTOS--}}
     <div class="h-full w-[75%] p-5 flex flex-wrap products-container">
         @foreach ($products as $product)
-        <div class="w-[30%] mr-7 mb-6">
+        <div class="w-[30%] mr-7 mb-6 font-montserrat">
             <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-[300px] object-cover">
             </a>
             <h4 class="pt-3">{{$product->name}}</h4>
-            <span data-calculated-price="{{ $product->calculated_price }}">CL$ {{ $product->formatted_price }}</span>
-            <div class="">
-                <button>
-                    Añadir al carro
-                    <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                </button>
-            </div>
+            <span class="font-bold" data-calculated-price="{{ $product->calculated_price }}">CL$ {{ $product->formatted_price }}</span>
         </div>    
         @endforeach
 
@@ -265,20 +256,12 @@
 
             products.forEach(product => {
                 const productHtml = `
-                    <div class="w-[30%] mr-7 mb-6">
+                    <div class="w-[30%] mr-7 mb-6 font-montserrat">
                         <a href="/jewelry/product/${product.id}" class="w-full h-[300px]">
                             <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
                         </a>
                         <h4 class="pt-3">${product.name}</h4>
-                        <span>CL$ ${new Intl.NumberFormat("en-US").format(product.calculated_price)}</span>
-                        <div>
-                            <button>Añadir al carro
-                                <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                                    <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                                    <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                                </svg>
-                            </button>
-                        </div>
+                        <span class="font-bold">CL$ ${new Intl.NumberFormat("en-US").format(product.calculated_price)}</span>
                     </div>
                 `;
                 productsContainer.innerHTML += productHtml;
