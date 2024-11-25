@@ -78,7 +78,7 @@
     <div class="col-span-1 grid grid-rows-4">
         <div class=" row-span-1 grid justify-center items-center">
             <div class="text-center text-xl pt-5">Informacion para contactar la pagina...</div>
-            <div class="text-center text-sm">Numero: +569XXXXXXXX</div>
+            <div class="text-center text-lg">Numero: +569XXXXXXXX</div>
             <div class="text-center text-xl">Los Pinos - QUILPUÉ</div>
         </div>
         <div class="row-span-3 pb-20 pt-2 pr-5">
