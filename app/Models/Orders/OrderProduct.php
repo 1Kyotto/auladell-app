@@ -9,9 +9,10 @@ use App\Models\Products\Product;
 class OrderProduct extends Pivot
 {
     use HasFactory;
-    
+
     protected $table = 'order_product';
     protected $fillable = ['order_id', 'product_id', 'quantity', 'unit_price', 'total_price'];
+    public $timestamps = false;
 
     public function order()
     {

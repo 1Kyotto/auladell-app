@@ -11,6 +11,7 @@ use App\Http\Controllers\Users\RegisterController;
 use App\Http\Controllers\Users\ForgotPasswordController;
 use App\Http\Controllers\Users\ResetPasswordController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Payments\PaymentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -48,9 +49,12 @@ Route::middleware('guest')->group(function () {
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'passwordResetForm'])->name('password.reset');
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPasswordUpdate'])->name('password.update');
 });
-//Logout
-Route::post('', [LogoutController::class, 'logout'])->name('user.logout');
-//
+
+Route::middleware('auth')->group(function () {
+    //Logout
+    Route::post('', [LogoutController::class, 'logout'])->name('user.logout');
+    //
+});
 
 //Productos
 Route::get('/jewelry/{type?}', [UserProdController::class, 'index'])->name('jewelry.index');
@@ -61,4 +65,11 @@ Route::get('/jewelry/product/{id}', [UserProdController::class, 'show'])->name('
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/checkout/information', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/checkout/payment', [CartController::class, 'payment'])->name('cart.payment');
+Route::put('/checkout/payment', [CartController::class, 'updateGuest'])->name('cart.update.guest');
+//
+
+//Pagos
+Route::post('/checkout/payment', [PaymentController::class, 'store'])->name('payment.store');
 //

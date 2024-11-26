@@ -14,16 +14,9 @@
         {{--FORMULARIO DE LOGIN--}}
         <form method="POST" action="{{ route('user.register') }}" class="flex flex-col gap-5 items-center">
             @csrf
-
-            <div class="flex flex-col lg:flex-row gap-5">
-                {{--NOMBRE--}}
-                <input id="name" class="w-72 h-8 bg-transparent focus:bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom lg:w-60" placeholder="Nombre" type="text" name="name" value="{{ old('name') }}" autofocus>
-                {{--NOMBRE--}}
-    
-                {{--APELLIDOS--}}
-                <input id="surname" class="w-72 h-8 bg-transparent focus:bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom lg:w-60" placeholder="Apellidos" type="text" name="apellido" value="{{ old('apellido') }}" autofocus>
-                {{--APELLIDOS--}}
-            </div>
+            {{--NOMBRE--}}
+            <input id="name" class="w-72 h-8 bg-transparent focus:bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom lg:w-full" placeholder="Nombre" type="text" name="email" value="{{ old('name') }}" autofocus>
+            {{--NOMBRE--}}
 
             {{--EMAIL--}}
             <input id="email" class="w-72 h-8 bg-transparent focus:bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom lg:w-full" placeholder="Correo Electrónico" type="text" name="email" value="{{ old('email') }}" autofocus>
