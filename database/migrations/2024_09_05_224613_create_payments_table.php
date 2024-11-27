@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->enum('payment_method', ['Credit', 'Debit', 'Transfer'])->nullable();
+            $table->enum('payment_method', ['Crédito', 'Débito', 'Transferencia'])->nullable();
             $table->decimal('total_price');
             $table->decimal('net_price');
             $table->enum('payment_status', ['Confirmed', 'Cancelled', 'In Transaction', 'Failed'])->default('Confirmed');

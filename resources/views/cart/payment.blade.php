@@ -5,9 +5,9 @@
     <div class="w-[70%] flex items-center justify-center">
         <!-- Paso 1 -->
         <div class="flex items-center">
-            <a href="{{ route('cart.index') }}" class="w-8 h-8 flex items-center justify-center rounded-full bg-[#008769] text-white font-bold">
+            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-[#008769] text-white font-bold">
                 1
-            </a>
+            </div>
         </div>
       
         <!-- Línea entre pasos -->
@@ -15,9 +15,9 @@
       
         <!-- Paso 2 -->
         <div class="flex items-center">
-            <a href="{{ route('cart.checkout') }}" class="w-8 h-8 flex items-center justify-center rounded-full bg-[#008769] text-white font-bold">
+            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-[#008769] text-white font-bold">
                 2
-            </a>
+            </div>
         </div>
       
         <!-- Línea entre pasos -->

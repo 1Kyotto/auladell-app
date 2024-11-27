@@ -11,6 +11,7 @@ use App\Http\Controllers\Users\RegisterController;
 use App\Http\Controllers\Users\ForgotPasswordController;
 use App\Http\Controllers\Users\ResetPasswordController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Payments\PaymentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -72,4 +73,9 @@ Route::put('/checkout/payment', [CartController::class, 'updateGuest'])->name('c
 
 //Pagos
 Route::post('/checkout/payment', [PaymentController::class, 'store'])->name('payment.store');
+//
+
+//Pedidos
+Route::get('/order-status', [OrderController::class, 'orderNumber'])->name('order.number');
+Route::post('/status', [OrderController::class, 'status'])->name('order.status');
 //

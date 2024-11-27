@@ -300,6 +300,6 @@ class CartController
         // Formatear el número de orden
         $orderNumber = strtoupper(substr($hash, 0, 10)); // Usar los primeros 10 caracteres para más legibilidad
 
-        return "ORD-{$orderNumber}";
+        return $orderNumber;
     }
 }

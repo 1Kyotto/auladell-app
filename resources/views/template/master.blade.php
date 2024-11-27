@@ -120,16 +120,6 @@
 
             {{--SEARCH Y BOTONES--}}
             <div class="flex items-center justify-end w-[33%] order-3 gap-4 sm:gap-6 md:gap-7 xl:order-3 xl:justify-end xl:gap-8">
-                {{--SEARCH--}}
-                <div class="xl:flex xl:items-center xl:gap-1 xl:w-[55%] xl:bg-gray-200 xl:border xl:rounded-xl xl:px-2 xl:py-1 xl:ml-4 2xl:ml-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[22px] w-[22px] text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
-                        <path d="M17.5 17.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                    </svg>
-                    <input type="text" placeholder="Buscar..." class="hidden xl:block xl:bg-gray-200 xl:outline-none xl:w-[95%]">
-                </div>
-                {{--SEARCH--}}
-
                 {{--CARRITO--}}
                 <a href="{{ route('cart.index') }}" class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
@@ -287,13 +277,11 @@
                     <h4 class="pb-1 font-bold">Información</h4>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Acerca de Auladell</a>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Política de privacidad</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Mantención de joyas</a>
                 </div>
 
                 <div class="flex flex-col text-start order-4 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
                     <h4 class="pb-1 font-bold">Servicio al cliente</h4>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Preguntas frecuentes</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
+                    <a href="{{ route('order.number') }}" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
                     <a href="" class="hover:text-accents-600 transition-colors duration-150">Cambios, devoluciones y garantía</a>
                 </div>
 

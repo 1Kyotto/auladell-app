@@ -65,6 +65,7 @@ class PaymentController
                 'shipping_address_id' => $shippingAddress->id,
                 'total' => $totalPrice,
                 'status' => 'Waiting',
+                'order_num' => '123',
             ]);
 
             $cartController = new CartController();
@@ -86,14 +87,14 @@ class PaymentController
             // Crear el pago asociado a la orden
             $payment = Payment::create([
                 'order_id' => $order->id,
-                'payment_method' => 'Credit', // Puede ser dinámico dependiendo del formulario
+                'payment_method' => 'Credito', // Puede ser dinámico dependiendo del formulario
                 'total_price' => $totalPrice,
                 'net_price' => $subtotal, // Precio sin incluir el costo de envío
                 'payment_status' => 'Confirmed', // Estado inicial del pago
             ]);
 
             if ($payment->payment_status === 'Confirmed') {
-                $order->update(['status' => 'Production']);
+                $order->update(['status' => 'Shipped']);
             }
 
             // Limpiar el carrito después de procesar la orden
@@ -102,8 +103,13 @@ class PaymentController
             // Confirmar la transacción
             DB::commit();
 
-            // Redirigir a la página de confirmación de pago
-            return redirect()->route('cart.success')->with('success', 'Tu pago se procesó correctamente.');
+            return view('cart.success', [
+                'orderNumber' => $order->order_num,
+                'paymentMethod' => $payment->payment_method,
+                'paymentDate' => $payment->created_at->format('d/m/Y'),
+                'paymentTime' => $payment->created_at->format('H:i'),
+                'totalPrice' => $payment->total_price,
+            ]);
         } catch (\Exception $e) {
             // Revertir los cambios si algo falla
             DB::rollBack();
