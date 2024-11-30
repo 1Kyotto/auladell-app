@@ -54,12 +54,10 @@ class LoginController
 
             if ($user->role == 'A') {
                 //Cambiar por admin.index
-                /*return redirect()->route('admin.product');*/
+                return redirect()->route('admin.product');
+            } else {
                 return redirect()->route('home.index');
             }
-            /*else {
-                return redirect()->route('home.index');
-            }*/
         }
 
         return back()->withErrors([

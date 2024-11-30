@@ -2,24 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Auth\User;
 use Illuminate\Http\Request;
 use App\Models\Products\Product;
 
 class AdminController
 {
-    public function index()
+    public function productManagment()
     {
-        /*return view('admin.index');*/
-        return view('home.index');
+        $products = Product::all();
+        $items = count($products);
+        $actives = $products->where('is_active', 1)->count();
+        $aros = $products->where('category', 'Aros')->count();
+        $anillos = $products->where('category', 'Anillos')->count();
+        $brazaletes = $products->where('category', 'Brazaletes')->count();
+        $collares = $products->where('category', 'Collares')->count();
+
+        return view('dashboard.product', compact('products', 'items', 'aros', 'anillos', 'brazaletes', 'collares', 'actives'));
     }
 
-    public function productManagment(Request $request, $category = null)
+    public function orders()
     {
-        if ($category) {
-            $products = Product::where('category', $category)->get();
-        } else {
-            $products = Product::all();
-        }
-        return view('admin.product', compact('products'));
+        return view('dashboard.order');
+    }
+
+    public function reports()
+    {
+        return view('dashboard.report');
+    }
+
+    public function materials()
+    {
+        return view('dashboard.material');
     }
 }

@@ -19,8 +19,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 //Admin
 Route::middleware(['auth', \App\Http\Middleware\AuthAdmin::class])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/dashboard/product/{category?}', [AdminController::class, 'productManagment'])->name('admin.product');
+    Route::get('/dashboard/product/', [AdminController::class, 'productManagment'])->name('admin.product');
+    Route::get('/dashboard/orders/', [AdminController::class, 'orders'])->name('admin.order');
+    Route::get('/dashboard/reports/', [AdminController::class, 'reports'])->name('admin.rerpot');
+    Route::get('/dashboard/materials/', [AdminController::class, 'materials'])->name('admin.material');
 
     //Gestión de Productos
     Route::get('/dashboard/new/product/create', [AdminProdController::class, 'create'])->name('product.create');
