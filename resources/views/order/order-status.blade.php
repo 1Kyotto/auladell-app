@@ -10,9 +10,15 @@
             <form action="{{ route('order.status') }}" method="POST" class="font-montserrat">
                 @csrf
                 <div>
-                    <label for="order-num" class="block text-sm font-semibold text-gray-700 mb-1">Número de Orden</label>
-                    <input type="text" id="order-num" name="order-num"
-                           class="w-full p-2 border border-gray-300 rounded-md focus:outline-none">
+                    <label for="order_num" class="block text-sm font-semibold text-gray-700 mb-1">Número de Orden</label>
+                    <input type="text" id="order_num" name="order_num"
+                    class="w-full p-2 border rounded-md focus:outline-none text-black 
+                    @error('order_num') border-red-500 @else bg-white @enderror">
+                    
+                    <!-- Mensaje de error -->
+                    @error('order_num')
+                        <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <button type="submit" class="w-full bg-[#008769] text-white font-semibold py-2 rounded-md mt-8">

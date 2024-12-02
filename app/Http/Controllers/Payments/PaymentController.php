@@ -27,6 +27,34 @@ class PaymentController
             'shipping-city' => 'required|string|max:255',
             'shipping-locality' => 'required|string|max:255',
             'shipping-address' => 'required|string|max:255',
+        ],[
+            'name-cardholder.required' => 'El nombre es obligatorio.',
+            'name-cardholder.string' => 'El nombre debe ser un texto.',
+            'mame-cardholder.max' => 'El nombre no puede tener más de :max caracteres.',
+
+            'card-number.required' => 'El número de tarjeta es obligatorio.',
+            'card-number.string' => 'El número de tarjeta debe ser un texto.',
+            'card-number.max' => 'El número de tarjeta no puede tener más de :max caracteres.',
+
+            'expiry-date.required' => 'La fecha de vencimiento es obligatoria.',
+            'expiry-date.string' => 'La fecha de vencimiento debe ser un texto.',
+            'expiry-date.max' => 'La fecha de vencimiento no puede tener más de :max caracteres.',
+
+            'card-cvv.required' => 'El código de verificación es obligatorio.',
+            'card-cvv.string' => 'El código de verificación debe ser un texto.',
+            'card-cvv.max' => 'El código de verificación no puede tener más de :max caracteres.',
+
+            'shipping-city.required' => 'El nombre de la ciudad es obligatorio.',
+            'shipping-city.string' => 'El nombre de la ciudad debe ser un texto.',
+            'shipping-city.max' => 'El nombre de la ciudad no puede tener más de :max caracteres.',
+
+            'shipping-locality.required' => 'El nombre de la comuna es obligatorio.',
+            'shipping-locality.string' => 'El nombre de la comuna debe ser un texto.',
+            'shipping-locality.max' => 'El nombre de la comuna no puede tener más de :max caracteres.',
+
+            'shipping-address.required' => 'La dirección es obligatoria.',
+            'shipping-address.string' => 'La dirección debe ser un texto.',
+            'shipping-address.max' => 'La dirección no puede tener más de :max caracteres.',
         ]);
 
         // Comenzar una transacción de base de datos para garantizar integridad

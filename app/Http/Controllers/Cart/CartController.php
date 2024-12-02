@@ -263,7 +263,18 @@ class CartController
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|digits_between:8,15',
+            'phone' => 'required|digits_between:8,15|max:9',
+        ],[
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser un texto.',
+            'mame.max' => 'El nombre no puede tener más de :max caracteres.',
+
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no es válido.',
+            'email.max' => 'El correo electrónico no puede tener más de :max caracteres.',
+
+            'phone.required' => 'El número de teléfono es obligatorio.',
+            'phone.max' => 'El número de teléfono no puede tener más de :max caracteres.',
         ]);
 
         // Procesar los datos

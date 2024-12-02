@@ -16,7 +16,13 @@ class OrderController
     public function status(Request $request)
     {
         $validated = $request->validate([
-            'order-num' => 'required|string|max:10'
+            'order_num' => 'required|string|min:10|max:10|exists:orders,order_num',
+        ],[
+            'order_num.required' => 'El número de orden es obligatorio.',
+            'order_num.string' => 'El número de orden debe ser un texto.',
+            'order_num.min' => 'El número de orden debe tener al menos :min caracteres.',
+            'order_num.max' => 'El número de orden no puede tener más de :max caracteres.',
+            'order_num.exists' => 'El número de orden ingresado no existe en nuestros registros.',
         ]);
 
         $order = Order::where('order_num', $validated['order-num'])

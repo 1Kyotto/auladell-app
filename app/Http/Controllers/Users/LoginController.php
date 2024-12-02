@@ -63,7 +63,7 @@ class LoginController
         }
 
         return back()->withErrors([
-            'email' => 'Las credenciales no coinciden con nuestros registros.',
+            'email' => 'Las credenciales no existen o no coinciden con nuestros registros.',
         ])->onlyInput('email');
     }
 }

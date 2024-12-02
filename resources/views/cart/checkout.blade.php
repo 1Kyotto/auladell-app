@@ -41,15 +41,30 @@
             @method('PUT')
             
             {{--NOMBRE--}}
-            <input id="name" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout" placeholder="Nombre" type="text" name="name" value="{{ old('name') }}" autofocus>
+            <input id="name" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout 
+            @error('name') border-red-500 bg-transparent @else border-[#008769] bg-transparent @enderror" 
+            placeholder="Nombre" type="text" name="name" value="{{ old('name') }}" autofocus>
+            @error('name')
+                <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+            @enderror
             {{--NOMBRE--}}
 
             {{--EMAIL--}}
-            <input id="email" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout" placeholder="Correo Electrónico" type="text" name="email" value="{{ old('email') }}" autofocus>
+            <input id="email" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout 
+            @error('email') border-red-500 bg-transparent @else border-[#008769] bg-transparent @enderror" 
+            placeholder="Correo Electrónico" type="text" name="email" value="{{ old('email') }}" autofocus>
+            @error('email')
+                <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+            @enderror
             {{--EMAIL--}}
 
             {{--TELÉFONO--}}
-            <input id="phone" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout" placeholder="Teléfono" type="text" name="phone" value="{{ old('phone') }}">
+            <input id="phone" class="w-72 bg-transparent border-b-2 rounded-sm px-3 py-2 outline-none border-[#008769] sm:w-96 input-checkout 
+            @error('phone') border-red-500 bg-transparent @else border-[#008769] bg-transparent @enderror" 
+            placeholder="Teléfono" type="text" name="phone" value="{{ old('phone') }}">
+            @error('phone')
+                <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+            @enderror
             {{--TELÉFONO--}}
 
             {{--BOTÓN--}}

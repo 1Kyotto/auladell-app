@@ -16,11 +16,23 @@
             @csrf
 
             {{--EMAIL--}}
-            <input id="email" class="w-72 h-8 bg-transparent focus:bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom" placeholder="Correo Electrónico" type="text" name="email" value="{{ old('email') }}" autofocus>
+            <input id="email" class="w-72 h-8 focus:bg-transparent border-b-2 outline-none sm:w-96 input-custom 
+            @error('email') border-red-500 bg-transparent @else border-cwhite-500 bg-transparent @enderror" 
+            placeholder="Correo Electrónico" type="text" name="email" value="{{ old('email') }}" autofocus>
+            <!-- Mensaje de error -->
+            @error('email')
+                <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+            @enderror
             {{--EMAIL--}}
 
             {{--CONTRASEÑA--}}
-            <input id="password" class="w-72 h-8 bg-transparent border-b-2 outline-none border-cwhite-500 sm:w-96 input-custom" placeholder="Contraseña" type="password" name="password" autocomplete="current-password">
+            <input id="password" class="w-72 h-8 border-b-2 outline-none sm:w-96 input-custom 
+            @error('password') border-red-500 bg-transparent @else border-cwhite-500 bg-transparent @enderror" 
+            placeholder="Contraseña" type="password" name="password" autocomplete="current-password">
+            <!-- Mensaje de error -->
+            @error('password')
+                <span class="text-sm text-red-500 mt-1 block">{{ $message }}</span>
+            @enderror
             {{--CONTRASEÑA--}}
 
             {{--RECUÉRDAME--}}
