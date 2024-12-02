@@ -16,8 +16,9 @@ return new class extends Migration
             $table->enum('transaction_type', ['Purchase', 'Production', 'Adjustment']);
             $table->timestamps();
 
-            $table->foreign('material_id')->references('id')->on('materials');
-            $table->foreign('performed_by')->references('id')->on('users');
+            // Clave foránea con el comportamiento de eliminación
+            $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
+            $table->foreign('performed_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 

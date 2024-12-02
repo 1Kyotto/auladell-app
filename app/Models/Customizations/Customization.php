@@ -31,8 +31,8 @@ class Customization extends Model
         return $this->hasMany(CustomizationSelection::class);
     }
 
-    public function customizationHierarchies()
+    public function options()
     {
-        return $this->hasMany(CustomizationHierarchy::class);
+        return $this->hasMany(CustomizationOption::class);
     }
 }

@@ -11,10 +11,9 @@ return new class extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
-            $table->string('email', 30)->unique();
-            $table->string('phone',9);
+            $table->string('email', 255)->unique();
+            $table->string('phone', 9);
             $table->timestamps();
-            
         });
     }
 

@@ -13,6 +13,12 @@ nav.active ul {
     opacity: 1;
 }
 
+.input-checkout::placeholder {
+    color: #4e5154;
+    opacity: 1;
+    font-family: "Montserrat", serif;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {

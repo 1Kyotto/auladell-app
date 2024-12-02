@@ -16,5 +16,29 @@ class CustomizationsSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        Customization::create([
+            'name' => 'Largo de la cadena',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Customization::create([
+            'name' => 'Incrustación de piedra',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Customization::create([
+            'name' => 'Talla del anillo',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Customization::create([
+            'name' => 'Bañado',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

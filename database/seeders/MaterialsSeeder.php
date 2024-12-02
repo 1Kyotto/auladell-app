@@ -158,21 +158,21 @@ class MaterialsSeeder extends Seeder
         ]);
 
         Material::create([
-            'name' => 'Esmeralda',
+            'name' => 'Green Emerald rounds',
             'description' => 'Piedra preciosa verde utilizada en joyería fina.',
             'unit' => 'quilates',
-            'price_per_unit' => 650000, // Precio aproximado en CLP por quilate de esmeralda
-            'quantity_in_stock' => rand(10, 50),
+            'price_per_unit' => 260000, // Precio aproximado en CLP por quilate de esmeralda
+            'quantity_in_stock' => rand(1, 4),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Material::create([
-            'name' => 'Zafiro',
+            'name' => 'Blue Sapphires',
             'description' => 'Piedra preciosa azul valorada en joyería y relojería.',
             'unit' => 'quilates',
-            'price_per_unit' => 450000, // Precio aproximado en CLP por quilate de zafiro
-            'quantity_in_stock' => rand(10, 50),
+            'price_per_unit' => 97700, // Precio aproximado en CLP por quilate de zafiro
+            'quantity_in_stock' => rand(1, 6),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -181,8 +181,8 @@ class MaterialsSeeder extends Seeder
             'name' => 'Rubí',
             'description' => 'Piedra preciosa roja, altamente valorada en joyería.',
             'unit' => 'quilates',
-            'price_per_unit' => 500000, // Precio aproximado en CLP por quilate de rubí
-            'quantity_in_stock' => rand(10, 50),
+            'price_per_unit' => 230000, // Precio aproximado en CLP por quilate de rubí
+            'quantity_in_stock' => rand(1, 4),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -198,41 +198,11 @@ class MaterialsSeeder extends Seeder
         ]);
 
         Material::create([
-            'name' => 'Diamante',
+            'name' => 'Natural Melee Blue Diamonds',
             'description' => 'Piedra preciosa extremadamente valiosa y resistente.',
             'unit' => 'quilates',
-            'price_per_unit' => 2000000, // Precio aproximado en CLP por quilate de diamante
-            'quantity_in_stock' => rand(5, 20),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        Material::create([
-            'name' => 'Ágata',
-            'description' => 'Piedra semipreciosa de múltiples colores, popular en joyería y decoración.',
-            'unit' => 'quilates',
-            'price_per_unit' => 5000, // Precio aproximado en CLP por quilate de ágata
-            'quantity_in_stock' => rand(100, 300),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        Material::create([
-            'name' => 'Cuarzo Rosa',
-            'description' => 'Piedra semipreciosa rosa, simboliza el amor y la armonía.',
-            'unit' => 'quilates',
-            'price_per_unit' => 7000, // Precio aproximado en CLP por quilate de cuarzo rosa
-            'quantity_in_stock' => rand(100, 300),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        Material::create([
-            'name' => 'Ojo de Tigre',
-            'description' => 'Piedra semipreciosa marrón y dorada, utilizada en amuletos de protección.',
-            'unit' => 'quilates',
-            'price_per_unit' => 6000, // Precio aproximado en CLP por quilate de ojo de tigre
-            'quantity_in_stock' => rand(100, 300),
+            'price_per_unit' => 253000,
+            'quantity_in_stock' => rand(1, 4),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

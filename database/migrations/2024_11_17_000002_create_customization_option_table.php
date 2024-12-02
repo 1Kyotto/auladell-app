@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customization_hierarchy', function (Blueprint $table) {
+        Schema::create('customization_option', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('customization_id');
-            $table->decimal('additional_cost', 10, 2)->default(0);
+            $table->string('option_name');
+
+            $table->foreign('customization_id')->references('id')->on('customizations');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customization_hierarchy');
+        Schema::dropIfExists('customization_option');
     }
 };

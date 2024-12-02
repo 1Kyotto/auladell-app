@@ -123,18 +123,11 @@
                 <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-[300px] object-cover">
             </a>
             <h4 class="pt-3">{{$product->name}}</h4>
-            <span>CL$ {{ number_format($product->base_price, 0) }}</span>
-            <div class="">
-                <button>
-                    Añadir al carro
-                    <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                </button>
-            </div>
+            <span data-calculated-price="{{ $product->calculated_price }}">CL$ {{ $product->formatted_price }}</span>
         </div>    
         @endforeach
+
+        <div id="end-marker" class="w-full h-1 hidden"></div>
     </div>
     {{--PRODUCTOS--}}
 
@@ -207,7 +200,7 @@
 </script>
 {{--FUNCIONALIDAD DEL DROPDOWN--}}
 
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
@@ -267,7 +260,7 @@
 
                 const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
                 const materialMatch = selectedMaterials.length === 0 || selectedMaterials.some(material => productMaterials.includes(material));
-                const gemstoneMatch = selectedGemstones.length === 0 || selectedGemstones.some(gemstone => productMaterials.includes(gemstone));
+                const gemstoneMatch = selectedGemstones.length === 0 || selectedGemstones.some(gemstone => product.gemstones.includes(gemstone));
 
                 return categoryMatch && materialMatch && gemstoneMatch;
             });
@@ -296,20 +289,12 @@
 
             products.forEach(product => {
                 const productHtml = `
-                    <div class="w-[30%] mr-7 mb-6">
+                    <div class="w-[30%] mr-7 mb-6 font-montserrat">
                         <a href="/jewelry/product/${product.id}" class="w-full h-[300px]">
                             <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
                         </a>
                         <h4 class="pt-3">${product.name}</h4>
-                        <span>CL$ ${new Intl.NumberFormat().format(product.base_price)}</span>
-                        <div>
-                            <button>Añadir al carro
-                                <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                                    <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                                    <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                                </svg>
-                            </button>
-                        </div>
+                        <span class="font-bold">CL$ ${new Intl.NumberFormat("en-US").format(product.calculated_price)}</span>
                     </div>
                 `;
                 productsContainer.innerHTML += productHtml;
@@ -320,5 +305,32 @@
         filterProducts();
     });
 </script>
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
+
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebar = document.querySelector(".sidebar");
+        const endMarker = document.getElementById("end-marker");
+        const productsContainer = document.querySelector(".products-container");
+        const initialSidebarTop = sidebar.offsetTop;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    // Cuando el marcador no es visible, "pegar" el sidebar
+                    sidebar.style.position = "absolute";
+                    sidebar.style.top = `${productsContainer.offsetHeight - sidebar.offsetHeight}px`;
+                } else {
+                    // Volver a sticky cuando el marcador es visible
+                    sidebar.style.position = "sticky";
+                    sidebar.style.top = "0";
+                }
+            });
+        }, { threshold: 0 });
+
+        observer.observe(endMarker);
+    });
+</script>
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
 @endsection
