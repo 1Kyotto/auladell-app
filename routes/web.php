@@ -11,6 +11,7 @@ use App\Http\Controllers\Users\RegisterController;
 use App\Http\Controllers\Users\ForgotPasswordController;
 use App\Http\Controllers\Users\ResetPasswordController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Materials\MaterialController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Payments\PaymentController;
 
@@ -19,18 +20,31 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 //Admin
 Route::middleware(['auth', \App\Http\Middleware\AuthAdmin::class])->group(function () {
-    Route::get('/dashboard/product/', [AdminController::class, 'productManagment'])->name('admin.product');
     Route::get('/dashboard/orders/', [AdminController::class, 'orders'])->name('admin.order');
     Route::get('/dashboard/reports/', [AdminController::class, 'reports'])->name('admin.rerpot');
     Route::get('/dashboard/materials/', [AdminController::class, 'materials'])->name('admin.material');
 
     //Gestión de Productos
-    Route::get('/dashboard/new/product/create', [AdminProdController::class, 'create'])->name('product.create');
-    Route::post('/dashboard/new/product/store', [AdminProdController::class, 'store'])->name('product.store');
-    Route::get('/dashboard/product/{id}/edit', [AdminProdController::class, 'edit'])->name('product.edit');
-    Route::put('/dashboard/product/{id}', [AdminProdController::class, 'update'])->name('product.update');
-    Route::delete('/dashboard/product/{id}', [AdminProdController::class, 'destroy'])->name('product.destroy');
-    Route::patch('/dashboard/product/{id}/toggle', [AdminProdController::class, 'toggleStatus'])->name('product.toggleStatus');
+    Route::get('/dashboard/product/', [AdminProdController::class, 'index'])->name('admin.product');
+    Route::post('/dashboard/product/store', [AdminProdController::class, 'store'])->name('admin.product.store');
+    Route::post('/dashboard/product/store-step1', [AdminProdController::class, 'storeStep1'])->name('admin.products.store-step1');
+
+    Route::patch('/dashboard/product/{product}/toggle-status', [AdminProdController::class, 'toggleStatus'])->name('admin.product.toggle-status');
+
+    Route::get('/dashboard/product/{productId}/customizations', [AdminProdController::class, 'getCustomizations'])->name('admin.products.customizations');
+    Route::delete('/dashboard/product/customization/{id}', [AdminProdController::class, 'deleteCustomization'])->name('admin.products.customization.delete');
+    
+    Route::get('/dashboard/customization/{customization}/options', [AdminProdController::class, 'getCustomizationOptions'])->name('admin.products.customization-options');
+    Route::post('/dashboard/product/store-customization', [AdminProdController::class, 'store'])->name('admin.products.store-customization');
+
+    Route::get('/dashboard/product/{product}/edit', [AdminProdController::class, 'edit'])->name('admin.product.edit');
+    Route::put('/dashboard/product/{product}/update', [AdminProdController::class, 'update'])->name('admin.product.update');
+    
+    //Gestion de Materiales
+    Route::get('/dashboard/materials', [MaterialController::class, 'index'])->name('admin.materials');
+    Route::post('/dashboard/materials', [MaterialController::class, 'store'])->name('admin.materials.store');
+    Route::get('/dashboard/materials/{material}/edit', [MaterialController::class, 'edit'])->name('admin.materials.edit');
+    Route::put('/dashboard/materials/{material}', [MaterialController::class, 'update'])->name('admin.materials.update');
 });
 //
 
@@ -78,6 +92,10 @@ Route::post('/checkout/payment', [PaymentController::class, 'store'])->name('pay
 //
 
 //Pedidos
+Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('admin.order');
+Route::get('/dashboard/order/{order}', [OrderController::class, 'show'])->name('admin.order.show');
+Route::put('/dashboard/order/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.order.status');
+
 Route::get('/order-status', [OrderController::class, 'orderNumber'])->name('order.number');
 Route::post('/status', [OrderController::class, 'status'])->name('order.status');
 //

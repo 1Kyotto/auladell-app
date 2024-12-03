@@ -7,6 +7,7 @@
         <title>Auladell Joyas</title>
         @vite('resources/css/app.css')
         @vite('resources/css/custom.css')
+        @vite(['resources/js/app.js'])
     </head>
     <body class="bg-cwhite-500 grid xl:grid-rows-[auto_1fr_auto] xl:min-h-dvh">
         <header class="w-full bg-white text-accents-900 px-4 md:px-20 xl:px-8 flex justify-between font-cinzel border-[1px] border-[#CED4E0]">
@@ -328,5 +329,15 @@
                 navbar.classList.toggle('active');
             }
         </script>
+
+        @auth
+        <script>
+            window.userId = {{ auth()->id() }};
+        </script>
+        @else
+        <script>
+            window.guestId = "{{ session('guest_id') }}";
+        </script>
+        @endauth
     </body>
 </html>

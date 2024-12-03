@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customization_id');
             $table->string('option_name');
+            $table->boolean('requires_material')->default(true);
 
             $table->foreign('customization_id')->references('id')->on('customizations');
         });

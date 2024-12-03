@@ -8,6 +8,7 @@ use App\Models\Orders\Order;
 use App\Models\Orders\OrderProduct;
 use App\Models\Orders\Payment;
 use App\Models\ShippingAddresses\ShippingAddress;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,15 +74,103 @@ class PaymentController
 
             $order->update(['order_num' => $orderNumber]);
 
-            // Crear los productos asociados a la orden
+            // Crear los productos asociados a la orden y mantener un mapeo
+            $cartProductToOrderProduct = [];
             foreach ($cartProducts as $cartProduct) {
-                OrderProduct::create([
+                Log::info('Creando OrderProduct', [
+                    'cart_product_id' => $cartProduct->id,
+                    'product_id' => $cartProduct->product_id,
+                    'quantity' => $cartProduct->quantity,
+                    'price' => $cartProduct->price
+                ]);
+
+                $orderProduct = OrderProduct::create([
                     'order_id' => $order->id,
                     'product_id' => $cartProduct->product_id,
                     'quantity' => $cartProduct->quantity,
                     'unit_price' => $cartProduct->price,
                     'total_price' => $cartProduct->price * $cartProduct->quantity,
                 ]);
+
+                Log::info('OrderProduct creado', [
+                    'order_product_id' => $orderProduct->id,
+                    'cart_product_id' => $cartProduct->id
+                ]);
+
+                $cartProductToOrderProduct[$cartProduct->id] = $orderProduct->id;
+            }
+
+            Log::info('Mapeo de CartProduct a OrderProduct', [
+                'mapping' => $cartProductToOrderProduct
+            ]);
+
+            // Actualizar las customizaciones: desvincular del cart_product y vincular al order_product
+            foreach ($cartProducts as $cartProduct) {
+                $orderProductId = $cartProductToOrderProduct[$cartProduct->id] ?? null;
+                Log::info('Actualizando customizaciones', [
+                    'cart_product_id' => $cartProduct->id,
+                    'order_product_id' => $orderProductId,
+                    'mapping_completo' => $cartProductToOrderProduct
+                ]);
+                
+                // Obtener todas las customizaciones y actualizarlas una por una
+                $customizations = $cartProduct->customizations()->get();
+                foreach ($customizations as $customization) {
+                    try {
+                        $customization->update([
+                            'cart_product_id' => null,
+                            'order_product_id' => $orderProductId
+                        ]);
+                        Log::info('Customización actualizada', [
+                            'customization_id' => $customization->id,
+                            'nuevo_order_product_id' => $orderProductId
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::error('Error al actualizar customización', [
+                            'customization_id' => $customization->id,
+                            'error' => $e->getMessage()
+                        ]);
+                        throw $e;
+                    }
+                }
+            }
+
+            // Actualizar el inventario de materiales
+            foreach ($cartProducts as $cartProduct) {
+                $product = $cartProduct->product;
+                
+                // Restar materiales del producto base
+                foreach ($product->materials as $material) {
+                    $quantityToReduce = $material->pivot->quantity_needed * $cartProduct->quantity;
+                    $material->decrement('quantity_in_stock', $quantityToReduce);
+                    
+                    // Registrar el cambio en el inventario
+                    DB::table('inventory_change')->insert([
+                        'material_id' => $material->id,
+                        'performed_by' => $userId,
+                        'quantity' => -$quantityToReduce,
+                        'transaction_type' => 'Production'
+                    ]);
+                }
+                
+                // Restar materiales de las personalizaciones
+                $customizations = $cartProduct->customizations;
+                foreach ($customizations as $customization) {
+                    foreach ($customization->customizationOption->materials as $material) {
+                        $quantityToReduce = $material->pivot->quantity_needed * $cartProduct->quantity;
+                        $material->decrement('quantity_in_stock', $quantityToReduce);
+                        
+                        // Registrar el cambio en el inventario
+                        DB::table('inventory_change')->insert([
+                            'material_id' => $material->id,
+                            'performed_by' => $userId,
+                            'quantity' => -$quantityToReduce,
+                            'transaction_type' => 'Production',
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    }
+                }
             }
 
             // Crear el pago asociado a la orden
@@ -94,10 +183,10 @@ class PaymentController
             ]);
 
             if ($payment->payment_status === 'Confirmed') {
-                $order->update(['status' => 'Shipped']);
+                $order->update(['status' => 'Production']);
             }
 
-            // Limpiar el carrito después de procesar la orden
+            // Eliminar los productos del carrito
             CartProduct::where('cart_id', $cartId)->delete();
 
             // Confirmar la transacción

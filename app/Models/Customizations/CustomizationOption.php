@@ -11,7 +11,7 @@ class CustomizationOption extends Model
     use HasFactory;
 
     protected $table = 'customization_option';
-    protected $fillable = ['customization_id', 'option_name', 'price_adjustment'];
+    protected $fillable = ['customization_id', 'option_name', 'requires_material'];
     public $timestamps = false;
 
     public function customization()

@@ -2,11 +2,13 @@
 
 namespace App\Models\Orders;
 
+use App\Models\Customizations\CustomizationSelection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Models\Products\Product;
+use Illuminate\Database\Eloquent\Model;
 
-class OrderProduct extends Pivot
+class OrderProduct extends Model
 {
     use HasFactory;
 
@@ -22,5 +24,10 @@ class OrderProduct extends Pivot
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function customizationSelections()
+    {
+        return $this->hasMany(CustomizationSelection::class);
     }
 }

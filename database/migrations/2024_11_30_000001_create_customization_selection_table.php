@@ -10,12 +10,15 @@ return new class extends Migration
     {
         Schema::create('customization_selection', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_product_id');
-            $table->unsignedBigInteger('customization_id');
-            $table->integer('quantity');
-
+            $table->unsignedBigInteger('cart_product_id')->nullable();
+            $table->unsignedBigInteger('order_product_id')->nullable();
+            $table->unsignedBigInteger('customization_option_id');
+            $table->integer('quantity')->default(1);
+            $table->timestamps();
+            
+            $table->foreign('cart_product_id')->references('id')->on('cart_product');
             $table->foreign('order_product_id')->references('id')->on('order_product');
-            $table->foreign('customization_id')->references('id')->on('customizations');
+            $table->foreign('customization_option_id')->references('id')->on('customization_option');
         });
     }
 

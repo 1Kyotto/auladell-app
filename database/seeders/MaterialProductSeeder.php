@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\PriceHelper;
 use App\Models\Materials\MaterialProduct;
 use App\Models\Products\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -79,18 +80,45 @@ class MaterialProductSeeder extends Seeder
         ]);
         //Producto 8
 
-        $products = Product::all();
-        $mano_obra = 10000;
-        $horas = [3, 5, 3, 5, 4, 6, 6, 8];
+        // Actualizar los precios base de todos los productos
+        $this->updateBaseProducts();
+    }
 
+    private function updateBaseProducts()
+    {
+        $margin = 0.20; // 20% de margen
+        $iva = 0.19;    // 19% de IVA
+        $products = Product::with('materials')->get();
+    
         foreach ($products as $product) {
-            $costo_mano_obra = $mano_obra * $horas[$product->id - 1];
+            $materialProduct = MaterialProduct::where('product_id', $product->id)->first();
+            
+            if ($materialProduct) {
+                $material = $materialProduct->material;
+                $quantityNeeded = $materialProduct->quantity_needed;
+                
+                // Calcular costo del material
+                $materialCost = $material->price_per_unit * $quantityNeeded;
+                
+                // Calcular costo de mano de obra
+                $laborCost = $product->labor_hours * $product->labor_cost_per_hour;
+                
+                // Precio raw (materiales + mano de obra)
+                $rawPrice = round($materialCost + $laborCost);
+                
+                // Precio con margen
+                $priceWithMargin = round($rawPrice * (1 + $margin));
+                
+                // Precio final con IVA
+                $finalPrice = round($priceWithMargin * (1 + $iva));
 
-            $total = MaterialProduct::where('product_id', $product->id)
-                ->join('materials', 'material_product.material_id', '=', 'materials.id')
-                ->sum(DB::raw('materials.price_per_unit * material_product.quantity_needed'));
-
-            $product->update(['base_price' => ($total + $costo_mano_obra)]);
+                $finalPrice = PriceHelper::applyAttractiveRounding($finalPrice);
+                
+                $product->update([
+                    'raw_price' => $rawPrice,
+                    'final_price' => $finalPrice
+                ]);
+            }
         }
     }
 }
