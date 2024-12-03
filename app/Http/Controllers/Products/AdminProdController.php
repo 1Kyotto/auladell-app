@@ -103,8 +103,26 @@ class AdminProdController
                 'materials.*' => 'required|exists:materials,id',
                 'quantities' => 'required|array|min:1',
                 'quantities.*' => 'required|numeric|min:0',
-                'base_material' => 'required|exists:materials,id',
+                'base_material' => 'required|exists:materials,id|in:' . implode(',', $request->input('materials', [])),
+            ], [
+                'base_material.required' => 'Debe seleccionar un material base para el producto.',
+                'base_material.exists' => 'El material base seleccionado no es válido.',
+                'base_material.in' => 'El material base debe ser uno de los materiales seleccionados.',
+                'materials.required' => 'Debe seleccionar al menos un material.',
+                'materials.min' => 'Debe seleccionar al menos un material.',
+                'quantities.required' => 'Debe especificar las cantidades para todos los materiales.',
+                'quantities.*.required' => 'La cantidad es requerida para cada material.',
+                'quantities.*.numeric' => 'La cantidad debe ser un número.',
+                'quantities.*.min' => 'La cantidad no puede ser negativa.',
             ]);
+
+            // Verificar que el material base está en la lista de materiales
+            $baseMaterialIndex = array_search($validated['base_material'], $validated['materials']);
+            if ($baseMaterialIndex === false) {
+                throw new \Illuminate\Validation\ValidationException(validator([], []), [
+                    'base_material' => ['El material base debe estar incluido en la lista de materiales.']
+                ]);
+            }
 
             // Procesar y guardar la imagen
             if ($request->hasFile('image')) {
@@ -290,103 +308,110 @@ class AdminProdController
         }
     }
 
-    public function edit(Product $product)
+    public function edit($id)
     {
-        $product->load('materials');
-        // Asegurarse de que la URL de la imagen sea relativa al storage
-        $product->image = str_replace('storage/', '', $product->image);
-        return response()->json($product);
+        $adminName = Auth::user()->name;
+        $product = Product::with('materials')->findOrFail($id);
+        $materials = Material::all();
+        return view('dashboard.edit', compact('product', 'materials', 'adminName'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
         try {
             DB::beginTransaction();
-    
-            // Validar los datos recibidos del formulario
+
+            $product = Product::findOrFail($id);
+
+            // Validar los datos recibidos
             $validated = $request->validate([
                 'name' => 'required|string|max:100',
                 'category' => 'required|in:Aros,Anillos,Brazaletes,Collares',
-                'image' => 'nullable|image|max:2048', // Opcional para actualización
+                'image' => 'nullable|image|max:2048',
                 'labor_hours' => 'required|numeric|min:0',
                 'labor_cost_per_hour' => 'required|numeric|min:0',
-                'raw_price' => 'required|numeric|min:0',
-                'price_with_margin' => 'required|numeric|min:0',
-                'final_price' => 'required|numeric|min:0',
-                'materials' => 'required|array|min:1',
-                'materials.*' => 'required|exists:materials,id',
-                'quantities' => 'required|array|min:1',
-                'quantities.*' => 'required|numeric|min:0',
-                'base_material' => 'required|exists:materials,id',
+                'materials' => 'required|array',
+                'materials.*' => 'exists:materials,id',
+                'quantities' => 'required|array',
+                'quantities.*' => 'numeric|min:0'
             ]);
-    
-            // Actualizar la imagen si se proporciona una nueva
+
+            // Calcular precios
+            $materialsCost = 0;
+            $laborCost = $validated['labor_hours'] * $validated['labor_cost_per_hour'];
+
+            // Calcular costo total de materiales
+            foreach ($validated['materials'] as $index => $materialId) {
+                if (!empty($validated['quantities'][$index])) {
+                    $material = Material::find($materialId);
+                    if ($material) {
+                        $materialsCost += $material->price_per_unit * $validated['quantities'][$index];
+                    }
+                }
+            }
+
+            // Calcular precios finales
+            $rawPrice = $laborCost + $materialsCost;
+            $priceWithMargin = $rawPrice * 1.2; // 30% de margen
+            $finalPrice = ceil($priceWithMargin * 1.19 / 100) * 100; // 19% IVA y redondeo
+
+            // Actualizar imagen si se proporcionó una nueva
             if ($request->hasFile('image')) {
-                // Eliminar la imagen anterior
                 if ($product->image) {
                     Storage::disk('public')->delete($product->image);
                 }
                 $imagePath = $request->file('image')->store('products', 'public');
             }
-    
-            // Actualizar el producto con los datos validados
-            $product->update([
+
+            // Actualizar producto con los precios calculados
+            $updateData = [
                 'name' => $validated['name'],
-                'raw_price' => $validated['raw_price'],
-                'final_price' => $validated['final_price'],
+                'category' => $validated['category'],
                 'labor_hours' => $validated['labor_hours'],
                 'labor_cost_per_hour' => $validated['labor_cost_per_hour'],
-                'category' => $validated['category'],
-                'image' => $request->hasFile('image') ? $imagePath : $product->image,
-            ]);
-    
-            // Eliminar las relaciones existentes
-            $product->materials()->detach();
-            DB::table('customization_material')
-                ->where('product_id', $product->id)
-                ->where('customization_option_id', 1)
-                ->delete();
-    
-            // Asociar los nuevos materiales con sus cantidades
-            $baseMaterialQuantity = 1;
-            foreach ($validated['materials'] as $index => $materialId) {
-                if (isset($validated['quantities'][$index])) {
-                    $product->materials()->attach($materialId, [
-                        'quantity_needed' => $validated['quantities'][$index],
-                    ]);
+                'raw_price' => $rawPrice,
+                'price_with_margin' => $priceWithMargin,
+                'final_price' => $finalPrice
+            ];
 
-                    if ($materialId == $validated['base_material']) {
-                        $baseMaterialQuantity = $validated['quantities'][$index];
-                    }
+            if ($request->hasFile('image')) {
+                $updateData['image'] = $imagePath;
+            }
+
+            $product->update($updateData);
+
+            // Actualizar materiales
+            $materials = [];
+            foreach ($validated['materials'] as $index => $materialId) {
+                if (!empty($validated['quantities'][$index])) {
+                    $materials[$materialId] = ['quantity_needed' => $validated['quantities'][$index]];
                 }
             }
-    
-            // Insertar nuevo material base en customization_material
-            DB::table('customization_material')->insert([
-                'customization_option_id' => 1,
-                'material_id' => $validated['base_material'],
-                'product_id' => $product->id,
-                'quantity_needed' => $baseMaterialQuantity,
-                'price_adjustment' => 0,
-                'is_base' => true
-            ]);
-    
+            
+            $product->materials()->sync($materials);
+
             DB::commit();
+
+            // Log para debugging
+            Log::info('Product updated', [
+                'product_id' => $id,
+                'raw_price' => $rawPrice,
+                'price_with_margin' => $priceWithMargin,
+                'final_price' => $finalPrice,
+                'materials_cost' => $materialsCost,
+                'labor_cost' => $laborCost
+            ]);
+
             return redirect()->route('admin.product')->with('success', 'Producto actualizado exitosamente');
-    
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Error de validación',
-                'errors' => $e->errors()
-            ], 422);
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al actualizar el producto: ' . $e->getMessage()
-            ], 500);
+            Log::error('Error updating product', [
+                'product_id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return back()->withInput()->with('error', 'Error al actualizar el producto: ' . $e->getMessage());
         }
     }
 
@@ -578,24 +603,44 @@ class AdminProdController
                     ]);
                 }
 
-                // Archivar relaciones de órdenes usando consulta directa
+                // Primero archivar las relaciones de order_product y sus personalizaciones
                 DB::table('order_product')
                     ->where('product_id', $product->id)
                     ->orderBy('id')
                     ->chunk(100, function($orderProducts) use ($archivedProduct) {
-                        $records = [];
                         foreach($orderProducts as $op) {
-                            $records[] = [
+                            // Primero archivar las selecciones de personalización
+                            $selections = DB::table('customization_selection')
+                                ->where('order_product_id', $op->id)
+                                ->get();
+                            
+                            foreach($selections as $selection) {
+                                DB::table('archived_customization_selection')->insert([
+                                    'order_product_id' => $op->id,
+                                    'customization_option_id' => $selection->customization_option_id,
+                                    'archived_at' => now()
+                                ]);
+                            }
+                            
+                            // Eliminar las selecciones originales
+                            DB::table('customization_selection')
+                                ->where('order_product_id', $op->id)
+                                ->delete();
+
+                            // Archivar el order_product
+                            DB::table('archived_order_product')->insert([
                                 'order_id' => $op->order_id,
                                 'product_id' => $archivedProduct->id,
                                 'quantity' => $op->quantity,
                                 'unit_price' => $op->unit_price,
                                 'total_price' => $op->total_price,
                                 'archived_at' => now()
-                            ];
+                            ]);
                         }
-                        DB::table('archived_order_product')->insert($records);
                     });
+
+                // Luego eliminar los registros originales de order_product
+                DB::table('order_product')->where('product_id', $product->id)->delete();
 
                 // Eliminar relaciones originales
                 $product->customizations()->detach();
@@ -616,22 +661,18 @@ class AdminProdController
                     ->where('product_id', $product->id)
                     ->update(['product_id' => $archivedProduct->id]);
 
-                // Eliminar el producto original
+                // Finalmente eliminar el producto original
                 $product->delete();
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Producto archivado exitosamente']);
+            return redirect()->route('admin.product');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error al archivar el producto: ' . $e->getMessage());
             Log::error('Stack trace: ' . $e->getTraceAsString());
             
-            return response()->json([
-                'success' => false,
-                'error' => 'Error al archivar el producto',
-                'message' => $e->getMessage()
-            ], 500);
+            return back()->with('error', 'Error al archivar el producto: ' . $e->getMessage());
         }
     }
 }

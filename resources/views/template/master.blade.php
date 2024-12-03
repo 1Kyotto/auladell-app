@@ -262,20 +262,12 @@
                     <a href="{{ route('jewelry.index', ['type' => 'rings']) }}" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
                     <a href="{{ route('jewelry.index', ['type' => 'bracelets']) }}" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
                     <a href="{{ route('jewelry.index', ['type' => 'necklaces']) }}" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Joya Personalizada</a>
                     <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="hover:text-accents-600 transition-colors duration-150">Todas las colecciones</a>
-                </div>
-
-                <div class="flex flex-col text-start order-3 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
-                    <h4 class="pb-1 font-bold">Información</h4>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Acerca de Auladell</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Política de privacidad</a>
                 </div>
 
                 <div class="flex flex-col text-start order-4 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
                     <h4 class="pb-1 font-bold">Servicio al cliente</h4>
                     <a href="{{ route('order.number') }}" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Cambios, devoluciones y garantía</a>
                 </div>
 
                 <div class="order-1 py-6 w-[70%] md:py-8 xl:w-fit xl:py-0 xl:order-5">

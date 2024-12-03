@@ -14,6 +14,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Materials\MaterialController;
 use App\Http\Controllers\Orders\OrderController;
 use App\Http\Controllers\Payments\PaymentController;
+use App\Http\Controllers\Reports\ReportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -38,10 +39,14 @@ Route::middleware(['auth', \App\Http\Middleware\AuthAdmin::class])->group(functi
     Route::post('/dashboard/product/store-customization', [AdminProdController::class, 'store'])->name('admin.products.store-customization');
 
     Route::get('/dashboard/product/{product}/edit', [AdminProdController::class, 'edit'])->name('admin.product.edit');
-    Route::put('/dashboard/product/{product}/update', [AdminProdController::class, 'update'])->name('admin.product.update');
+    Route::put('/dashboard/product/{product}', [AdminProdController::class, 'update'])->name('admin.product.update');
+    Route::post('/dashboard/product/calculate-prices', [AdminProdController::class, 'calculatePricesAjax'])->name('admin.product.calculate-prices');
 
     Route::delete('/dashboard/product/{id}', [AdminProdController::class, 'destroy'])->name('admin.product.destroy');
     
+    Route::get('/dashboard/reports/', [AdminController::class, 'reports'])->name('admin.report');
+    Route::get('/dashboard/reports/generate', [ReportController::class, 'generateReport'])->name('admin.reports.generate');
+
     //Gestion de Materiales
     Route::get('/dashboard/materials', [MaterialController::class, 'index'])->name('admin.materials');
     Route::post('/dashboard/materials', [MaterialController::class, 'store'])->name('admin.materials.store');

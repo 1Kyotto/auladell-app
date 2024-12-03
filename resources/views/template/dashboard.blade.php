@@ -125,8 +125,8 @@
                                     </svg>
                                 </div>
                                 Materiales</a>
-                            <a href="{{ route('admin.rerpot') }}" class="w-full px-12 pt-5 pb-5 flex items-center gap-4 border-b
-                            {{ request()->routeIs('admin.rerpot') ? 'bg-[#0E0E0E] border-l-[3px] border-l-[#006C55]' : 'border-l-[3px] border-l-transparent' }}">
+                            <a href="{{ route('admin.report') }}" class="w-full px-12 pt-5 pb-5 flex items-center gap-4 border-b
+                            {{ request()->routeIs('admin.report') ? 'bg-[#0E0E0E] border-l-[3px] border-l-[#006C55]' : 'border-l-[3px] border-l-transparent' }}">
                                 <div class="bg-[#006C55] w-8 h-8 flex items-center justify-center rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cwhite-500" viewBox="0 0 24 24" fill="none">
                                         <path d="M7 17L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
