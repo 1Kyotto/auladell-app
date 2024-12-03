@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Cart;
 use App\Models\Auth\Guest;
 use App\Models\Carts\Cart;
 use App\Models\Carts\CartProduct;
+use App\Models\Customizations\CustomizationSelection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -66,8 +68,28 @@ class CartController
         // Si hay un carrito, obtener los productos
         if ($cart) {
             $products = CartProduct::where('cart_id', $cart->id)
-                ->with('product') // Si tienes relación con el modelo Product
+                ->with(['product', 'customizations.customizationOption.customization'])
                 ->get();
+
+            // Log para depuración
+            Log::info('Productos del carrito:', [
+                'productos' => $products->map(function($product) {
+                    return [
+                        'id' => $product->id,
+                        'nombre' => $product->product->name,
+                        'customizations' => $product->customizations->map(function($customization) {
+                            return [
+                                'id' => $customization->id,
+                                'customization_option_id' => $customization->customization_option_id,
+                                'option' => $customization->customizationOption ? [
+                                    'id' => $customization->customizationOption->id,
+                                    'name' => $customization->customizationOption->name
+                                ] : null
+                            ];
+                        })
+                    ];
+                })
+            ]);
         }
 
         // Calcular el total de ítems
@@ -79,36 +101,35 @@ class CartController
 
     public function addToCart(Request $request)
     {
-        // Validación de datos de entrada
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'total_price' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:1',
-        ]);
-
-        // Obtener el user_id si está autenticado
-        $userId = Auth::check() ? Auth::id() : null;
-
-        // Obtener el guest_id desde la cookie
-        $guestId = $request->cookie('guest_id');
-
-        // Si no hay cookie, crear un nuevo invitado y establecer la cookie
-        if (!$userId && !$guestId) {
-            $guest = Guest::create([
-                'name' => 'Invitado',
-                'email' => 'guest_' . Str::uuid() . '@example.com',
-                'phone' => '000000000',
+        try {
+            // Log para ver los datos que llegan
+            Log::info('Datos recibidos:', [
+                'request_all' => $request->all(),
+                'customizations' => $request->input('customizations'),
+                'decoded_customizations' => json_decode($request->customizations, true)
             ]);
 
-            $guestId = $guest->id;
+            // Decodificar el JSON de customizations
+            if ($request->has('customizations')) {
+                $request->merge(['customizations' => json_decode($request->customizations, true)]);
+            }
 
-            // Establecer la cookie para persistir el guest_id
-            cookie()->queue(cookie('guest_id', $guestId, 60 * 24 * 7)); // Duración de 7 días
-        } elseif (!$userId && $guestId) {
-            // Verificar si el guest_id existe en la base de datos
-            $guestExists = Guest::where('id', $guestId)->exists();
-            if (!$guestExists) {
-                // Si el guest_id de la cookie no existe, crear uno nuevo
+            // Validación de datos de entrada
+            $validated = $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'total_price' => 'required|numeric|min:0',
+                'quantity' => 'required|integer|min:1',
+                'customizations' => 'required|array',
+                'customizations.*.option_id' => 'required|exists:customization_option,id',
+                'customizations.*.quantity' => 'required|integer|min:1',
+            ]);
+
+            // Obtener el user_id si está autenticado
+            $userId = Auth::check() ? Auth::id() : null;
+            $guestId = $request->cookie('guest_id');
+
+            // Si no hay cookie o el guest no existe, crear un nuevo invitado
+            if (!$userId && (!$guestId || !Guest::where('id', $guestId)->exists())) {
                 $guest = Guest::create([
                     'name' => 'Invitado',
                     'email' => 'guest_' . Str::uuid() . '@example.com',
@@ -116,114 +137,155 @@ class CartController
                 ]);
 
                 $guestId = $guest->id;
-
-                // Actualizar la cookie con el nuevo guest_id
-                cookie()->queue(cookie('guest_id', $guestId, 60 * 24 * 7)); // Duración de 7 días
+                cookie()->queue(cookie('guest_id', $guestId, 60 * 24 * 7));
             }
-        }
 
-        // Obtener o crear el carrito asociado al usuario o invitado
-        try {
+            DB::beginTransaction();
+
+            // Obtener o crear el carrito
             $cart = Cart::firstOrCreate([
                 'user_id' => $userId,
                 'guest_id' => $userId ? null : $guestId,
             ]);
-        } catch (\Exception $e) {
-            // \Log::error('Error al crear o buscar el carrito:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'Hubo un problema al agregar el producto al carrito.');
-        }
 
-        // Agregar o actualizar el producto en el carrito
-        try {
-            for ($i = 0; $i < $validated['quantity']; $i++) {
-                CartProduct::create([
-                    'cart_id' => $cart->id,
-                    'product_id' => $validated['product_id'],
-                    'quantity' => 1,
-                    'price' => $validated['total_price'],
+            // Crear el registro en cart_product
+            $cartProduct = CartProduct::create([
+                'cart_id' => $cart->id,
+                'product_id' => $validated['product_id'],
+                'quantity' => $validated['quantity'],
+                'price' => $validated['total_price'],
+            ]);
+
+            // Log para debug
+            Log::info('CartProduct creado:', [
+                'cart_product_id' => $cartProduct->id,
+                'cart_id' => $cart->id,
+                'product_id' => $validated['product_id']
+            ]);
+
+            // Guardar las customizaciones
+            foreach ($validated['customizations'] as $customization) {
+                // Log antes de insertar
+                Log::info('Intentando insertar customización:', [
+                    'cart_product_id' => $cartProduct->id,
+                    'customization_option_id' => $customization['option_id'],
+                    'customization_data' => $customization
+                ]);
+
+                CustomizationSelection::create([
+                    'cart_product_id' => $cartProduct->id,
+                    'customization_option_id' => $customization['option_id'],
+                    'quantity' => $customization['quantity']
                 ]);
             }
-        } catch (\Exception $e) {
-            // \Log::error('Error al agregar el producto al carrito:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'No se pudo agregar el producto al carrito.');
-        }
 
-        return redirect()->route('cart.index');
+            DB::commit();
+
+            // Log de éxito
+            Log::info('Producto agregado al carrito exitosamente', [
+                'cart_id' => $cart->id,
+                'product_id' => $validated['product_id'],
+                'price' => $validated['total_price']
+            ]);
+
+            return redirect()->route('cart.index')->with('success', 'Producto agregado al carrito exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error al agregar el producto al carrito:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->back()->with('error', 'Error al agregar el producto al carrito.');
+        }
     }
 
     public function removeFromCart(Request $request)
     {
-        // Validación de datos de entrada
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
-
-        // Obtener el user_id si está autenticado
-        $userId = Auth::check() ? Auth::id() : null;
-
-        // Obtener el guest_id desde la cookie si no está autenticado
-        $guestId = !$userId ? $request->cookie('guest_id') : null;
-
-        // Verificar si hay un carrito activo
-        $cart = Cart::where('user_id', $userId)
-            ->orWhere('guest_id', $guestId)
-            ->first();
-
-        // Si no hay carrito, redirigir con un mensaje
-        if (!$cart) {
-            return redirect()->route('cart.index')->with('error', 'No se encontró un carrito activo.');
-        }
-
-        // Buscar el producto en el carrito
-        $cartProduct = CartProduct::where('cart_id', $cart->id)
-            ->where('product_id', $validated['product_id'])
-            ->first();
-
-        // Si el producto no existe en el carrito, redirigir con un mensaje
-        if (!$cartProduct) {
-            return redirect()->route('cart.index')->with('error', 'El producto no está en el carrito.');
-        }
-
-        // Eliminar el producto del carrito
         try {
+            DB::beginTransaction();
+            
+            // Validación de datos de entrada
+            $validated = $request->validate([
+                'product_id' => 'required|exists:products,id',
+            ]);
+
+            // Obtener el carrito actual de la sesión
+            $cartId = session('cart_id');
+            
+            if (!$cartId) {
+                return redirect()->route('cart.index')->with('error', 'No se encontró un carrito activo.');
+            }
+
+            // Buscar el producto en el carrito
+            $cartProduct = CartProduct::where('cart_id', $cartId)
+                ->where('product_id', $validated['product_id'])
+                ->first();
+
+            if (!$cartProduct) {
+                return redirect()->route('cart.index')->with('error', 'El producto no está en el carrito.');
+            }
+
+            // Eliminar las personalizaciones asociadas
+            CustomizationSelection::where('cart_product_id', $cartProduct->id)->delete();
+            
+            // Eliminar el producto del carrito
             $cartProduct->delete();
+
+            DB::commit();
+            
+            return redirect()->route('cart.index')->with('success', 'Producto eliminado del carrito exitosamente.');
+            
         } catch (\Exception $e) {
-            Log::error('Error al eliminar el producto del carrito:', ['error' => $e->getMessage()]);
+            DB::rollBack();
+            Log::error('Error al eliminar el producto del carrito:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return redirect()->route('cart.index')->with('error', 'No se pudo eliminar el producto del carrito.');
         }
-
-        return redirect()->route('cart.index')->with('success', 'Producto eliminado del carrito.');
     }
 
     public function consolidateCarts($guestCart, $userCart)
     {
-        foreach ($guestCart->products as $guestProduct) {
-            $productId = $guestProduct->id;
-            $quantity = $guestProduct->pivot->quantity;
-            $price = $guestProduct->pivot->price;
+        // Obtener todos los productos del carrito del invitado
+        $guestCartProducts = CartProduct::where('cart_id', $guestCart->id)->get();
 
+        foreach ($guestCartProducts as $guestCartProduct) {
             // Buscar si el producto ya existe en el carrito del usuario
-            $existingProduct = $userCart->products()->where('product_id', $productId)->first();
+            $existingCartProduct = CartProduct::where('cart_id', $userCart->id)
+                ->where('product_id', $guestCartProduct->product_id)
+                ->first();
 
-            if ($existingProduct) {
-                // Si el producto ya existe, sumar las cantidades y mantener el precio más reciente
-                $userCart->products()->updateExistingPivot($productId, [
-                    'quantity' => $existingProduct->pivot->quantity + $quantity,
-                    'price' => $price,
+            if ($existingCartProduct) {
+                // Si el producto ya existe, actualizar la cantidad y el precio
+                $existingCartProduct->update([
+                    'quantity' => $existingCartProduct->quantity + $guestCartProduct->quantity,
+                    'price' => $guestCartProduct->price,
                 ]);
             } else {
-                // Si el producto no existe, agregarlo al carrito del usuario
-                $userCart->products()->attach($productId, [
-                    'quantity' => $quantity,
-                    'price' => $price,
+                // Si el producto no existe, crear un nuevo CartProduct
+                CartProduct::create([
+                    'cart_id' => $userCart->id,
+                    'product_id' => $guestCartProduct->product_id,
+                    'quantity' => $guestCartProduct->quantity,
+                    'price' => $guestCartProduct->price,
+                ]);
+            }
+
+            // Transferir las customizaciones si existen
+            foreach ($guestCartProduct->customizations as $customization) {
+                $customization->update([
+                    'cart_product_id' => $existingCartProduct ? $existingCartProduct->id : CartProduct::where('cart_id', $userCart->id)
+                        ->where('product_id', $guestCartProduct->product_id)
+                        ->first()->id
                 ]);
             }
         }
 
-        // Eliminar primero los productos del carrito de invitado
-        $guestCart->products()->detach();
+        // Eliminar todos los CartProduct del carrito del invitado
+        CartProduct::where('cart_id', $guestCart->id)->delete();
 
-        // Luego, eliminar el carrito del invitado
+        // Eliminar el carrito del invitado
         $guestCart->delete();
     }
 

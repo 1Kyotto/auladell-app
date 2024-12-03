@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\User;
 use App\Models\Auth\Guest;
 use App\Models\Products\Product;
+use App\Models\Carts\CartProduct;
 
 class Cart extends Model
 {
@@ -26,7 +27,13 @@ class Cart extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->using(CartProduct::class)->withPivot('quantity', 'price');
-        //->withTimestamps(); Quizás
+        return $this->belongsToMany(Product::class, 'cart_product')
+            ->withPivot(['quantity', 'price'])
+            ->withTimestamps();
+    }
+
+    public function cartProducts()
+    {
+        return $this->hasMany(CartProduct::class);
     }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->decimal('quantity_needed', 8, 2);
             $table->decimal('price_adjustment', 10, 2);
+            $table->boolean('is_base')->default(false);
 
             $table->foreign('customization_option_id')->references('id')->on('customization_option');
             $table->foreign('material_id')->references('id')->on('materials');

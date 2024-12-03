@@ -17,22 +17,26 @@ class ProductsSeeder extends Seeder
         /*Aros*/
         Product::create([
             'name' => 'Northern Star Stud Earrings',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 3,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Aros',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Product::create([
             'name' => 'Teardrop Dangle Earrings',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 5,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Aros',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -41,22 +45,26 @@ class ProductsSeeder extends Seeder
         /*Anillos*/
         Product::create([
             'name' => 'Sloane Ring',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 3,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Anillos',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Product::create([
             'name' => 'Laney Ring',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 5,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Anillos',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -65,22 +73,26 @@ class ProductsSeeder extends Seeder
         /*Brazaletes*/
         Product::create([
             'name' => 'Ivy Name Paperclip Chain Bracelet',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 4,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Brazaletes',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Product::create([
             'name' => 'The Showstopper Link',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 6,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Brazaletes',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -89,22 +101,26 @@ class ProductsSeeder extends Seeder
         /*Collares*/
         Product::create([
             'name' => 'Engraved Northern Star Necklace',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 6,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Collares',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Product::create([
             'name' => 'Aria Mirror Chain Necklace',
-            'base_price' => 0,
+            'raw_price' => 0,
+            'final_price' => 0,
+            'labor_hours' => 8,
+            'labor_cost_per_hour' => 10000,
             'category' => 'Collares',
             'is_active' => true,
             'image' => 'products/product-image.jpg',
-            'inlay' => false,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

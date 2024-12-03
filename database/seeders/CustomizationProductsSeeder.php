@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Products\Product;
 use App\Models\Customizations\Customization;
 use Illuminate\Support\Facades\DB;
-use App\Models\Customizations\CustomizationHierarchy;
 
 class CustomizationProductsSeeder extends Seeder
 {

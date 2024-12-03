@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Auth\User;
 use Illuminate\Http\Request;
 use App\Models\Products\Product;
 
 class AdminController
 {
-    public function index()
+    public function orders()
     {
-        /*return view('admin.index');*/
-        return view('admin.index');
+        return view('dashboard.order');
     }
 
-    /*public function productManagment(Request $request, $category = null)
+    public function reports()
     {
-        if ($category) {
-            $products = Product::where('category', $category)->get();
-        } else {
-            $products = Product::all();
-        }
-        return view('admin.product', compact('products'));
-    }*/
+        return view('dashboard.report');
+    }
+
+    public function materials()
+    {
+        return view('dashboard.material');
+    }
 }

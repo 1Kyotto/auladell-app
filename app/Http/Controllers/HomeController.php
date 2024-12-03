@@ -9,9 +9,12 @@ class HomeController
 {
     public function index()
     {
-        $products = Product::all()->groupBy('category')->map(function ($group) {
-            return $group->random();
-        });
+        $products = Product::where('is_active', true)
+            ->get()
+            ->groupBy('category')
+            ->map(function ($group) {
+                return $group->random();
+            });
         return view('home.index', ['products' => $products]);
     }
 }
