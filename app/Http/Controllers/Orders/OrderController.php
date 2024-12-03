@@ -17,24 +17,33 @@ class OrderController
     public function status(Request $request)
     {
         $validated = $request->validate([
-            'order-num' => 'required|string|max:10'
+            'order-num' => 'required|string|max:10|exists:orders,order_num'
+        ],[
+            'order-num.required' => 'El número de orden es obligatorio.',
+            'order-num.string' => 'El número de orden debe ser un texto.',
+            'order-num.max' => 'El número de orden no puede tener más de :max caracteres.',
+            'order-num.exists' => 'El número de orden ingresado no existe en nuestros registros.',
         ]);
 
-        $order = Order::where('order_num', $validated['order-num'])
-            ->with('shippingAddress')
-            ->first();
+        try {
+            $order = Order::where('order_num', $validated['order-num'])
+                ->with('shippingAddress')
+                ->firstOrFail();
 
-        $statuses = ['Waiting', 'Production', 'Packaging', 'Shipped'];
-        $currentStatus = $order->status;
-        $filteredStatuses = array_slice($statuses, 0, array_search($currentStatus, $statuses) + 1);
+            $statuses = ['Waiting', 'Production', 'Packaging', 'Shipped'];
+            $currentStatus = $order->status;
+            $filteredStatuses = array_slice($statuses, 0, array_search($currentStatus, $statuses) + 1);
 
-        $status = $order->status;
-        $city = $order->shippingAddress->city;
-        $locality = $order->shippingAddress->locality;
-        $address = $order->shippingAddress->address;
-        $orderNumber = $order->order_num;
+            $status = $order->status;
+            $city = $order->shippingAddress->city;
+            $locality = $order->shippingAddress->locality;
+            $address = $order->shippingAddress->address;
+            $orderNumber = $order->order_num;
 
-        return view('order.status', compact('status', 'city', 'locality', 'address', 'orderNumber', 'filteredStatuses'));
+            return view('order.status', compact('status', 'city', 'locality', 'address', 'orderNumber', 'filteredStatuses'));
+        } catch (\Exception $e) {
+            return back()->withErrors(['order-num' => 'No se pudo encontrar la información de la orden.'])->withInput();
+        }
     }
 
     public function index()

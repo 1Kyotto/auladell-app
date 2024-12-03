@@ -326,6 +326,19 @@ class CartController
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|digits_between:8,15',
+        ], [
+            'name.required' => 'El nombre es obligatorio',
+            'name.string' => 'El nombre debe ser texto',
+            'name.max' => 'El nombre no puede tener más de :max caracteres',
+            
+            'email.required' => 'El correo electrónico es obligatorio',
+            'email.email' => 'El correo electrónico debe ser válido',
+            'email.max' => 'El correo electrónico no puede tener más de :max caracteres',
+            
+            'phone.required' => 'El teléfono es obligatorio',
+            'phone.string' => 'El teléfono debe ser texto',
+            'phone.min' => 'El teléfono debe tener al menos :min dígitos',
+            'phone.max' => 'El teléfono no puede tener más de :max dígitos',
         ]);
 
         // Procesar los datos

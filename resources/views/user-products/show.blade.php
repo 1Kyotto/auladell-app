@@ -135,12 +135,6 @@
         </div>
     </div>
 
-    {{-- Descripción del Producto --}}
-    <div class="mt-16">
-        <h2 class="text-xl font-cinzel font-semibold mb-4">Descripción</h2>
-        <p class="font-montserrat">{{ $product->description }}</p>
-    </div>
-
     <!-- Modal Guía de Tallas -->
     <div id="sizeGuideModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg max-w-2xl w-full mx-4">

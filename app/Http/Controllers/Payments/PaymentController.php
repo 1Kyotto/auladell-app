@@ -29,6 +29,29 @@ class PaymentController
             'shipping-city' => 'required|string|max:255',
             'shipping-locality' => 'required|string|max:255',
             'shipping-address' => 'required|string|max:255',
+        ], [
+            'name-cardholder.required' => 'El nombre del titular es obligatorio',
+            'name-cardholder.max' => 'El nombre no puede tener más de :max caracteres',
+            
+            'card-number.required' => 'El número de tarjeta es obligatorio',
+            'card-number.min' => 'El número de tarjeta debe tener :min dígitos',
+            'card-number.max' => 'El número de tarjeta debe tener :max dígitos',
+            
+            'month.required' => 'El mes es obligatorio',
+            'month.min' => 'El mes debe tener :min dígitos',
+            'month.max' => 'El mes debe tener :max dígitos',
+            
+            'year.required' => 'El año es obligatorio',
+            'year.min' => 'El año debe tener :min dígitos',
+            'year.max' => 'El año debe tener :max dígitos',
+            
+            'card-cvv.required' => 'El CVV es obligatorio',
+            'card-cvv.min' => 'El CVV debe tener al menos :min dígitos',
+            'card-cvv.max' => 'El CVV no puede tener más de :max dígitos',
+            
+            'shipping-city.required' => 'La ciudad es obligatoria',
+            'shipping-locality.required' => 'La comuna es obligatoria',
+            'shipping-address.required' => 'La dirección es obligatoria',
         ]);
 
         // Comenzar una transacción de base de datos para garantizar integridad
