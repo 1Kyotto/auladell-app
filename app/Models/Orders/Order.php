@@ -8,6 +8,7 @@ use App\Models\Auth\User;
 use App\Models\Auth\Guest;
 use App\Models\ShippingAddresses\ShippingAddress;
 use App\Models\Products\Product;
+use App\Models\Orders\OrderProduct;
 
 class Order extends Model
 {
@@ -32,7 +33,10 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'unit_price', 'total_price')->withTimestamps();
+        return $this->belongsToMany(Product::class)
+                    ->using(OrderProduct::class)
+                    ->withPivot(['quantity', 'unit_price', 'total_price'])
+                    ->as('order_product');
     }
 
     public function payments()

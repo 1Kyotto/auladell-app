@@ -90,7 +90,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                         <div class="hidden group-hover:block absolute z-10 text-center w-48 p-2 mt-1 text-sm text-gray-500 bg-white rounded-lg shadow-lg border border-gray-200 -left-40">
-                                            Haz clic en el estado para cambiar entre Activo/Inactivo
+                                            Haz clic en el estado para cambiar entre <strong class="text-[#006C55]">Activo</strong>/<strong class="text-[#006C55]">Inactivo</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                         <div class="hidden group-hover:block absolute z-10 text-center w-48 p-2 mt-1 text-sm text-gray-500 bg-white rounded-lg shadow-lg border border-gray-200 -left-40">
-                                            Haz clic en la acción correspondiente para editar o eliminar un producto.
+                                            Haz clic en la acción correspondiente para <strong class="text-[#006C55]">editar</strong> o <strong class="text-[#006C55]">eliminar</strong> un producto.
                                         </div>
                                     </div>
                                 </div>
@@ -159,10 +159,20 @@
                                     {{ $product->is_active ? 'Activo' : 'Inactivo' }}
                                 </button>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <button onclick="openEditProduct('{{ $product->id }}')"
-                                    class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
-                                    Editar
+                            <td class="px-6 py-4 whitespace-nowrap items-center flex gap-6">
+                                <button onclick="openEditProduct('{{ $product->id }}')" class="text-[#006C55] hover:text-[#005544] font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                                        <path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M11 20H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                    </svg>
+                                </button class="text-[#006C55] hover:text-[#005544] font-medium">
+                                <button onclick="openDeleteModal('{{ $product->id }}')" class="text-red-600 hover:text-red-900 text-sm font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="none">
+                                        <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <path d="M3 5.5H21M16.0557 5.5L15.3731 4.09173C14.9196 3.15626 14.6928 2.68852 14.3017 2.39681C14.215 2.3321 14.1231 2.27454 14.027 2.2247C13.5939 2 13.0741 2 12.0345 2C10.9688 2 10.436 2 9.99568 2.23412C9.8981 2.28601 9.80498 2.3459 9.71729 2.41317C9.32164 2.7167 9.10063 3.20155 8.65861 4.17126L8.05292 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <path d="M9.5 16.5L9.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <path d="M14.5 16.5L14.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                    </svg>
                                 </button>
                             </td>
                         </tr>
@@ -625,6 +635,23 @@
     </div>
 </div>
 
+{{-- Modal de Confirmación de Eliminación --}}
+<div id="deleteConfirmModal" class="fixed inset-0 text-cblack-500 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full mx-4">
+        <h3 class="text-xl font-bold mb-4 font-cinzel">Confirmar eliminación</h3>
+        <p class="text-gray-600 mb-1">¿Estás seguro de que deseas archivar este producto?</p>
+        <p class="text-gray-600 mb-6 font-bold">Esta acción no se puede deshacer.</p>
+        <div class="flex justify-end gap-4">
+            <button onclick="closeDeleteModal()" class="px-4 py-2 border text-cblack-500 border-gray-300 rounded-md hover:bg-gray-100">
+                Cancelar
+            </button>
+            <button id="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
 {{--SCRIPT PARA AÑADIR PRODUCTO--}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -979,6 +1006,77 @@
 
 </script>
 {{--SCRIPT PARA EDITAR PRODUCTO--}}
+
+{{--SCRIPT PARA ELIMINAR PRODUCTO--}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let deleteForm = null;
+    
+        window.openDeleteModal = function(productId) {
+            console.log('Opening modal for product:', productId); // Para debugging
+            // Crear el formulario dinámicamente
+            deleteForm = document.createElement('form');
+            deleteForm.method = 'POST';
+            deleteForm.action = `/dashboard/product/${productId}`;
+            
+            // Agregar los tokens CSRF
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            deleteForm.appendChild(csrfToken);
+            
+            // Agregar el método DELETE
+            const methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            deleteForm.appendChild(methodField);
+    
+            // Mostrar el modal
+            const modal = document.getElementById('deleteConfirmModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                console.error('Modal not found'); // Para debugging
+            }
+        }
+    
+        window.closeDeleteModal = function() {
+            const modal = document.getElementById('deleteConfirmModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                deleteForm = null;
+            }
+        }
+    
+        // Agregar el event listener para el botón de confirmar
+        const confirmButton = document.getElementById('confirmDelete');
+        if (confirmButton) {
+            confirmButton.addEventListener('click', function() {
+                if (deleteForm) {
+                    document.body.appendChild(deleteForm);
+                    deleteForm.submit();
+                }
+                closeDeleteModal();
+            });
+        }
+    
+        // Cerrar modal al hacer clic fuera de él
+        const deleteModal = document.getElementById('deleteConfirmModal');
+        if (deleteModal) {
+            deleteModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeDeleteModal();
+                }
+            });
+        }
+    
+    });
+</script>
+{{--SCRIPT PARA ELIMINAR PRODUCTO--}}
 
 {{--SCRIPT PARA ELIMINAR ALERTA--}}
 <script>

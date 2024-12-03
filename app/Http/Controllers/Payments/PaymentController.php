@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Cart\CartController;
+use App\Models\Carts\Cart;
 use App\Models\Carts\CartProduct;
 use App\Models\Orders\Order;
 use App\Models\Orders\OrderProduct;
@@ -35,9 +36,23 @@ class PaymentController
 
         try {
             // Obtener datos del carrito
-            $userId = Auth::check() ? Auth::id() : null; // Si está autenticado
-            $guestId = $userId ? null : $request->cookie('guest_id'); // Si es invitado
-            $cartId = session('cart_id'); // Obtener el cart_id desde la sesión
+            $userId = Auth::check() ? Auth::id() : null;
+            $cartId = session('cart_id');
+
+            // Obtener el guest_id del carrito actual
+            $cart = Cart::find($cartId);
+            $guestId = $cart ? $cart->guest_id : null;
+
+            // Si no hay guest_id en el carrito, intentar obtenerlo de la cookie
+            if (!$guestId) {
+                $guestId = $request->cookie('guest_id');
+            }
+
+            Log::info('IDs de la orden:', [
+                'user_id' => $userId,
+                'guest_id' => $guestId,
+                'cart_id' => $cartId
+            ]);
 
             // Verificar si hay productos en el carrito
             $cartProducts = CartProduct::where('cart_id', $cartId)->get();

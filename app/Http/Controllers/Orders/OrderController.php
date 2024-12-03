@@ -51,11 +51,16 @@ class OrderController
         try {
             $order->load([
                 'user',
+                'guest',
                 'products' => function($query) {
-                    $query->with(['customizationSelections' => function($query) {
-                        $query->with('customizationOption.customizationMaterials.material');
-                    }]);
-                }
+                    $query->with(['customizations']);
+                },
+                'products.customizationSelections' => function($query) use ($order) {
+                    $query->whereHas('orderProduct', function($q) use ($order) {
+                        $q->where('order_id', $order->id);
+                    });
+                },
+                'products.customizationSelections.customizationOption.customization'
             ]);
 
             // Debug información
@@ -64,11 +69,12 @@ class OrderController
             // Transformar los datos solo si hay productos
             if ($order->products) {
                 $order->products->transform(function ($product) {
-                    // Debug información
-                    Log::info('Product:', ['product' => $product->toArray()]);
-                    Log::info('CustomizationSelections:', ['selections' => $product->customizationSelections->toArray()]);
+                    // Obtener las personalizaciones desde customizationSelections
+                    $customizations = $product->customizationSelections;
+                    Log::info('CustomizationSelections for product ' . $product->id . ':', [
+                        'selections' => $customizations->toArray()
+                    ]);
                     
-                    $product->customization_selections = $product->customizationSelections;
                     return $product;
                 });
             }

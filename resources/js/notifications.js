@@ -1,5 +1,19 @@
 import Swal from 'sweetalert2';
 
+// Configuración global de SweetAlert2
+const swalConfig = {
+    customClass: {
+        popup: 'font-cinzel',
+        title: 'text-lg font-semibold',
+        confirmButton: 'bg-[#008769] text-white px-4 py-2 rounded-lg hover:bg-[#006C55] transition-colors duration-200',
+        cancelButton: 'bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-200',
+        actions: 'gap-12'
+    },
+    buttonsStyling: false,
+    confirmButtonText: 'Entendido',
+    allowOutsideClick: false
+};
+
 // Función para manejar notificaciones de productos
 function handleProductNotifications() {
     const productId = document.querySelector('meta[name="product-id"]')?.content;
@@ -28,12 +42,11 @@ function handleProductNotifications() {
 function showUnavailableNotification(shouldReload = false) {
     console.log('Mostrando notificación de producto no disponible, shouldReload:', shouldReload);
     return Swal.fire({
+        ...swalConfig,
         title: 'Producto no disponible',
         text: 'Este producto ya no está disponible.',
         icon: 'warning',
-        confirmButtonText: 'Entendido',
-        confirmButtonColor: '#006C55',
-        allowOutsideClick: false
+        iconColor: '#EF4444'
     }).then((result) => {
         console.log('Usuario hizo clic en Entendido');
         if (shouldReload) {
@@ -50,11 +63,18 @@ function showToastNotification(message) {
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000,
-        timerProgressBar: true
+        timerProgressBar: true,
+        customClass: {
+            popup: 'font-montserrat',
+            title: 'text-sm'
+        },
+        background: '#FEE2E2',
+        color: '#991B1B'
     });
 
     return Toast.fire({
         icon: 'warning',
+        iconColor: '#991B1B',
         title: message
     });
 }
@@ -99,9 +119,11 @@ window.openDeleteModal = function(button) {
         'Este producto no está disponible. Debes eliminarlo para continuar con la compra.';
     
     Swal.fire({
+        ...swalConfig,
         title: isActive ? 'Eliminar producto' : 'Producto no disponible',
         text: message,
         icon: isActive ? 'question' : 'warning',
+        iconColor: isActive ? '#008769' : '#EF4444',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar'
@@ -145,12 +167,11 @@ function handleCartNotifications() {
             if (productInCart && !isAvailable) {
                 console.log('Mostrando notificación de carrito');
                 Swal.fire({
+                    ...swalConfig,
                     title: 'Producto no disponible',
                     text: 'Uno o más productos en tu carrito ya no están disponibles. Por favor, elimínalos para continuar con la compra.',
                     icon: 'warning',
-                    confirmButtonText: 'Entendido',
-                    confirmButtonColor: '#006C55',
-                    allowOutsideClick: false
+                    iconColor: '#EF4444'
                 }).then(() => {
                     console.log('Recargando página del carrito...');
                     window.location.reload();

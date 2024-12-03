@@ -51,7 +51,7 @@
                                 {{ $order->order_num }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $order->user ? $order->user->name : 'Cliente Invitado' }}
+                                {{ $order->user ? $order->user->name : ($order->guest ? $order->guest->name : 'Cliente Invitado') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ number_format($order->total, 0, ',', '.') }}
@@ -176,16 +176,25 @@
     // Función para ver detalles del pedido
     async function viewOrder(orderId) {
         try {
+            console.log('Fetching order:', orderId);
             const response = await fetch(`/dashboard/order/${orderId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
+            console.log('Received order data:', data);
             
             const detailsHtml = `
                 <div class="border-b pb-4">
                     <p class="font-medium">N° Orden: ${data.order_num}</p>
-                    <p>Cliente: ${data.user ? data.user.name : 'Cliente Invitado'}</p>
+                    <p>Cliente: ${data.user ? data.user.name : (data.guest ? data.guest.name : 'Cliente Invitado')}</p>
+                    ${data.user ? `
+                        <p>Email: ${data.user.email}</p>
+                        <p>Teléfono: ${data.user.phone || 'No especificado'}</p>
+                    ` : data.guest ? `
+                        <p>Email: ${data.guest.email}</p>
+                        <p>Teléfono: ${data.guest.phone}</p>
+                    ` : ''}
                     <p>Fecha: ${new Date(data.created_at).toLocaleString()}</p>
                     <p>Estado: ${data.status}</p>
                 </div>
@@ -194,28 +203,28 @@
                     ${data.products.map(product => `
                         <div class="border-b pb-2">
                             <p class="font-medium">${product.name}</p>
-                            <p>Cantidad: ${product.pivot.quantity}</p>
-                            <p>Precio unitario: $${Number(product.pivot.unit_price).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
+                            <p>Cantidad: ${product.pivot?.quantity || product.order_product?.quantity || 1}</p>
+                            <p>Precio unitario: $${Number(product.pivot?.unit_price || product.order_product?.unit_price || 0).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
                             ${product.customization_selections && product.customization_selections.length > 0 ? `
                                 <div class="ml-4 mt-2">
                                     <p class="text-sm font-medium">Personalizaciones:</p>
-                                    ${product.customization_selections.map(selection => `
-                                        <div class="ml-2 text-sm">
-                                            <p>• ${selection.customization_option.option_name}${
-                                                selection.customization_option.requires_material && 
-                                                selection.customization_option.customization_materials && 
-                                                selection.customization_option.customization_materials.length > 0
-                                                ? ` - ${[...new Set(selection.customization_option.customization_materials
-                                                    .filter(cm => cm && cm.material)
-                                                    .map(cm => cm.material.name))]
-                                                    .join(', ')}`
-                                                : ''
-                                            } - ${selection.quantity} unidad(es)</p>
-                                        </div>
-                                    `).join('')}
+                                    ${product.customization_selections
+                                        .filter(selection => 
+                                            selection.customization_option && 
+                                            selection.customization_option.customization
+                                        )
+                                        .map(selection => {
+                                            const customization = selection.customization_option.customization;
+                                            const optionName = selection.customization_option.option_name;
+                                            return `
+                                                <div class="ml-2 text-sm">
+                                                    <p>• ${customization.name}: ${optionName}</p>
+                                                </div>
+                                            `;
+                                        }).join('')}
                                 </div>
                             ` : ''}
-                            <p>Total: $${Number(product.pivot.total_price).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
+                            <p>Total: $${Number(product.pivot?.total_price || product.order_product?.total_price || 0).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
                         </div>
                     `).join('')}
                     <div class="mt-4 text-right">

@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Products;
 
+use App\Models\Archives\ArchivedCustomizationMaterial;
+use App\Models\Archives\ArchivedCustomizationProduct;
+use App\Models\Archives\ArchivedMaterialProduct;
+use App\Models\Archives\ArchivedOrderProduct;
+use App\Models\Archives\ArchivedProduct;
 use App\Models\Customizations\Customization;
 use App\Models\Customizations\CustomizationOption;
-use App\Models\Materials\CustomizationMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Materials\Material;
 use App\Models\Products\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -349,7 +354,7 @@ class AdminProdController
                     $product->materials()->attach($materialId, [
                         'quantity_needed' => $validated['quantities'][$index],
                     ]);
-    
+
                     if ($materialId == $validated['base_material']) {
                         $baseMaterialQuantity = $validated['quantities'][$index];
                     }
@@ -505,6 +510,127 @@ class AdminProdController
             return response()->json([
                 'success' => false,
                 'message' => 'Error al actualizar el estado'
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            // Obtener el producto con todas sus relaciones excepto orders
+            $product = Product::with([
+                'customizations',
+                'customizationMaterials',
+                'materials'
+            ])->findOrFail($id);
+
+            // 1. Archivar el producto principal PRIMERO
+            $archivedProduct = ArchivedProduct::create([
+                'id' => $product->id,
+                'name' => $product->name,
+                'raw_price' => $product->raw_price,
+                'final_price' => $product->final_price,
+                'labor_hours' => $product->labor_hours,
+                'labor_cost_per_hour' => $product->labor_cost_per_hour,
+                'category' => $product->category,
+                'is_active' => $product->is_active,
+                'image' => $product->image,
+                'archived_at' => now(),
+                'archived_by' => Auth::user()->id,
+                'original_created_at' => $product->created_at,
+                'original_updated_at' => $product->updated_at
+            ]);
+
+            // 2. Archivar relaciones DESPUÉS de que existe el producto archivado
+            if ($archivedProduct) {
+                // Archivar relaciones de personalización
+                foreach($product->customizations as $customization) {
+                    ArchivedCustomizationProduct::create([
+                        'product_id' => $archivedProduct->id,
+                        'customization_id' => $customization->id,
+                        'archived_at' => now()
+                    ]);
+                }
+
+                // Archivar materiales de personalización
+                foreach($product->customizationMaterials as $material) {
+                    if ($material->material_id) {
+                        ArchivedCustomizationMaterial::create([
+                            'product_id' => $archivedProduct->id,
+                            'customization_option_id' => $material->customization_option_id,
+                            'material_id' => $material->material_id,
+                            'quantity_needed' => $material->quantity_needed,
+                            'price_adjustment' => $material->price_adjustment,
+                            'is_base' => $material->is_base,
+                            'archived_at' => now()
+                        ]);
+                    }
+                }
+
+                // Archivar relaciones de materiales
+                foreach($product->materials as $material) {
+                    ArchivedMaterialProduct::create([
+                        'product_id' => $archivedProduct->id,
+                        'material_id' => $material->id,
+                        'quantity' => $material->pivot->quantity_needed,
+                        'archived_at' => now()
+                    ]);
+                }
+
+                // Archivar relaciones de órdenes usando consulta directa
+                DB::table('order_product')
+                    ->where('product_id', $product->id)
+                    ->orderBy('id')
+                    ->chunk(100, function($orderProducts) use ($archivedProduct) {
+                        $records = [];
+                        foreach($orderProducts as $op) {
+                            $records[] = [
+                                'order_id' => $op->order_id,
+                                'product_id' => $archivedProduct->id,
+                                'quantity' => $op->quantity,
+                                'unit_price' => $op->unit_price,
+                                'total_price' => $op->total_price,
+                                'archived_at' => now()
+                            ];
+                        }
+                        DB::table('archived_order_product')->insert($records);
+                    });
+
+                // Eliminar relaciones originales
+                $product->customizations()->detach();
+                $product->materials()->detach();
+                $product->customizationMaterials()->delete();
+
+                // Eliminar referencias en el carrito y personalizaciones
+                $cartProducts = DB::table('cart_product')->where('product_id', $product->id)->get();
+                foreach ($cartProducts as $cartProduct) {
+                    // Primero eliminar las selecciones de personalización
+                    DB::table('customization_selection')->where('cart_product_id', $cartProduct->id)->delete();
+                }
+                // Luego eliminar los items del carrito
+                DB::table('cart_product')->where('product_id', $product->id)->delete();
+
+                // Actualizar las referencias en order_product para que apunten al producto archivado
+                DB::table('order_product')
+                    ->where('product_id', $product->id)
+                    ->update(['product_id' => $archivedProduct->id]);
+
+                // Eliminar el producto original
+                $product->delete();
+            }
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Producto archivado exitosamente']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error al archivar el producto: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            return response()->json([
+                'success' => false,
+                'error' => 'Error al archivar el producto',
+                'message' => $e->getMessage()
             ], 500);
         }
     }

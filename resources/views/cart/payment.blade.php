@@ -57,22 +57,21 @@
         <form action="{{ route('payment.store') }}" method="POST" class="font-cinzel font-semibold text-md">
             @csrf
             <div class="flex flex-col gap-8">
-                <div class="flex gap-4 items-center">
-                    <label for="name-cardholder" class="uppercase pl-2">titular de la tarjeta</label>
-                    <input type="text" id="name-cardholder" name="name-cardholder" placeholder="Nombre" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-64">
-                    <input type="text" id="name-cardholder" name="name-cardholder" placeholder="Apellido" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-64">
+                <div class="flex gap-4 items-center w-full">
+                    <label for="name-cardholder" class="uppercase pl-2 w-[30%]">titular de la tarjeta</label>
+                    <input type="text" id="name-cardholder" name="name-cardholder" placeholder="Nombre" class="bg-[#E0EFEC] border border-[#737878] w-[70%] rounded-lg py-1 px-4">
                 </div>
-                <div class="flex gap-4 items-center">
-                    <label for="card-number" class="uppercase pl-1">número de la tarjeta</label>
-                    <input type="text" id="card-number" name="card-number" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-[528px]">
+                <div class="flex gap-4 items-center w-full">
+                    <label for="card-number" class="uppercase pl-1 w-[30%]">número de la tarjeta</label>
+                    <input type="text" id="card-number" name="card-number" class="bg-[#E0EFEC] w-[70%] border border-[#737878] rounded-lg py-1 px-4">
                 </div>
-                <div class="flex">
+                <div class="flex flex-col gap-4">
                     <div class="flex gap-4 items-center">
-                        <label for="expiry-date" class="uppercase pl-3">fecha de expiración</label>
-                        <input type="text" id="month" name="expiry-date" placeholder="MES" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-24">
-                        <input type="text" id="year" name="expiry-date" placeholder="AÑO" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-24">
+                        <label for="expiry-date" class="uppercase pl-3 w-[30%]">fecha de expiración</label>
+                        <input type="text" id="month" name="expiry-date" placeholder="MES" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-[35%]">
+                        <input type="text" id="year" name="expiry-date" placeholder="AÑO" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4 w-[35%]">
                     </div>
-                    <div class="flex gap-4 items-center">
+                    <div class="flex gap-4 items-center justify-end">
                         <label for="card-cvv" class="uppercase pl-5">cvv</label>
                         <input type="text" id="card-cvv" name="card-cvv" class="bg-[#E0EFEC] border border-[#737878] rounded-lg py-1 px-4">
                     </div>
@@ -80,7 +79,7 @@
             </div>
             <div class="w-full flex flex-col font-montserrat gap-3 font-medium text-sm mt-9 border border-[#CED4E0] rounded-md py-3 px-6">
                 <div class="flex justify-between w-full">
-                    <span class="font-semibold">Subtotal <span class="font-medium">()</span></span>
+                    <span class="font-semibold">Subtotal</span>
                     <span class="font-semibold">CL$ {{ number_format($totalPrice, 0) }}</span>
                 </div>
                 <div class="flex justify-between w-full">

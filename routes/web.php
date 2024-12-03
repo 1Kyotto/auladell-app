@@ -39,6 +39,8 @@ Route::middleware(['auth', \App\Http\Middleware\AuthAdmin::class])->group(functi
 
     Route::get('/dashboard/product/{product}/edit', [AdminProdController::class, 'edit'])->name('admin.product.edit');
     Route::put('/dashboard/product/{product}/update', [AdminProdController::class, 'update'])->name('admin.product.update');
+
+    Route::delete('/dashboard/product/{id}', [AdminProdController::class, 'destroy'])->name('admin.product.destroy');
     
     //Gestion de Materiales
     Route::get('/dashboard/materials', [MaterialController::class, 'index'])->name('admin.materials');
