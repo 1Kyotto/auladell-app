@@ -20,7 +20,7 @@
         {{-- Header --}}
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-xl font-cinzel text-cwhite-500">Productos</h1>
-            <button onclick="openAddProductModal()" class="bg-[#006C55] hover:bg-[#005544] text-white font-medium py-2 px-4 rounded-md text-sm flex items-center gap-2">
+            <button onclick="openAddProduct()" class="bg-[#006C55] hover:bg-[#005544] text-white font-medium py-2 px-4 rounded-md text-sm flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                 </svg>
@@ -193,7 +193,7 @@
     <div class="relative top-5 mx-auto p-5 border w-[800px] shadow-lg rounded-md bg-white mb-10">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-cinzel font-medium text-gray-900">Añadir Nuevo Producto</h3>
-            <button type="button" onclick="document.getElementById('addProductModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-500">
+            <button type="button" onclick="closeAddModal()" class="text-gray-400 hover:text-gray-500">
                 <span class="sr-only">Cerrar</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -256,7 +256,8 @@
                                required
                                min="0"
                                step="0.5"
-                               class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
+                               class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900"
+                               onchange="calculatePrices()">
                     </div>
                     <div>
                         <label for="labor_cost_per_hour" class="block text-sm font-medium text-gray-700 mb-1">Costo por hora de trabajo</label>
@@ -266,23 +267,24 @@
                                required
                                min="0"
                                step="100"
-                               class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
+                               class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900"
+                               onchange="calculatePrices()">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Costo Base</label>
+                        <label for="raw_price_display" class="block text-sm font-medium text-gray-700 mb-1">Costo Base</label>
                         <input type="text" readonly id="raw_price_display" class="w-full py-2 px-3 rounded-md border border-gray-300 bg-gray-100 text-gray-900">
                         <input type="hidden" name="raw_price" id="raw_price">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Precio con Margen</label>
+                        <label for="price_with_margin_display" class="block text-sm font-medium text-gray-700 mb-1">Precio con Margen</label>
                         <input type="text" readonly id="price_with_margin_display" class="w-full py-2 px-3 rounded-md border border-gray-300 bg-gray-100 text-gray-900">
                         <input type="hidden" name="price_with_margin" id="price_with_margin">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Precio Final</label>
+                        <label for="final_price_display" class="block text-sm font-medium text-gray-700 mb-1">Precio Final</label>
                         <input type="text" readonly id="final_price_display" class="w-full py-2 px-3 rounded-md border border-gray-300 bg-gray-100 text-gray-900">
                         <input type="hidden" name="final_price" id="final_price">
                     </div>
@@ -317,7 +319,7 @@
                                    step="0.01"
                                    class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
                         </div>
-                        <button type="button" onclick="addMaterialRow()" class="px-3 py-2 bg-[#006C55] text-white rounded-md hover:bg-[#005543] transition-colors">
+                        <button type="button" onclick="addAddMaterialRow()" class="px-3 py-2 bg-[#006C55] text-white rounded-md hover:bg-[#005543] transition-colors">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -484,7 +486,7 @@
                                    onchange="calculatePrices()"
                                    class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
                         </div>
-                        <button type="button" onclick="addMaterialRow()" class="px-3 py-2 bg-[#006C55] text-white rounded-md hover:bg-[#005543] transition-colors">
+                        <button type="button" onclick="addEditMaterialRow()" class="px-3 py-2 bg-[#006C55] text-white rounded-md hover:bg-[#005543] transition-colors">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -654,113 +656,145 @@
 
 {{--SCRIPT PARA AÑADIR PRODUCTO--}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Constantes
-        const MARGIN = 0.20; // 20%
-        const IVA = 0.19;   // 19%
-    
-        // Función para abrir el modal
-        window.openAddProductModal = function() {
-            document.getElementById('addProductModal').classList.remove('hidden');
-        }
+    // Función para abrir el modal
+    window.openAddProduct = function() {
+        try {
+            // Mostrar el modal
+            const modal = document.getElementById('addProductModal');
+            modal.classList.remove('hidden');
 
-        // Función para calcular precios
-        function calculatePrices() {
+            // Limpiar el formulario
+            const form = document.getElementById('addProductForm');
+            if (form) form.reset();
+
+            // Limpiar materiales adicionales
+            const materialsContainer = document.getElementById('materials_container');
+            const materialRows = materialsContainer.querySelectorAll('.material-row:not(:first-child)');
+            materialRows.forEach(row => row.remove());
+
+            // Calcular precios iniciales
+            calculateAddPrices();
+        } catch (error) {
+            console.error('Error en openAddProduct:', error);
+        }
+    }
+
+    // Función para cerrar el modal
+    window.closeAddModal = function() {
+        document.getElementById('addProductModal').classList.add('hidden');
+    }
+
+    // Función para calcular precios específica para añadir
+    function calculateAddPrices() {
+        try {
             const laborHours = parseFloat(document.getElementById('labor_hours').value) || 0;
             const laborCost = parseFloat(document.getElementById('labor_cost_per_hour').value) || 0;
             
             // Calcular costo de materiales
             let materialsCost = 0;
-            const materialRows = document.querySelectorAll('.material-row');
+
+            // Calcular costo del material base
+            const baseMaterialSelect = document.querySelector('#addProductModal select[data-is-base="true"]');
+            const baseQuantity = document.getElementById('base_quantity');
+            if (baseMaterialSelect && baseQuantity && baseMaterialSelect.value) {
+                const selectedOption = baseMaterialSelect.selectedOptions[0];
+                if (selectedOption && selectedOption.dataset.price) {
+                    const price = parseFloat(selectedOption.dataset.price) || 0;
+                    materialsCost += price * parseFloat(baseQuantity.value || 0);
+                }
+            }
+
+            // Calcular costo de materiales adicionales
+            const materialRows = document.querySelectorAll('#addProductModal .material-row');
             materialRows.forEach(row => {
                 const material = row.querySelector('select[name="materials[]"]');
                 const quantity = row.querySelector('input[name="quantities[]"]');
-                if (material.value && quantity.value) {
-                    const price = parseFloat(material.selectedOptions[0].dataset.price) || 0;
-                    materialsCost += price * parseFloat(quantity.value);
+                if (material && material.value && quantity && quantity.value) {
+                    const selectedOption = material.selectedOptions[0];
+                    if (selectedOption && selectedOption.dataset.price) {
+                        const price = parseFloat(selectedOption.dataset.price) || 0;
+                        materialsCost += price * parseFloat(quantity.value);
+                    }
                 }
             });
-    
+
             // Calcular precios
             const rawPrice = (laborHours * laborCost) + materialsCost;
             const priceWithMargin = rawPrice * (1 + MARGIN);
             const finalPrice = Math.ceil(priceWithMargin * (1 + IVA) / 100) * 100;
-    
+
             // Actualizar campos
             document.getElementById('raw_price').value = rawPrice;
             document.getElementById('price_with_margin').value = priceWithMargin;
             document.getElementById('final_price').value = finalPrice;
-    
+
             // Actualizar displays
             document.getElementById('raw_price_display').value = formatCurrency(rawPrice);
             document.getElementById('price_with_margin_display').value = formatCurrency(priceWithMargin);
             document.getElementById('final_price_display').value = formatCurrency(finalPrice);
+        } catch (error) {
+            console.error('Error en calculateAddPrices:', error);
         }
-    
-        // Función para formatear moneda
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('es-CL', {
-                style: 'currency',
-                currency: 'CLP',
-                minimumFractionDigits: 0
-            }).format(amount);
-        }
-    
+    }
+
+    // Función para agregar material específica para añadir
+    window.addAddMaterialRow = function() {
+        const container = document.getElementById('materials_container');
+        const baseSelect = container.querySelector('select[name="materials[]"]');
+        const options = Array.from(baseSelect.options).map(opt => {
+            return `<option value="${opt.value}" data-price="${opt.dataset.price}">${opt.textContent}</option>`;
+        }).join('');
+
+        const newRow = document.createElement('div');
+        newRow.className = 'material-row flex items-end gap-2 mt-2';
+        newRow.innerHTML = `
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Material Adicional</label>
+                <select name="materials[]" 
+                        class="w-full py-3 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900"
+                        onchange="calculateAddPrices()">
+                    <option value="">Seleccionar material adicional</option>
+                    ${options}
+                </select>
+            </div>
+            <div class="w-32">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+                <input type="number" 
+                    name="quantities[]" 
+                    placeholder="Cantidad" 
+                    required 
+                    min="0" 
+                    step="0.01"
+                    onchange="calculateAddPrices()"
+                    class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
+            </div>
+            <button type="button" onclick="removeAddMaterialRow(this)" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                <i class="fas fa-minus"></i>
+            </button>
+        `;
+        container.appendChild(newRow);
+    }
+
+    // Función para remover material específica para añadir
+    window.removeAddMaterialRow = function(button) {
+        button.closest('.material-row').remove();
+        calculateAddPrices();
+    }
+
+    // Agregar event listeners cuando el DOM esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
         // Agregar event listeners para cálculos automatizados
-        document.getElementById('labor_hours').addEventListener('input', calculatePrices);
-        document.getElementById('labor_cost_per_hour').addEventListener('input', calculatePrices);
-        document.getElementById('materials_container').addEventListener('input', calculatePrices);
-        document.getElementById('materials_container').addEventListener('change', calculatePrices);
-    
-        
-        // Función para añadir nueva fila de material
-        window.addMaterialRow = function() {
-            console.log('Función addMaterialRow llamada');
-            const container = document.getElementById('materials_container');
-            console.log('Container encontrado:', container);
-            
-            const baseSelect = container.querySelector('select[name="materials[]"]');
-            console.log('Select base encontrado:', baseSelect);
-            console.log('Opciones del select:', baseSelect.options);
-            
-            const options = Array.from(baseSelect.options).map(opt => {
-                console.log('Procesando opción:', opt);
-                return `<option value="${opt.value}" data-price="${opt.dataset.price}">${opt.textContent}</option>`;
-            }).join('');
-            console.log('HTML de opciones generado:', options);
-    
-            const newRow = document.createElement('div');
-            newRow.className = 'material-row flex items-end gap-2 mt-2';
-            newRow.innerHTML = `
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Material Adicional</label>
-                    <select name="materials[]" class="w-full py-3 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
-                        <option value="">Seleccionar material adicional</option>
-                        ${options}
-                    </select>
-                </div>
-                <div class="w-32">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
-                    <input type="number" 
-                           name="quantities[]" 
-                           placeholder="Cantidad" 
-                           required 
-                           min="0" 
-                           step="0.01"
-                           class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
-                </div>
-                <button type="button" onclick="removeMaterialRow(this)" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
-                    <i class="fas fa-minus"></i>
-                </button>
-            `;
-            console.log('Nueva fila creada:', newRow);
-            container.appendChild(newRow);
-            console.log('Fila añadida al contenedor');
-        }
-    
-        window.removeMaterialRow = function(button) {
-            button.closest('.material-row').remove();
-            calculatePrices();
+        const laborHours = document.getElementById('labor_hours');
+        const laborCost = document.getElementById('labor_cost_per_hour');
+        const materialsContainer = document.getElementById('materials_container');
+        const baseQuantity = document.getElementById('base_quantity');
+
+        if (laborHours) laborHours.addEventListener('input', calculateAddPrices);
+        if (laborCost) laborCost.addEventListener('input', calculateAddPrices);
+        if (baseQuantity) baseQuantity.addEventListener('input', calculateAddPrices);
+        if (materialsContainer) {
+            materialsContainer.addEventListener('input', calculateAddPrices);
+            materialsContainer.addEventListener('change', calculateAddPrices);
         }
     });
 </script>
@@ -768,10 +802,6 @@
 
 {{--SCRIPT PARA EDITAR PRODUCTO--}}
 <script>
-    // Constantes globales
-    const MARGIN = 0.20; // 20%
-    const IVA = 0.19;   // 19%
-
     // Función para abrir el modal
     window.openEditProduct = async function(productId) {
         console.log('openEditProduct called with ID:', productId);
@@ -784,7 +814,7 @@
             const modal = document.getElementById('editProductModal');
             modal.classList.remove('hidden');
 
-            // Actualizar la URL del formulario reemplazando :product_id con el ID real
+            // Actualizar la URL del formulario
             const form = modal.querySelector('form');
             const action = form.getAttribute('action').replace(':product_id', productId);
             form.setAttribute('action', action);
@@ -825,70 +855,23 @@
 
                 // Agregar materiales adicionales
                 for (let i = 1; i < data.materials.length; i++) {
-                    const material = data.materials[i];
-                    const container = document.getElementById('edit_materials_container');
-                    const baseSelect = container.querySelector('select[name="materials[]"]');
-                    const options = Array.from(baseSelect.options).map(opt => {
-                        return `<option value="${opt.value}" 
-                                    data-price="${opt.dataset.price}"
-                                    ${material.id == opt.value ? 'selected' : ''}>
-                                ${opt.textContent}
-                            </option>`;
-                    }).join('');
-
-                    const newRow = document.createElement('div');
-                    newRow.className = 'material-row flex items-end gap-2 mt-2';
-                    newRow.innerHTML = `
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Material Adicional</label>
-                            <select name="materials[]" 
-                                    class="w-full py-3 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900"
-                                    onchange="calculatePrices()">
-                                <option value="">Seleccionar material adicional</option>
-                                ${options}
-                            </select>
-                        </div>
-                        <div class="w-32">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
-                            <input type="number" 
-                                name="quantities[]" 
-                                value="${material.pivot.quantity_needed}"
-                                placeholder="Cantidad" 
-                                required 
-                                min="0" 
-                                step="0.01"
-                                onchange="calculatePrices()"
-                                class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
-                        </div>
-                        <button type="button" onclick="removeMaterialRow(this)" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    `;
-                    container.appendChild(newRow);
+                    addEditMaterialRow(data.materials[i]);
                 }
             }
 
             // Calcular precios iniciales
-            calculatePrices();
+            calculateEditPrices();
         } catch (error) {
             console.error('Error en openEditProduct:', error);
         }
-    }
-    // Función para formatear moneda (global)
-    window.formatCurrency = function(amount) {
-        return new Intl.NumberFormat('es-CL', {
-            style: 'currency',
-            currency: 'CLP',
-            minimumFractionDigits: 0
-        }).format(amount);
     }
 
     window.closeEditModal = function() {
         document.getElementById('editProductModal').classList.add('hidden');
     }
 
-    // Función para calcular precios (global)
-    window.calculatePrices = function() {
+    // Función para calcular precios específica para editar
+    function calculateEditPrices() {
         try {
             const laborHours = parseFloat(document.getElementById('edit_labor_hours').value) || 0;
             const laborCost = parseFloat(document.getElementById('edit_labor_cost_per_hour').value) || 0;
@@ -897,7 +880,7 @@
             let materialsCost = 0;
 
             // Calcular costo del material base
-            const baseMaterialSelect = document.querySelector('select[data-is-base="true"]');
+            const baseMaterialSelect = document.querySelector('#editProductModal select[data-is-base="true"]');
             const baseQuantity = document.getElementById('edit_base_quantity');
             if (baseMaterialSelect && baseQuantity && baseMaterialSelect.value) {
                 const selectedOption = baseMaterialSelect.selectedOptions[0];
@@ -907,7 +890,8 @@
                 }
             }
 
-            const materialRows = document.querySelectorAll('.material-row');
+            // Calcular costo de materiales adicionales
+            const materialRows = document.querySelectorAll('#editProductModal .material-row');
             materialRows.forEach(row => {
                 const material = row.querySelector('select[name="materials[]"]');
                 const quantity = row.querySelector('input[name="quantities[]"]');
@@ -935,77 +919,93 @@
             document.getElementById('edit_price_with_margin_display').value = formatCurrency(priceWithMargin);
             document.getElementById('edit_final_price_display').value = formatCurrency(finalPrice);
         } catch (error) {
-            console.error('Error en calculatePrices:', error);
+            console.error('Error en calculateEditPrices:', error);
         }
+    }
 
-                // Función para agregar material (global)
-        window.addMaterialRow = function() {
-            const container = document.getElementById('edit_materials_container');
-            const baseSelect = container.querySelector('select[name="materials[]"]');
-            const options = Array.from(baseSelect.options).map(opt => {
-                return `<option value="${opt.value}" data-price="${opt.dataset.price}">${opt.textContent}</option>`;
-            }).join('');
+    // Función para agregar material específica para editar
+    window.addEditMaterialRow = function(existingMaterial = null) {
+        const container = document.getElementById('edit_materials_container');
+        const baseSelect = container.querySelector('select[name="materials[]"]');
+        const options = Array.from(baseSelect.options).map(opt => {
+            const selected = existingMaterial && existingMaterial.id == opt.value ? 'selected' : '';
+            return `<option value="${opt.value}" data-price="${opt.dataset.price}" ${selected}>${opt.textContent}</option>`;
+        }).join('');
 
-            const newRow = document.createElement('div');
-            newRow.className = 'material-row flex items-end gap-2 mt-2';
-            newRow.innerHTML = `
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Material Adicional</label>
-                    <select name="materials[]" 
-                            class="w-full py-3 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
-                        <option value="">Seleccionar material adicional</option>
-                        ${options}
-                    </select>
-                </div>
-                <div class="w-32">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
-                    <input type="number" 
-                        name="quantities[]" 
-                        placeholder="Cantidad" 
-                        required 
-                        min="0" 
-                        step="0.01"
-                        class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
-                </div>
-                <button type="button" onclick="removeMaterialRow(this)" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
-                    <i class="fas fa-minus"></i>
-                </button>
-            `;
-            container.appendChild(newRow);
+        const newRow = document.createElement('div');
+        newRow.className = 'material-row flex items-end gap-2 mt-2';
+        newRow.innerHTML = `
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Material Adicional</label>
+                <select name="materials[]" 
+                        class="w-full py-3 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900"
+                        onchange="calculateEditPrices()">
+                    <option value="">Seleccionar material adicional</option>
+                    ${options}
+                </select>
+            </div>
+            <div class="w-32">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+                <input type="number" 
+                    name="quantities[]" 
+                    value="${existingMaterial ? existingMaterial.pivot.quantity_needed : ''}"
+                    placeholder="Cantidad" 
+                    required 
+                    min="0" 
+                    step="0.01"
+                    onchange="calculateEditPrices()"
+                    class="w-full py-2 px-3 rounded-md border border-[#737878] bg-[#E0EFEC] text-gray-900">
+            </div>
+            <button type="button" onclick="removeEditMaterialRow(this)" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                <i class="fas fa-minus"></i>
+            </button>
+        `;
+        container.appendChild(newRow);
+    }
 
-            // Agregar event listeners a los nuevos elementos
-            const newSelect = newRow.querySelector('select[name="materials[]"]');
-            const newQuantity = newRow.querySelector('input[name="quantities[]"]');
-            
-            if (newSelect) newSelect.addEventListener('change', calculatePrices);
-            if (newQuantity) newQuantity.addEventListener('input', calculatePrices);
-        }
+    // Función para remover material específica para editar
+    window.removeEditMaterialRow = function(button) {
+        button.closest('.material-row').remove();
+        calculateEditPrices();
+    }
 
-        // Función para remover material (global)
-        window.removeMaterialRow = function(button) {
-            button.closest('.material-row').remove();
-            calculatePrices();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Agregar event listeners para cálculos automatizados
+    // Agregar event listeners cuando el DOM esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        const editModal = document.getElementById('editProductModal');
+        if (editModal) {
             const laborHours = document.getElementById('edit_labor_hours');
             const laborCost = document.getElementById('edit_labor_cost_per_hour');
             const materialsContainer = document.getElementById('edit_materials_container');
             const baseQuantity = document.getElementById('edit_base_quantity');
 
-            if (laborHours) laborHours.addEventListener('input', calculatePrices);
-            if (laborCost) laborCost.addEventListener('input', calculatePrices);
-            if (baseQuantity) baseQuantity.addEventListener('input', calculatePrices);
+            if (laborHours) laborHours.addEventListener('input', calculateEditPrices);
+            if (laborCost) laborCost.addEventListener('input', calculateEditPrices);
+            if (baseQuantity) baseQuantity.addEventListener('input', calculateEditPrices);
             if (materialsContainer) {
-                materialsContainer.addEventListener('input', calculatePrices);
-                materialsContainer.addEventListener('change', calculatePrices);
+                materialsContainer.addEventListener('input', calculateEditPrices);
+                materialsContainer.addEventListener('change', calculateEditPrices);
             }
-        });
-    }
-
+        }
+    });
 </script>
 {{--SCRIPT PARA EDITAR PRODUCTO--}}
+
+{{-- CONSTANTES GLOBALES --}}
+<script>
+    // Constantes globales para toda la aplicación
+    const MARGIN = 0.20; // 20%
+    const IVA = 0.19;   // 19%
+
+    // Función de formateo de moneda compartida
+    window.formatCurrency = function(amount) {
+        return new Intl.NumberFormat('es-CL', {
+            style: 'currency',
+            currency: 'CLP',
+            minimumFractionDigits: 0
+        }).format(amount);
+    }
+</script>
+{{-- CONSTANTES GLOBALES --}}
 
 {{--SCRIPT PARA ELIMINAR PRODUCTO--}}
 <script>
