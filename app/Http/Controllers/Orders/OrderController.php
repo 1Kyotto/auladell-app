@@ -25,7 +25,7 @@ class OrderController
             'order_num.exists' => 'El número de orden ingresado no existe en nuestros registros.',
         ]);
 
-        $order = Order::where('order_num', $validated['order-num'])
+        $order = Order::where('order_num', $validated['order_num'])
             ->with('shippingAddress')
             ->first();
 
