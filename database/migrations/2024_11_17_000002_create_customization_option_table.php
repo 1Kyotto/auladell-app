@@ -6,21 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('customization_material', function (Blueprint $table) {
+        Schema::create('customization_option', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customization_id');
-            $table->unsignedBigInteger('material_id');
-            $table->decimal('quantity_needed', 8, 2);
+            $table->string('option_name');
+            $table->boolean('requires_material')->default(true);
 
             $table->foreign('customization_id')->references('id')->on('customizations');
-            $table->foreign('material_id')->references('id')->on('materials');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('customization_material');
+        Schema::dropIfExists('customization_option');
     }
 };

@@ -7,9 +7,10 @@
         <title>Auladell Joyas</title>
         @vite('resources/css/app.css')
         @vite('resources/css/custom.css')
+        @vite(['resources/js/app.js'])
     </head>
     <body class="bg-cwhite-500 grid xl:grid-rows-[auto_1fr_auto] xl:min-h-dvh">
-        <header class="w-full bg-white text-accents-900 px-4 md:px-20 xl:px-8 flex justify-between font-cinzel">
+        <header class="w-full bg-white text-accents-900 px-4 md:px-20 xl:px-8 flex justify-between font-cinzel border-[1px] border-[#CED4E0]">
             {{--HAMBURGER--}}
             <div class="flex flex-col justify-center cursor-pointer w-[33%] xl:relative xl:hidden order-1" id="hamburger">
                 <div class="w-8 h-[3px] mb-1 rounded bg-cblack-500"></div>
@@ -100,7 +101,7 @@
             <nav class="absolute inset-x-0 top-[80px] w-full bg-white h-0 overflow-hidden duration-300 transition-all xl:relative xl:h-auto xl:flex xl:top-0 xl:overflow-visible xl:order-2 xl:w-1/2 2xl:w-[33%]" id="navbar">
                 <ul class="block w-full mt-[80px] mr-auto mb-0 ml-auto text-center opacity-0 duration-500 xl:flex xl:w-full xl:justify-between xl:items-center xl:opacity-100 xl:mt-0 xl:mr-0 xl:ml-0">
                     <li class="mb-4 xl:mb-0">
-                        <a href="" class="hover:text-accents-600 transition-colors duration-150">Personaliza</a>
+                        <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="hover:text-accents-600 transition-colors duration-150">Todas las Joyas</a>
                     </li>
                     <li class="mb-4 xl:mb-0">
                         <a href="{{ route('jewelry.index', ['type' => 'earrings']) }}" class="hover:text-accents-600 transition-colors duration-150">Aros</a>
@@ -120,16 +121,6 @@
 
             {{--SEARCH Y BOTONES--}}
             <div class="flex items-center justify-end w-[33%] order-3 gap-4 sm:gap-6 md:gap-7 xl:order-3 xl:justify-end xl:gap-8">
-                {{--SEARCH--}}
-                <div class="xl:flex xl:items-center xl:gap-1 xl:w-[55%] xl:bg-gray-200 xl:border xl:rounded-xl xl:px-2 xl:py-1 xl:ml-4 2xl:ml-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer h-[22px] w-[22px] text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
-                        <path d="M17.5 17.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                    </svg>
-                    <input type="text" placeholder="Buscar..." class="hidden xl:block xl:bg-gray-200 xl:outline-none xl:w-[95%]">
-                </div>
-                {{--SEARCH--}}
-
                 {{--CARRITO--}}
                 <a href="{{ route('cart.index') }}" class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
@@ -153,16 +144,8 @@
 
                 {{--LOGOUT--}}
                 @auth
-                    @if (auth()->user()->role === 'C')
-                    <a href="{{ route('home.index') }}" class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
-                            <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        </svg>
-                    </a>
-                    @endif
-
                     @if (auth()->user()->role === 'A')
-                        <a href="{{ route('home.index') }}" class="">
+                        <a href="{{ route('admin.product') }}" class="">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accents-900 hover:text-accents-600 transition-colors duration-150" viewBox="0 0 24 24" fill="none">
                                 <path d="M2 18C2 16.4596 2 15.6893 2.34673 15.1235C2.54074 14.8069 2.80693 14.5407 3.12353 14.3467C3.68934 14 4.45956 14 6 14C7.54044 14 8.31066 14 8.87647 14.3467C9.19307 14.5407 9.45926 14.8069 9.65327 15.1235C10 15.6893 10 16.4596 10 18C10 19.5404 10 20.3107 9.65327 20.8765C9.45926 21.1931 9.19307 21.4593 8.87647 21.6533C8.31066 22 7.54044 22 6 22C4.45956 22 3.68934 22 3.12353 21.6533C2.80693 21.4593 2.54074 21.1931 2.34673 20.8765C2 20.3107 2 19.5404 2 18Z" stroke="currentColor" stroke-width="1.5" />
                                 <path d="M14 18C14 16.4596 14 15.6893 14.3467 15.1235C14.5407 14.8069 14.8069 14.5407 15.1235 14.3467C15.6893 14 16.4596 14 18 14C19.5404 14 20.3107 14 20.8765 14.3467C21.1931 14.5407 21.4593 14.8069 21.6533 15.1235C22 15.6893 22 16.4596 22 18C22 19.5404 22 20.3107 21.6533 20.8765C21.4593 21.1931 21.1931 21.4593 20.8765 21.6533C20.3107 22 19.5404 22 18 22C16.4596 22 15.6893 22 15.1235 21.6533C14.8069 21.4593 14.5407 21.1931 14.3467 20.8765C14 20.3107 14 19.5404 14 18Z" stroke="currentColor" stroke-width="1.5" />
@@ -279,22 +262,12 @@
                     <a href="{{ route('jewelry.index', ['type' => 'rings']) }}" class="hover:text-accents-600 transition-colors duration-150">Anillos</a>
                     <a href="{{ route('jewelry.index', ['type' => 'bracelets']) }}" class="hover:text-accents-600 transition-colors duration-150">Brazaletes</a>
                     <a href="{{ route('jewelry.index', ['type' => 'necklaces']) }}" class="hover:text-accents-600 transition-colors duration-150">Collares</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Joya Personalizada</a>
                     <a href="{{ route('jewelry.index', ['type' => 'all-products']) }}" class="hover:text-accents-600 transition-colors duration-150">Todas las colecciones</a>
-                </div>
-
-                <div class="flex flex-col text-start order-3 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
-                    <h4 class="pb-1 font-bold">Información</h4>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Acerca de Auladell</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Política de privacidad</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Mantención de joyas</a>
                 </div>
 
                 <div class="flex flex-col text-start order-4 w-[70%] pb-6 md:pb-8 xl:w-fit xl:pb-0">
                     <h4 class="pb-1 font-bold">Servicio al cliente</h4>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Preguntas frecuentes</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
-                    <a href="" class="hover:text-accents-600 transition-colors duration-150">Cambios, devoluciones y garantía</a>
+                    <a href="{{ route('order.number') }}" class="hover:text-accents-600 transition-colors duration-150">Seguimiento de pedido</a>
                 </div>
 
                 <div class="order-1 py-6 w-[70%] md:py-8 xl:w-fit xl:py-0 xl:order-5">
@@ -340,5 +313,15 @@
                 navbar.classList.toggle('active');
             }
         </script>
+
+        @auth
+        <script>
+            window.userId = {{ auth()->id() }};
+        </script>
+        @else
+        <script>
+            window.guestId = "{{ session('guest_id') }}";
+        </script>
+        @endauth
     </body>
 </html>

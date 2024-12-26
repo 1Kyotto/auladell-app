@@ -11,31 +11,125 @@ class CustomizationProductsSeeder extends Seeder
 {
     public function run(): void
     {
-        // Definir las personalizaciones por categoría
-        $categories = ['Aros', 'Anillos', 'Brazaletes', 'Collares'];
+        //Cambio de material
+        DB::table('customization_product')->insert([
+            'product_id' => 1,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 2,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 3,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 4,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 5,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 6,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 7,
+            'customization_id' => 1,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 8,
+            'customization_id' => 1,
+        ]);
+        //Cambio de material
 
-        // Recorrer cada categoría
-        foreach ($categories as $category) {
-            // Obtener los productos de la categoría actual
-            $products = Product::where('category', $category)->pluck('id')->toArray();
+        //Largo de cadena
+        DB::table('customization_product')->insert([
+            'product_id' => 5,
+            'customization_id' => 2,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 6,
+            'customization_id' => 2,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 7,
+            'customization_id' => 2,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 8,
+            'customization_id' => 2,
+        ]);
+        //Largo de cadena
 
-            // Eliminar duplicados de los productos (si aún es necesario)
-            $products = array_unique($products);
+        //Incrustación de Piedra
+        DB::table('customization_product')->insert([
+            'product_id' => 1,
+            'customization_id' => 3,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 3,
+            'customization_id' => 3,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 5,
+            'customization_id' => 3,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 7,
+            'customization_id' => 3,
+        ]);
+        //Incrustación de Piedra
 
-            // Obtener las personalizaciones para esta categoría
-            $customizations = Customization::where('category', $category)->pluck('id')->toArray();
+        //Cambio talla anillo
+        DB::table('customization_product')->insert([
+            'product_id' => 3,
+            'customization_id' => 4,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 4,
+            'customization_id' => 4,
+        ]);
+        //Cambio talla anillo
 
-            // Asignar las personalizaciones a cada producto de la categoría
-            foreach ($products as $productId) {
-                foreach ($customizations as $customizationId) {
-                    DB::table('customization_product')->insertOrIgnore([
-                        'product_id' => $productId,
-                        'customization_id' => $customizationId,
-                    ]);
-                }
-            }
-        }
+        //Cambio talla anillo
+        DB::table('customization_product')->insert([
+            'product_id' => 1,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 2,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 3,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 4,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 5,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 6,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 7,
+            'customization_id' => 5,
+        ]);
+        DB::table('customization_product')->insert([
+            'product_id' => 8,
+            'customization_id' => 5,
+        ]);
+        //Cambio talla anillo
 
-        $this->command->info('Personalizaciones asignadas correctamente a los productos.');
+
     }
 }

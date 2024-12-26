@@ -5,7 +5,7 @@ namespace App\Models\Materials;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Products\Product;
-use App\Models\Customizations\Customization;
+use App\Models\Customizations\CustomizationHierarchy;
 use App\Models\Inventories\Inventory;
 
 class Material extends Model
@@ -16,14 +16,7 @@ class Material extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity_needed');
-        //->withTimestamps();
-    }
-
-    public function customizations()
-    {
-        return $this->belongsToMany(Customization::class)->withPivot('quantity_needed');
-        //->withTimestamps();
+        return $this->belongsToMany(Product::class, 'material_product')->withPivot('quantity_needed');
     }
 
     public function inventoryChanges()

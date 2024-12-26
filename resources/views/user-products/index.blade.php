@@ -3,47 +3,22 @@
 @section('content')
 <div class="w-full h-full flex">
     {{--SIDEBAR--}}
-    <div class="h-[100dvh] w-[25%] flex flex-col font-cinzel text-black shadow-right-only sticky top-0 z-50">
-        <div class="ml-8">
-            <h4 class="mt-5 text-2xl">
-                Filtrar Y Ordenar
-            </h4>
-            <span class="text-lg">
-                {{ $products->count() }} item(s)
-            </span>
-        
-            <div class="my-6 relative text-xl">
-                <button id="dropdownButton"
-                        class="border rounded-sm py-3 px-3 w-[calc(100%-32px)] flex items-center justify-between"
-                        onclick="toggleMenuAndSetDefault()">
-                    <span id="buttonText"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6" fill="none">
-                        <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-                <ul class="dropdown-menu hidden pt-1 shadow-md w-[calc(100%-32px)]">
-                    <li>
-                        <a href="" class="rounded-t bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Trending Now</a>
-                    </li>
-                    <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Bestsellers</a>
-                    </li>
-                    <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Newest</a>
-                    </li>
-                    <li>
-                        <a href="" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Price Low to High</a>
-                    </li>
-                    <li>
-                        <a href="" class="rounded-b bg-gray-200 hover:bg-gray-300 py-2 px-4 block whitespace-nowrap">Price High to Low</a>
-                    </li>
-                </ul>
+    <div class="h-[800px] w-[25%] flex flex-col font-cinzel text-black shadow-right-only sticky top-0 z-50">
+        <div class="px-8">
+            <div class="flex flex-col w-full border-b border-[#CED4E0] pb-3">
+                <h4 class="mt-5 text-2xl">
+                    Filtros
+                </h4>
+                <span class="text-lg">
+                    {{ $products->count() }} item(s)
+                </span>
             </div>
 
-            {{--FILTRO CATEGORIA AJAX--}}
+            {{--FILTRO CATEGORIAS--}}
+            @if ($currentCategory == 'all-products')
             <div class="my-6 relative text-xl">
-                <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
-                    Categoría
+                <button class="toggle-button py-3 w-full flex items-center justify-between">
+                    Categorías
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
                         <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -53,22 +28,22 @@
                         <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
-                <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
-                    @foreach ($products->unique('category') as $product)
+                <ul class="dropdown hidden pl-6 w-full">
+                    @foreach ($categories as $name => $value)
                     <li>
-                        <label for="">
-                            <input type="checkbox" class="category-checkbox" data-category="{{ $product->category }}">
-                            <span>{{ $product->category }}</span>
+                        <label>
+                            <input type="checkbox" name="category-filter" value="{{ $value }}" class="category-checkbox" {{ $value === 'all-products' ? 'checked' : '' }}>
+                            <span>{{ $name }}</span>
                         </label>
                     </li>
                     @endforeach
                 </ul>
             </div>
-            {{--FILTRO CATEGORIA AJAX--}}
+            @endif
 
             {{--FILTRO MATERIALES--}}
-            <div class="my-6 relative text-xl">
-                <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
+            <div class="my-6 relative text-xl w-full">
+                <button class="toggle-button py-3 w-full flex items-center justify-between">
                     Materiales
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
                         <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -79,11 +54,11 @@
                         <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
-                <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
+                <ul class="dropdown hidden pl-6 w-full">
                     @foreach ($selectedMaterial as $material)
                     <li>
                         <label for="">
-                            <input type="checkbox">
+                            <input type="checkbox" class="material-checkbox" data-material="{{ $material->name }}">
                             <span>{{$material->name}}</span>
                         </label>
                     </li>
@@ -91,11 +66,11 @@
                 </ul>
             </div>
             {{--FILTRO MATERIALES--}}
-    
-            {{--FILTRO COLECCION--}}
+
+            {{--FILTRO GEMSTONES--}}
             <div class="my-6 relative text-xl">
-                <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
-                    Colección
+                <button class="toggle-button py-3 w-full flex items-center justify-between">
+                    Incrustaciones
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
                         <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -105,76 +80,18 @@
                         <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
-                <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
+                <ul class="dropdown hidden pl-6 w-full">
+                    @foreach ($selectedGemstone as $gemstone)
                     <li>
                         <label for="">
-                            <input type="checkbox">
-                            <span>Aros</span>
+                            <input type="checkbox" class="gemstone-checkbox" data-gemstone="{{ $gemstone->name }}">
+                            <span>{{$gemstone->name}}</span>
                         </label>
                     </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Anillos</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Brazaletes</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Collares</span>
-                        </label>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
-            {{--FILTRO COLECCION--}}
-    
-            {{--FILTRO ACABADO--}}
-            <div class="my-6 relative text-xl">
-                <button class="toggle-button py-3 w-[calc(100%-32px)] flex items-center justify-between">
-                    Acabado
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon h-5 w-5" fill="none">
-                        <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-    
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="minus-icon h-5 w-5 hidden" fill="none">
-                        <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
-                <ul class="dropdown hidden pl-6 w-[calc(100%-32px)]">
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Aros</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Anillos</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Brazaletes</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="">
-                            <input type="checkbox">
-                            <span>Collares</span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            {{--FILTRO ACABADO--}}
+            {{--FILTRO GEMSTONES--}}
         </div>
     </div>
     {{--SIDEBAR--}}
@@ -182,162 +99,136 @@
     {{--PRODUCTOS--}}
     <div class="h-full w-[75%] p-5 flex flex-wrap products-container">
         @foreach ($products as $product)
-        <div class="w-[30%] mr-7 mb-6">
-            <a href="" class="w-full h-[300px]">
+        <div class="w-[30%] mr-7 mb-6 font-montserrat">
+            <a href="{{ route('jewelry.show', ['id' => $product->id]) }}" class="w-full h-[300px]">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="" class="w-full h-[300px] object-cover">
             </a>
             <h4 class="pt-3">{{$product->name}}</h4>
-            <span>CL$ {{ number_format($product->base_price, 0) }}</span>
-            <div class="">
-                <button>
-                    Añadir al carro
-                    <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                        <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                        <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                </button>
-            </div>
+            <span class="font-bold" data-calculated-price="{{ $product->calculated_price }}">CL$ {{ $product->formatted_price }}</span>
         </div>    
         @endforeach
+
+        <div id="end-marker" class="w-full h-1 hidden"></div>
     </div>
     {{--PRODUCTOS--}}
 
 </div>
-{{--FUNCIONALIDAD DE MOSTRAR OPCIONES DE FILTRO--}}
+
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
 <script>
     // Selecciona todos los botones con clase 'toggle-button'
     const toggleButtons = document.querySelectorAll('.toggle-button');
+    const materialCheckboxes = document.querySelectorAll('.material-checkbox');
+    const gemstoneCheckboxes = document.querySelectorAll('.gemstone-checkbox');
+    const productsContainer = document.querySelector('.products-container');
+    const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+    const allProducts = @json($products);
 
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Encuentra el contenedor de este botón
-            const parentDiv = button.closest('.my-6');
-            const plusIcon = parentDiv.querySelector('.plus-icon');
-            const minusIcon = parentDiv.querySelector('.minus-icon');
-            const dropdownMenu = parentDiv.querySelector('.dropdown');
-
-            // Cierra cualquier menú abierto antes de abrir el actual
-            document.querySelectorAll('.dropdown').forEach(menu => {
-                if (!menu.classList.contains('hidden') && menu !== dropdownMenu) {
-                    // Cierra el menú que no corresponde al botón actual
-                    menu.classList.add('hidden');
-                    menu.closest('.my-6').querySelector('.plus-icon').classList.remove('hidden');
-                    menu.closest('.my-6').querySelector('.minus-icon').classList.add('hidden');
-                }
-            });
-
-            // Alterna la visibilidad del menú y los iconos en el contenedor actual
-            plusIcon.classList.toggle('hidden');
-            minusIcon.classList.toggle('hidden');
-            dropdownMenu.classList.toggle('hidden');
-        });
-    });
-</script>
-{{--FUNCIONALIDAD DE MOSTRAR OPCIONES DE FILTRO--}}
-
-{{--FUNCIONALIDAD DEL DROPDOWN--}}
-<script>
-    // Función para configurar el texto del botón con la primera opción del ul
-    function setDefaultButtonText() {
-        const firstOptionText = document.querySelector(".dropdown-menu li:first-child a").textContent;
-        document.getElementById("buttonText").textContent = firstOptionText;
-    }
-
-    // Llamada a la función al cargar la página
-    window.onload = setDefaultButtonText;
-
-    // Función para alternar el menú
-    function toggleMenuAndSetDefault() {
-        const menu = document.querySelector(".dropdown-menu");
-        menu.classList.toggle("hidden");
-    }
-</script>
-{{--FUNCIONALIDAD DEL DROPDOWN--}}
-
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const checkboxes = document.querySelectorAll('.category-checkbox');
-        const productsContainer = document.querySelector('.products-container');  // Asegúrate de tener una clase para el contenedor de productos
-        const allProducts = @json($products);  // Pasa todos los productos al frontend
-
+    function allowOnlyOneSelection(checkboxes) {
         checkboxes.forEach(checkbox => {
-            // Añadimos un listener a cada checkbox
-            checkbox.addEventListener('change', function() {
-                // Si el checkbox es seleccionado
+            checkbox.addEventListener('change', function () {
                 if (this.checked) {
-                    // Desmarcamos todos los demás checkboxes
                     checkboxes.forEach(otherCheckbox => {
                         if (otherCheckbox !== this) {
                             otherCheckbox.checked = false;
                         }
                     });
+                }
+                filterProducts();
+            });
+        });
+    }
 
-                    // Ahora, si este checkbox está marcado, podemos realizar el filtrado
-                    filterProducts();
+    allowOnlyOneSelection(materialCheckboxes);
+    allowOnlyOneSelection(gemstoneCheckboxes);
+    allowOnlyOneSelection(categoryCheckboxes);
+
+    // Manejo de los toggles para mostrar/ocultar filtros
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const dropdown = this.nextElementSibling;
+            const plusIcon = this.querySelector('.plus-icon');
+            const minusIcon = this.querySelector('.minus-icon');
+            
+            dropdown.classList.toggle('hidden');
+            plusIcon.classList.toggle('hidden');
+            minusIcon.classList.toggle('hidden');
+        });
+    });
+
+    function filterProducts() {
+        let filteredProducts = [...allProducts];
+
+        // Aplicar filtro de categoría
+        const selectedCategory = Array.from(categoryCheckboxes)
+            .find(cb => cb.checked);
+        if (selectedCategory && selectedCategory.value !== 'all-products') {
+            filteredProducts = filteredProducts.filter(product => 
+                product.category === selectedCategory.value
+            );
+        }
+
+        // Aplicar filtro de material
+        const selectedMaterial = Array.from(materialCheckboxes)
+            .find(cb => cb.checked);
+        if (selectedMaterial) {
+            const materialName = selectedMaterial.dataset.material;
+            filteredProducts = filteredProducts.filter(product => 
+                product.materials.some(m => m.name === materialName)
+            );
+        }
+
+        // Aplicar filtro de incrustaciones
+        const selectedGemstone = Array.from(gemstoneCheckboxes)
+            .find(cb => cb.checked);
+        if (selectedGemstone) {
+            const gemstoneName = selectedGemstone.dataset.gemstone;
+            filteredProducts = filteredProducts.filter(product => 
+                product.gemstones.includes(gemstoneName)
+            );
+        }
+
+        renderProducts(filteredProducts);
+    }
+
+    function renderProducts(products) {
+        productsContainer.innerHTML = products.map(product => `
+            <div class="w-[30%] mr-7 mb-6 font-montserrat">
+                <a href="/jewelry/product/${product.id}" class="w-full h-[300px]">
+                    <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
+                </a>
+                <h4 class="pt-3">${product.name}</h4>
+                <span class="font-bold" data-calculated-price="${product.calculated_price}">CL$ ${product.formatted_price}</span>
+            </div>
+        `).join('');
+    }
+</script>
+{{--SCRIPT PARA FILTRAR PRODUCTOS--}}
+
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebar = document.querySelector(".sidebar");
+        const endMarker = document.getElementById("end-marker");
+        const productsContainer = document.querySelector(".products-container");
+        const initialSidebarTop = sidebar.offsetTop;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    // Cuando el marcador no es visible, "pegar" el sidebar
+                    sidebar.style.position = "absolute";
+                    sidebar.style.top = `${productsContainer.offsetHeight - sidebar.offsetHeight}px`;
                 } else {
-                    // Si se desmarca, no hacemos nada, solo se mantienen los productos previamente filtrados
-                    filterProducts();
+                    // Volver a sticky cuando el marcador es visible
+                    sidebar.style.position = "sticky";
+                    sidebar.style.top = "0";
                 }
             });
-        });
+        }, { threshold: 0 });
 
-        // Función para mostrar productos según la categoría seleccionada
-        function filterProducts() {
-            // Obtener todas las categorías seleccionadas
-            const selectedCategories = Array.from(checkboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.getAttribute('data-category'));
-
-            // Si no hay categorías seleccionadas, mostrar todos los productos
-            if (selectedCategories.length === 0) {
-                renderProducts(allProducts);  // Muestra todos los productos
-                return;  // No filtramos nada más
-            }
-
-            // Filtrar los productos según las categorías seleccionadas
-            const filteredProducts = allProducts.filter(product => {
-                return selectedCategories.includes(product.category);
-            });
-
-            // Mostrar los productos filtrados
-            renderProducts(filteredProducts);
-        }
-
-        // Función para renderizar los productos
-        function renderProducts(products) {
-            productsContainer.innerHTML = '';  // Limpiar productos existentes
-
-            products.forEach(product => {
-                const productHtml = `
-                    <div class="w-[30%] mr-7 mb-6">
-                        <a href="" class="w-full h-[300px]">
-                            <img src="${product.image_url}" alt="" class="w-full h-[300px] object-cover">
-                        </a>
-                        <h4 class="pt-3">${product.name}</h4>
-                        <span>CL$ ${new Intl.NumberFormat().format(product.base_price)}</span>
-                        <div class="">
-                            <button>Añadir al carro
-                                <svg class="w-[110px] h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 10" preserveAspectRatio="none">
-                                    <line x1="0" y1="5" x2="101" y2="5" stroke="currentColor" stroke-width="2" />
-                                    <polyline points="97,0 102,5 97,10" fill="none" stroke="currentColor" stroke-width="2" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                productsContainer.innerHTML += productHtml;
-            });
-        }
-
-        // Escuchar cambios en los checkboxes de categoría
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', filterProducts);
-        });
-
-        // Inicializar el filtro en caso de que haya categorías pre-seleccionadas
-        filterProducts();
+        observer.observe(endMarker);
     });
 </script>
-{{--SCRIPT PARA FILTRAR PRODUCTOS POR CATEGORIA--}}
+{{--SCRIPT PARA MANTENER EL COMPORTAMIENTO STICKY--}}
 @endsection
