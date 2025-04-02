@@ -1,66 +1,204 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Auladell App - Tienda de Joyería Personalizada
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de gestión integral para una tienda de joyería que permite a los clientes personalizar sus propias piezas de joyería y realizar pedidos de manera segura.
+Además, permite al usuario administrador gestionar los materiales en tiempo real.
 
-## About Laravel
+## Características Principales
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Comercio Electrónico
+- Catálogo de productos personalizables
+- Sistema de carrito de compras
+- Proceso de checkout con personalización
+- Sistema de pagos
+- Gestión de órdenes y estados
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Personalización de Productos
+- Sistema de personalizaciones por producto
+- Opciones de material base
+- Opciones de incrustación
+- Opciones de bañado
+- Cálculo dinámico de precios según opciones seleccionadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Gestión de Inventario
+- Control de materiales
+- Gestión de stock por material
+- Alertas de stock bajo
+- Registro de cambios en el inventario
+- Sistema de reducción automática de stock al realizar pedidos
 
-## Learning Laravel
+### Sistema de Usuarios
+- Registro de usuarios
+- Autenticación
+- Perfil de usuario
+- Historial de pedidos
+- Gestión de direcciones de envío
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Administración
+- Panel de administración
+- Gestión de productos
+- Gestión de materiales
+- Gestión de órdenes
+- Generación de reportes
+- Control de inventario
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Stack Tecnológico
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Frontend:**
+- Blade Templates
+- TailwindCSS
+- JavaScript
+- HTML5/CSS3
 
-## Laravel Sponsors
+**Backend:**
+- PHP 8.2
+- Laravel 11
+- MySQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Instalación
 
-### Premium Partners
+1. Clona el repositorio
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+	```bash
+	git clone https://github.com/1Kyotto/auladell-app.git
+	cd auladell-app
+	```
 
-## Contributing
+2. Instala las dependencias
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+	```bash
+	composer install
+	npm install
+	```
 
-## Code of Conduct
+3. Configura el entorno
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+	```bash
+	cp .env.example .env
+	php artisan key:generate
+	```
 
-## Security Vulnerabilities
+4. Configura la base de datos en el archivo .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+	```env
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=auladell_app
+	DB_USERNAME=root
+	DB_PASSWORD=
+	```
 
-## License
+5. Ejecuta las migraciones y seeders
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+	```bash
+	php artisan migrate --seed
+	```
+
+## Ejecución Local
+
+1. Inicia el servidor de desarrollo
+
+	```bash
+	php artisan serve
+	```
+
+2. Compila los assets (en una nueva terminal)
+
+	```bash
+	npm run dev
+	```
+
+3. Accede a la aplicación en `http://localhost:8000`
+
+## Variables de Entorno
+
+Las principales variables de entorno que necesitas configurar son:
+
+```env
+APP_NAME=Auladell App
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=auladell_app
+DB_USERNAME=
+DB_PASSWORD=
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=
+MAIL_USERNAME=#email
+MAIL_PASSWORD=#password
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS=#"email"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+## Estructura del Proyecto
+### Controladores
+
+- `app/Http/Controllers/`
+  - `Admin/` - Controladores de administración
+  - `Cart/` - Controladores del carrito
+  - `Materials/` - Controladores de materiales
+  - `Orders/` - Controladores de órdenes
+  - `Payments/` - Controladores de pagos
+  - `Products/` - Controladores de productos
+  - `Reports/` - Controladores de reportes
+  - `Users/` - Controladores de usuarios
+
+### Seeders
+
+- `database/seeders/`
+  - `UserSeeder` - Datos de usuarios de prueba
+  - `ProductsSeeder` - Catálogo de productos
+  - `MaterialSeeder` - Materiales disponibles
+  - `MaterialProductSeeder` - Relación de materiales con productos
+  - `CustomizationsSeeder` - Opciones de personalización
+  - `CustomizationProductsSeeder` - Relación de personalizaciones con productos
+  - `CustomizationOptionSeeder` - Opciones para cada personalización
+  - `CustomizationMaterialSeeder` - Materiales requeridos por personalizaciones
+  - `DatabaseSeeder` - Seeder principal que ejecuta todos los anteriores
+
+### Modelos
+
+- `app/Models/`
+  - `Auth/` - Modelos de autenticación
+  - `Carts/` - Modelos del carrito
+  - `Customizations/` - Modelos de personalización
+  - `Inventory/` - Modelos de inventario
+  - `Materials/` - Modelos de materiales
+  - `Orders/` - Modelos de órdenes
+  - `Products/` - Modelos de productos
+  - `ShippingAddresses/` - Modelos de direcciones de envío
+  - `Archives/` - Modelos de archivos/archivos
+
+### Otros Componentes
+
+- `app/Http/Middleware/` - Middleware de la aplicación
+- `app/Events/` - Eventos del sistema
+- `app/Exports/` - Exportaciones de datos
+- `app/Helpers/` - Funciones auxiliares
+- `app/Providers/` - Proveedores de servicios
+
+### Recursos
+
+- `resources/views/` - Vistas de la aplicación
+- `resources/lang/` - Archivos de idioma
+- `resources/js/` - JavaScript
+- `resources/css/` - Estilos CSS
+- `resources/sass/` - SASS/SCSS
+
+### Configuración
+
+- `.env` - Variables de entorno
+- `routes/` - Rutas de la aplicación
+
+## Autores
+
+- [@1Kyotto](https://github.com/1Kyotto)
+- [@Guilmon-Kyo](https://github.com/Guilmon-Kyo)
